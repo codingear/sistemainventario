@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'soporte@equibra.com'),
+        'name' => env('MAIL_FROM_NAME', 'Soporte Equibra'),
     ],
 
     /*
@@ -113,7 +113,7 @@ return [
     */
 
     'markdown' => [
-        'theme' => 'default',
+        'theme' => 'custom',
 
         'paths' => [
             resource_path('views/vendor/mail'),

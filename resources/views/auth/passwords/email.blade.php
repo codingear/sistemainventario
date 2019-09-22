@@ -1,47 +1,48 @@
-@extends('layouts.app')
-
+@extends('auth.layouts._layout')
+@section('title', 'Recupear Contraseña')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
+    <div class="container-form">
+        <div class="d-flex align-items-center justify-content-center container mb-4">
+            <img class="img-fluid login-logo" src="{{asset('img/thumbnail.png')}}" alt="">
+        </div>
+        <div class="card card-signin">
+            <div class="card-body">
+                <h5 class="card-title text-center mb-3">¿Olvidaste tu contraseña?</h5>
+                <p class="text-center">Ingresa tu email y te enviaremos un enlace para reestablecer tu contraseña.</p>
+                <form class="form-signin" autocomplete="on" method="POST" action="{{ route('password.email') }}">
+                    @csrf
+                    <div class="form-label-group">
+                        <input id="email" type="text"
+                               class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
+                               value="{{ old('email') }}" placeholder="Email" required>
+                        <label for="email">Email</label>
+                        @if ($errors->has('email'))
+                            <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                    <button class="btn btn-lg btn-blue  btn-block text-uppercase" type="submit">Enviar enlace de
+                        reestablecimiento
+                    </button>
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
+                        <p class="text-success mt-3 font-weight-bold text-center text-alert">
                             {{ session('status') }}
-                        </div>
+                        </p>
                     @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
+        <span class="footer-login">Copyright &copy; Equibra 2019</span>
     </div>
-</div>
+
 @endsection
+@push('optional_scripts')
+    <script>
+        window.setTimeout(function () {
+            $(".text-alert").fadeTo(600, 0).slideUp(600, function () {
+                $(this).remove();
+            });
+        }, 2500);
+    </script>
+@endpush

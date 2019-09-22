@@ -13,3 +13,7 @@ Isidro Martínez
 
 -   0.1
     -   Despliegue Inicial
+-   0.2
+    -   Módulo de Altas de Administradores
+    -   Login
+    -   Reestablecer Password
