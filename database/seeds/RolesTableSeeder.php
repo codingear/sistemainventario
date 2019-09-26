@@ -20,10 +20,19 @@ class RolesTableSeeder extends Seeder
             'special' => 'all-access'
         ]);
 
-        Role::create([
+        $role = Role::create([
             'name' => 'Administrador',
-            'slug' => 'Administrador',
+            'slug' => 'administrador',
             'description' => 'No tiene acceso a reportes y/o usuarios',
         ]);
+
+        $role->givePermissionTo(
+            'categorias.index',
+            'categorias.create',
+            'categorias.show',
+            'categorias.edit',
+            'categorias.show',
+            'categorias.destroy',
+        );
     }
 }

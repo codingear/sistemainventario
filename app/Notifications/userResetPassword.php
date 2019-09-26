@@ -45,9 +45,9 @@ class userResetPassword extends Notification
             ->subject('Solicitud de reestablecimiento de contraseña')
             ->greeting('Hola ' . $notifiable->name)
             ->line('Recibes este correo porque se solicitó un reestablecimiento de contraseña para tu cuenta.')
-            ->action('Reestablecer contraseña', url('/password/reset/'.$this->token))
+            ->action('Reestablecer contraseña', url('/password/reset/' . $this->token))
             ->line('Si no solicitaste esta acción, simplemente ignora este correo.')
-            ->salutation('¡Saludos!');
+            ->salutation('¡Saludos!. El equipo de Equibra');
     }
 
     /**

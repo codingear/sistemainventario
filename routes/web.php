@@ -26,20 +26,42 @@ Route::group(
     ],
     function () {
 
-        //Dashboard
-        //Route::get('/', 'DashboardController@index')->name('dashboard');
-
         Route::get('/', function () {
             return view('admin.dashboard');
         })->name('dashboard');
 
-        //Usuarios
-        Route::resource('usuarios', 'UserController', [
+        //Administradores
+        Route::resource('administradores', 'AdministratorController', [
+            'except' => ['show'],
             'parameters' => [
-                'usuarios' => 'user',
-            ]
+                'administradores' => 'user',
+            ],
         ]);
 
-        //Route::get('usuarios/perfil', 'UserController@userProfile')->name('perfil');
+        //Editar Datos Administrador
+        Route::match(['put', 'patch'], 'admin/change_UserStatus/{id}', 'AdministratorController@changeUserStatus')->name('admin.editAdminStatus');
+        Route::get('mi-perfil', 'ShowAdminProfile')->name('admin.profile');
+        Route::get('editar-perfil', 'AdministratorController@editAdminProfile')->name('admin.editProfile');
+        Route::match(['put', 'patch'], 'admin/edit_profile/{user}', 'AdministratorController@updateAdminProfile')->name('admin.updateAdminProfile');
+
+
+
+
+        //Categorias
+        Route::resource('categorias', 'CategoryController', [
+            'except' => ['show'],
+            'parameters' => [
+                'categorias' => 'category',
+            ],
+        ]);
+        Route::match(['put', 'patch'], 'admin/change_CategoryStatus/{id}', 'CategoryController@changeCategoryStatus')->name('admin.category.changeStatus');
+
+        //Productos
+        Route::resource('productos', 'ProductController', [
+            // 'except' => ['show'],
+            'parameters' => [
+                'productos' => 'product',
+            ],
+        ]);
     }
 );

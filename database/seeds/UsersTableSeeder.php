@@ -3,6 +3,7 @@
 use App\User;
 use Illuminate\Database\Seeder;
 use Caffeinated\Shinobi\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,12 +15,23 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
 
-        $user = User::create([
+        $superAdmin = User::create([
             'name'              => 'Luis Macias',
             'email'             => 'admin@equibra.com',
-            'password'          => bcrypt('981010'),
+            'password'          => Hash::make('981010'),
+            'change_password'   => true
         ]);
 
-        $user->assignRoles('superAdministrador');
+        $superAdmin->assignRoles('superAdministrador');
+
+
+        $admin = User::create([
+            'name'              => 'Luis Pastén',
+            'email'             => 'luisp@equibra.com',
+            'password'          => Hash::make('luis123'),
+            'change_password'   => true
+        ]);
+
+        $admin->assignRoles('administrador');
     }
 }

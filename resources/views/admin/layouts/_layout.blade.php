@@ -34,6 +34,12 @@
 
             {{--Begin Page Content--}}
             <div class="container-fluid">
+                @if (!Auth::user()->change_password)
+                    <div class="alert alert-warning mt-2" role="alert">
+                        Tu contraseña temporal es insegura, recuerda cambiarla.
+                        <a href="{{route('admin.editProfile')}}" class="alert-link">Cambiar contraseña</a>.
+                    </div>
+                @endif
                 @yield ('content')
             </div>
 

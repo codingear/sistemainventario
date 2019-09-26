@@ -2,7 +2,8 @@
     <div class="form-group col-lg-4 col-md-12">
         <label for="input-name" class="col-form-label">Nombre:</label>
         <input type="text" class="form-control {{$errors->has('name') ? 'is-invalid' :'' }}"
-               value="{{old('name',!empty($user) ? $user->name: '' )}}" id="input-name" name="name">
+               value="{{old('name',!empty($user) ? $user->name: '' )}}" id="input-name" name="name"
+            {{!empty($user) ? 'readonly': '' }} >
         @if ($errors->has('name'))
             <div class="invalid-feedback">
                 {{ $errors->first('name') }}
@@ -12,7 +13,8 @@
     <div class="form-group col-lg-4 col-md-12">
         <label for="input-email" class="col-form-label">Email:</label>
         <input type="email" class="form-control {{$errors->has('email') ? 'is-invalid' :'' }}"
-               value="{{old('email',!empty($user) ? $user->email: '')}}" id="input-email" name="email">
+               value="{{old('email',!empty($user) ? $user->email: '')}}" id="input-email" name="email"
+            {{!empty($user) ? 'readonly': '' }}>
         @if ($errors->has('email'))
             <div class="invalid-feedback">
                 {{ $errors->first('email') }}
@@ -36,22 +38,7 @@
             </div>
         @endif
     </div>
-    <div class="form-group col-lg-4 col-md-12">
-        <label for="input-password" class="col-form-label">Contraseña:</label>
-        <input type="password" class="form-control {{$errors->has('password') ? 'is-invalid' :'' }}"
-               value="{{old('password')}}" id="input-password" name="password">
-        @if ($errors->has('password'))
-            <div class="invalid-feedback">
-                {{ $errors->first('password') }}
-            </div>
-        @endif
-    </div>
-    <div class="form-group col-lg-4 col-md-12">
-        <label for="input-password_confirmation" class="col-form-label">Confirmar contraseña:</label>
-        <input type="password" class="form-control {{$errors->has('password') ? 'is-invalid' :'' }}"
-               value="{{old('password_confirmation')}}" id="input-password_confirmation" name="password_confirmation">
-    </div>
-    @if (!Request::is('admin/usuarios/crear'))
+    @if (!Request::is('admin/administradores/crear'))
         <div class="form-group col-lg-4 col-md-12">
             <div class="custom-control custom-checkbox checkbox-form ">
                 <input type="checkbox" name="status" id="status" class="custom-control-input"
@@ -61,7 +48,6 @@
         </div>
     @endif
 </div>
-
 <div class="btn-action">
     <button class="btn btn-success btn-icon-split btn-sm" type="submit">
                     <span class="icon text-white-50">
@@ -69,9 +55,9 @@
                     </span>
         <span class="text">Guardar</span>
     </button>
-    <a href="{{route('usuarios.index')}}" class="btn btn-danger btn-icon-split btn-sm">
+    <a href="{{route('administradores.index')}}" class="btn btn-secondary btn-icon-split btn-sm">
                     <span class="icon text-white-50">
-                        <i class="fas fa-ban fa-sm text-white-50"></i>
+                        <i class="fas fa-long-arrow-alt-left fa-sm text-white-50"></i>
                     </span>
         <span class="text">Cancelar</span>
     </a>

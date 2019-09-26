@@ -34,24 +34,9 @@
         </a>
         <div id="collapseAlmacen" class="collapse" aria-labelledby="headingAlmacen" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Categorías</a>
+                <a class="collapse-item" href="{{route('categorias.index')}}">Categorías</a>
                 <a class="collapse-item" href="#">Articulos</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Nav Item -Compras -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCompras"
-           aria-expanded="true" aria-controls="collapseCompras">
-            <i class="fas fa-cash-register"></i>
-            <span>Compras</span>
-        </a>
-        <div id="collapseCompras" class="collapse" aria-labelledby="headingCompras"
-             data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="#">Proveedores</a>
-                <a class="collapse-item" href="#">Ingresos</a>
             </div>
         </div>
     </li>
@@ -73,27 +58,30 @@
     </li>
 
     <!-- Nav Item -Reportes -->
+    @can('administradores.index')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes"
            aria-expanded="true" aria-controls="collapseReportes">
             <i class="fas fa-chart-pie"></i>
             <span>Reportes</span>
         </a>
-        <div id="collapseReportes" class="collapse" aria-labelledby="headingReportes"
-             data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Reportes Compras</a>
-                <a class="collapse-item" href="#">Reportes Ventas</a>
+
+            <div id="collapseReportes" class="collapse" aria-labelledby="headingReportes"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="#">Reportes Compras</a>
+                    <a class="collapse-item" href="#">Reportes Ventas</a>
+                </div>
             </div>
-        </div>
     </li>
+    @endcan
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
     <div class="sidebar-heading">
-       E-Commerce
+        E-Commerce
     </div>
 
     <!-- Nav Item - Envíos -->
@@ -110,25 +98,24 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider">
-
+@can('administradores.index')
     <!-- Heading Administración -->
-    <div class="sidebar-heading">
-        Ajustes Sistema
-    </div>
+        <div class="sidebar-heading">
+            Ajustes Sistema
+        </div>
+        <!-- Nav Item - Usuarios -->
+        <li class="nav-item {{ request()->is('admin/administradores','admin/administradores/*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{route('administradores.index')}}">
+                <i class="fas fa-user"></i>
+                <span>Administradores</span></a>
+        </li>
+    @endcan
+    {{--    <!-- Divider -->--}}
+    {{--    <hr class="sidebar-divider d-none d-md-block">--}}
 
-    <!-- Nav Item - Usuarios -->
-    <li class="nav-item {{ request()->is('admin/usuarios','admin/usuarios/*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{route('usuarios.index')}}">
-            <i class="fas fa-user"></i>
-            <span>Usuarios</span></a>
-    </li>
-
-{{--    <!-- Divider -->--}}
-{{--    <hr class="sidebar-divider d-none d-md-block">--}}
-
-{{--    <!-- Sidebar Toggler (Sidebar) -->--}}
-{{--    <div class="text-center d-none d-md-inline">--}}
-{{--        <button class="rounded-circle border-0" id="sidebarToggle"></button>--}}
-{{--    </div>--}}
+    {{--    <!-- Sidebar Toggler (Sidebar) -->--}}
+    {{--    <div class="text-center d-none d-md-inline">--}}
+    {{--        <button class="rounded-circle border-0" id="sidebarToggle"></button>--}}
+    {{--    </div>--}}
 
 </ul>

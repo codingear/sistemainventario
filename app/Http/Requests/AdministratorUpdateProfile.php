@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class AdministratorUpdateProfile extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,22 +23,14 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-
         $userId = isset($this->user) ? $this->user->id : null;
-
-        $rules = [
-            'name'   => 'required|max:60',
-            'email'  => 'required|email|max:255|unique:users,email,' . $userId . ',id',
-            'rol'    => 'required'
+        return [
+            'name'      => 'required|max:60',
+            'email'     => 'required|email|max:255|unique:users,email,' . $userId . ',id',
+            'password'  => 'required|string|min:6|confirmed'
         ];
-
-
-        if ($this->getMethod() == 'POST') {
-            $rules += ['password' => 'required|string|min:8|confirmed'];
-        }
-
-        return $rules;
     }
+
 
     /**
      * @return array
@@ -52,7 +44,6 @@ class UserRequest extends FormRequest
             'email.unique'              => 'Este email ya se ha registrado.',
             'password.required'         => 'La contraseña es obligatoria.',
             'password.confirmed'        => 'La contraseña no coincide.',
-            'username.unique'           => 'Este usuario ya se ha registrado.',
             'rol.required'           => 'El rol es obligatorio.'
         ];
     }
