@@ -30,7 +30,7 @@ Luis Pastén
     -   Módulo de **Mi Perfil** agregado:
         -   El administrador puede editar su información.
     -   Denegar o permitir acceso a ciertos módulos en función del rol asignado al administrador:
-        -   **Super Administrador** tiene acceso a todas las funciones delpuede sistema.
+        -   **Super Administrador** tiene acceso a todas las funciones del sistema.
         -   **Administrador** No puede acceder al módulo de administradores ni tampoco al módulo de reportes.
     -   Ocultar o mostrar botones, enlaces o información en función del rol asignado al administrador.
     -   Se ha modificado la vista del error 303.
