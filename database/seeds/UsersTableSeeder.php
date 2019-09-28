@@ -23,15 +23,5 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $superAdmin->assignRoles('superAdministrador');
-
-
-        $admin = User::create([
-            'name'              => 'Luis Pastén',
-            'email'             => 'luisp@equibra.com',
-            'password'          => Hash::make('luis123'),
-            'change_password'   => true
-        ]);
-
-        $admin->assignRoles('administrador');
     }
 }
