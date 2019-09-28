@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,7 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Renombrar los verbos http
+
+        Schema::defaultStringLength(191);
+
+
+
         Route::resourceVerbs([
             'create' => 'crear',
             'edit' => 'editar',

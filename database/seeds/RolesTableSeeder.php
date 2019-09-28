@@ -26,13 +26,13 @@ class RolesTableSeeder extends Seeder
             'description' => 'No tiene acceso a reportes y/o usuarios',
         ]);
 
-        $role->givePermissionTo(
+        $role->givePermissionTo([
             'categorias.index',
             'categorias.create',
             'categorias.show',
             'categorias.edit',
             'categorias.show',
             'categorias.destroy',
-        );
+        ]);
     }
 }
