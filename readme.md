@@ -20,6 +20,7 @@ Luis Pastén
     -   Login
     -   Reestablecer Password
 -   0.3
+
     -   Ahora al dar de alta un administrador los datos de acceso se envían mediante email.
     -   Indica por email el rol que se le ha asignado al administrador.
     -   Se notifica que debe cambiar la contraseña.
@@ -39,3 +40,6 @@ Luis Pastén
         -   Editar una categoría.
         -   Activar o desactivar una categoría desde el index.
         -   Eliminar una categoría.
+
+-   1.0
+    -   Módulo de produtos agregado.

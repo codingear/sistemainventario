@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Products extends Model
+class Image extends Model
 {
-    //
+    protected $guarded = [];
 }

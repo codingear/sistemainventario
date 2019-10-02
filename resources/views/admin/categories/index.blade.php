@@ -1,7 +1,7 @@
 @extends('admin.layouts._layout')
 @section('title', 'Categorías')
 @push('stylesheets')
-<link rel="stylesheet" href="{{ asset('vendors/dataTables-1.10.18/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.css')}}">
 @endpush
 @section('content')
 <!-- Page Heading -->
@@ -31,7 +31,7 @@
     <strong>Ops¡</strong> {{session('error')}}
 </div>
 @endif
-@if($categories->count()<=0) <div class="container menu-cursos mt-2">
+@if($categories->count()<=0) <div class="container mt-2 p-0">
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <h4 class="alert-heading font-weight-bold">¡Sin Registros!</h4>
         <p>Aún no tienes ninguna categoría agregada.</p>
@@ -96,14 +96,14 @@
     @endsection
 
     @push('optional_scripts')
-    <script src="{{ asset('vendors/dataTables-1.10.18/datatables.min.js') }}"></script>
-    <script src="{{ asset('vendors/dataTables-1.10.18/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('vendors/dataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#table-categories').dataTable({
                 "ordering": true,
                 "language": {
-                    "url": "{{ asset('vendors/dataTables-1.10.18/Spanish.json')}}",
+                    "url": "{{ asset('vendors/dataTables/Spanish.json')}}",
                 },
                 "pageLength": 10,
                 order: [0, 'asc']

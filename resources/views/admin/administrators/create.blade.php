@@ -1,7 +1,7 @@
 @extends('admin.layouts._layout')
 @section('title', 'Nuevo Administrador')
 @push('stylesheets')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="{{ asset('vendors/bootstrap-select/bootstrap-select.min.css') }}">
 @endpush
 @section('content')
 <!-- Page Heading -->
@@ -30,6 +30,6 @@
     </div>
 </div>
 @endsection
-@push('scripts_last')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+@push('optional_scripts')
+<script src="{{ asset('vendors/bootstrap-select/bootstrap-select.min.js') }}"></script>
 @endpush

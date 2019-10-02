@@ -23,9 +23,6 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-        $categoryId = isset($this->category) ? $this->category : null;
-        //dd($categoryId);
-
         return [
             'name'          => 'required|max:60|unique:categories,name,' . $this->category,
             'description'   => 'max:160',

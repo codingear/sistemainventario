@@ -15,18 +15,13 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('category_id')->unsigned();
             $table->string('name')->unique();
-            $table->string('description');
+            $table->string('description', 160)->nullable();
+            $table->bigInteger('category_id')->unsigned()->nullable();
             $table->boolean('status')->default(true);
-            $table->integer('stock')->default(0);
-            $table->decimal('sale_price')->default(0);
+            $table->integer('stock')->default(0)->nullable();
+            $table->decimal('sale_price')->default(0)->nullable();
             $table->timestamps();
-
-            //Relaciones
-            $table->foreign('category_id')->references('id')->on('categories')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
         });
     }
 

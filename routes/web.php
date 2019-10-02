@@ -45,8 +45,6 @@ Route::group(
         Route::match(['put', 'patch'], 'admin/edit_profile/{user}', 'AdministratorController@updateAdminProfile')->name('admin.updateAdminProfile');
 
 
-
-
         //Categorias
         Route::resource('categorias', 'CategoryController', [
             'except' => ['show'],
@@ -58,10 +56,11 @@ Route::group(
 
         //Productos
         Route::resource('productos', 'ProductController', [
-            // 'except' => ['show'],
             'parameters' => [
                 'productos' => 'product',
             ],
         ]);
+
+        Route::post('productos/{product}/images', 'ImageController@store')->name('productos.image.store');
     }
 );
