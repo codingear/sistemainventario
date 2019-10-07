@@ -30,7 +30,7 @@ class ProductRequest extends FormRequest
         if ($this->getMethod() == 'PUT') {
             $rules += ['description'     => 'required|max:160'];
             $rules += ['category_id'     => 'required'];
-            $rules += ['stock'           => 'required|numeric|between:0,9999'];
+            $rules += ['stock'           => 'required|numeric'];
             $rules += ['sale_price'      => 'required|between:1,999.99|numeric'];
         }
 
@@ -53,10 +53,9 @@ class ProductRequest extends FormRequest
             'category_id.required'  => 'La categoría es obligatorio.',
             'stock.required'        => 'El stock es obligatorio',
             'stock.numeric'         => 'stock inválido',
-            'stock.between'         => 'El stock debe ser mayor a 0',
             'sale_price.required'   => 'El precio de venta es obligatorio.',
             'sale_price.numeric'    => 'Precio inválido.',
-            'sale_price.between'    => 'El precio debe estar entre 0 y 999.99',
+            'sale_price.between'    => 'El precio debe estar entre 1 y 999.99',
         ];
     }
 }

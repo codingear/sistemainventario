@@ -59,7 +59,8 @@
                         @foreach($products as $product)
                         <tr>
                             <td>{{$product->name}}</td>
-                            <td>{{$product->category->name}}</td>
+                            <td>{{empty($product->category->name) ? 'Sin Categoría Asignada' : $product->category->name}}
+                            </td>
                             <td class="">
                                 <label class="badge badge-{{$product->stock<= 5 ? 'danger':'success'}}"
                                     style="font-size:.8rem;">
@@ -156,5 +157,13 @@
             });
             $('[data-toggle="tooltip"]').tooltip();
         });
+    </script>
+    <script>
+        $('#newProductModal').on('show.bs.modal', function(event) {
+            setTimeout(function (){
+                    $('#input-name').focus();
+                }, 750);
+        });
+
     </script>
     @endpush

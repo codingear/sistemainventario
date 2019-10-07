@@ -115,7 +115,6 @@
                 "pageLength": 10,
                 order: [1, 'asc']
             });
-
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
