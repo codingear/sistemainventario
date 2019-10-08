@@ -78,7 +78,8 @@
                         <div class="card">
                             <div class="card-image">
                                 <figure class="image is-4by3">
-                                    <img src="{{$product->images->first()->url}}" alt="Placeholder image">
+                                    <img src="{{empty($product->images->first()->url) ? 'https://bulma.io/images/placeholders/1280x960.png' : $product->images->first()->url}}"
+                                        alt="Placeholder image">
                                 </figure>
                             </div>
                             <div class="card-content">
