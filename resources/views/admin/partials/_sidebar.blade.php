@@ -13,7 +13,12 @@
     <li class="nav-item active">
         <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-home"></i>
-            <span>Inicio</span></a>
+            <span>Inicio</span>
+        </a>
+        <a class="nav-link" href="{{route('store')}}" target="_blank">
+            <i class="fas fa-store"></i>
+            <span>Ir a Tienda</span>
+        </a>
     </li>
 
     <!-- Divider -->
@@ -28,7 +33,7 @@
     <!-- Nav Item - Almacen-->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAlmacen"
-            aria-expanded="true" aria-controls="collapseAlmacen">
+           aria-expanded="true" aria-controls="collapseAlmacen">
             <i class="fas fa-boxes"></i>
             <span>Almacen</span>
         </a>
@@ -44,7 +49,7 @@
     <!-- Nav Item -Ventas -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVentas" aria-expanded="true"
-            aria-controls="collapseVentas">
+           aria-controls="collapseVentas">
             <i class="fas fa-shopping-cart"></i>
             <span>Ventas</span>
         </a>
@@ -58,23 +63,24 @@
 
     <!-- Nav Item -Reportes -->
     @can('administradores.index')
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes"
-            aria-expanded="true" aria-controls="collapseReportes">
-            <i class="fas fa-chart-pie"></i>
-            <span>Reportes</span>
-        </a>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes"
+               aria-expanded="true" aria-controls="collapseReportes">
+                <i class="fas fa-chart-pie"></i>
+                <span>Reportes</span>
+            </a>
 
-        <div id="collapseReportes" class="collapse" aria-labelledby="headingReportes" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Reportes Compras</a>
-                <a class="collapse-item" href="#">Reportes Ventas</a>
+            <div id="collapseReportes" class="collapse" aria-labelledby="headingReportes"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="#">Reportes Compras</a>
+                    <a class="collapse-item" href="#">Reportes Ventas</a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
     @endcan
 
-    <!-- Divider -->
+<!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
@@ -98,15 +104,15 @@
     <hr class="sidebar-divider">
     @can('administradores.index')
     <!-- Heading Administración -->
-    <div class="sidebar-heading">
-        Ajustes Sistema
-    </div>
-    <!-- Nav Item - Usuarios -->
-    <li class="nav-item {{ request()->is('admin/administradores','admin/administradores/*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{route('administradores.index')}}">
-            <i class="fas fa-user"></i>
-            <span>Administradores</span></a>
-    </li>
+        <div class="sidebar-heading">
+            Ajustes Sistema
+        </div>
+        <!-- Nav Item - Usuarios -->
+        <li class="nav-item {{ request()->is('admin/administradores','admin/administradores/*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{route('administradores.index')}}">
+                <i class="fas fa-user"></i>
+                <span>Administradores</span></a>
+        </li>
     @endcan
     {{--    <!-- Divider -->--}}
     {{--    <hr class="sidebar-divider d-none d-md-block">--}}

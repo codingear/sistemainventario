@@ -53,7 +53,7 @@
                             <th width="5%">Stock</th>
                             <th width="15%">Precio venta</th>
                             <th width="5%">Status</th>
-                            <th width="15%">Acciones</th>
+                            <th width="20%">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,33 +71,45 @@
                                 </td>
                                 <td>${{$product->sale_price}}</td>
                                 <td>
-                                    <label class="badge badge-{{$product->status=== 1 ? 'success':'danger'}}">
-                                        {{$product->status=== 1 ? 'ACTIVO':'INACTIVO'}}
+                                    <label class="badge badge-{{$product->status=== 'ACTIVO' ? 'success':'danger'}}">
+                                        {{$product->status}}
                                     </label>
                                 </td>
                                 <td class="d-flex flex-wrap justify-content-center align-items-center">
-                                    {{-- <a href="{{route('productos.show',$product)}}"
-                                    class="btn btn-circle btn-sm btn-primary mx-1 mb-1" data-toggle="tooltip"
-                                    data-placement="top" title="Ver detalles">
-                                    <i class="fas fa-eye"></i>
-                                    </a> --}}
+                                    <a href="{{route('productos.show',$product)}}"
+                                       class="btn btn-circle btn-sm btn-primary mx-1 mb-1" data-toggle="tooltip"
+                                       data-placement="top" title="Ver detalles">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
                                     <a href="{{route('productos.edit',$product)}}"
                                        class="btn btn-circle btn-sm btn-warning mx-1 mb-1" data-toggle="tooltip"
                                        data-placement="top" title="Editar">
                                         <i class="fas fa-pen"></i>
                                     </a>
-                                    <a href="{{route('admin.editAdminStatus',$product)}}"
-                                       class='btn btn-circle btn-sm {{$product->status ? 'btn-danger ' :'btn-success'}} mx-1 mb-1'
+                                    <a href="{{route('admin.editProductStatus',$product->id)}}"
+                                       class='btn btn-circle btn-sm {{$product->status=== 'ACTIVO' ? 'btn-danger':'btn-success'}} mx-1 mb-1'
                                        data-toggle="tooltip" data-placement="top"
-                                       title="{{$product->status ? 'Desactivar' :'Activar'}}"
-                                       onclick="event.preventDefault(); document.getElementById('changeStatus-form').submit();">
-                                        <i class="fa fa-fw {{$product->status ? 'fa-times' :'fa-check'}}"></i>
+                                       title="{{$product->status=== 'ACTIVO' ? 'Desactivar' :'Activar'}}"
+                                       onclick="event.preventDefault(); document.getElementById('changeProductStatus-form').submit();">
+                                        <i class="fa fa-fw {{$product->status==='ACTIVO' ? 'fa-times' :'fa-check'}}"></i>
                                     </a>
-                                    <form id="changeStatus-form"
-                                          action="{{ route('admin.editAdminStatus', $product->id) }}"
+                                    <form id="changeProductStatus-form"
+                                          action="{{ route('admin.editProductStatus', $product->id) }}"
                                           method="POST" style="display: none;">
                                         @csrf
                                         @method('PUT')
+                                    </form>
+                                    <a href="{{route('productos.destroy',$product->id)}}"
+                                       class='btn btn-circle btn-sm btn-danger mx-1 mb-1'
+                                       data-toggle="tooltip" data-placement="top" title="Eliminar"
+                                       onclick="event.preventDefault(); document.getElementById('deleteProduct-form').submit();">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                    <form id="deleteProduct-form"
+                                          action="{{ route('productos.destroy', $product->id) }}"
+                                          method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
                                     </form>
                                 </td>
                             </tr>

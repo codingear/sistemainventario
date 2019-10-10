@@ -64,7 +64,7 @@ Route::group(
                 'productos' => 'product',
             ],
         ]);
-
+        Route::match(['put', 'patch'], 'admin/change_ProductStatus/{id}', 'ProductController@changeProductStatus')->name('admin.editProductStatus');
         Route::post('productos/{product}/images', 'ImageController@store')->name('productos.image.store');
     }
 );

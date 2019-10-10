@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ImageRequest;
-use App\Http\Requests\ProductRequest;
 use App\Image;
 use App\Product;
+use App\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ImageRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -21,9 +22,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::query()
-            ->orderBy('created_at', 'desc')
+
+        $products = Product::where('status', 'ACTIVO')->orWhere('status', 'INACTIVO')
             ->get();
+
         return view('admin.products.index', compact('products'));
     }
 
@@ -96,6 +98,33 @@ class ProductController extends Controller
         return response()->json(['success' => 'Producto Editado correctamente.']);
     }
 
+
+    /**
+     * Cambia el status del producto
+     * @param int $id
+     * @return Response
+     */
+    public function changeProductStatus($id)
+    {
+        $product = Product::findOrFail($id);
+        if ($product->status == 'ACTIVO') {
+            $product->update([
+                'status' => 'INACTIVO'
+            ]);
+            $msg = 'Producto Desactivado exitosamente.';
+        } else if ($product->status == 'INACTIVO') {
+            $product->update([
+                'status' => 'ACTIVO'
+            ]);
+            $msg = 'Producto activado exitosamente.';
+        }
+
+        return redirect()
+            ->route('productos.index')
+            ->with('info', $msg);
+    }
+
+
     /**
      * Remove the specified resource from storage.
      *
@@ -104,6 +133,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->update([
+            'status' => 'ELIMINADO'
+        ]);
+        return redirect()->route('productos.index')
+            ->with('info', 'Producto Eliminado exitosamente.');
     }
 }

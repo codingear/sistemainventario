@@ -183,17 +183,27 @@
 
 
         let myDropzone = new Dropzone('.dropzone', {
-            url: '/admin/productos/{{$product->id}}/images',
-            acceptedFiles: 'image/jpg, image/jpeg, image/png',
-            maxFilesize: 2,
-            maxFiles: 5,
-            paramName: 'productImage',
-            headers: {
-                'X-CSRF-TOKEN': '{{csrf_token()}}'
-            },
-            dictDefaultMessage: 'Arrastra las fotos aquí o haz click para subirlas ',
-            dictMaxFilesExceeded: 'No puedes subir más de 5 imagenes.'
-        });
+                url: '/admin/productos/{{$product->id}}/images',
+                acceptedFiles: 'image/jpg, image/jpeg, image/png',
+                autoProcessQueue: false,
+                maxFilesize: 2,
+                addRemoveLinks: true,
+                maxFiles: 5,
+                paramName: 'productImage',
+                headers: {
+                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+                },
+                dictDefaultMessage: 'Arrastra las fotos aquí o haz click para subirlas (max 2mb)',
+                dictMaxFilesExceeded: 'No puedes subir más de 5 imagenes.',
+                dictRemoveFile: 'Remover Imagen',
+                dictFallbackMessage: 'Tu navegador no soporta la carga de archivos por favor actualiza.',
+                dictFallbackText: 'Please use the fallback form below to upload your files like in the olden days.',
+                dictFileTooBig: 'Tu archivo es muy grande.',
+                dictInvalidFileType: 'No se permite cargar archivos de este tipo.',
+                dictCancelUpload: 'Cancelar la carga',
+                dictCancelUploadConfirmation: '¿Estas seguro que quieres cancelar esta carga?',
+            })
+        ;
         Dropzone.autoDiscover = false;
         myDropzone.on('error', function (file, res) {
             let errormsg = res.errors.productImage[0];
