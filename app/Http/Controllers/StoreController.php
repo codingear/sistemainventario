@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Image;
+use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
-use App\Http\Requests\ImageRequest;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
-class ImageController extends Controller
+class StoreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +15,16 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::query()
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $products = Product::where('status', 'ACTIVO')
+            ->orderBy('name', 'desc')
+            ->get();
+
+
+        return view('front.store.index', compact('categories', 'products'));
     }
 
     /**
@@ -37,17 +43,9 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ImageRequest $request, Product $product)
+    public function store(Request $request)
     {
-
-        //return 'procesando img';
-        $image =  $request->file('productImage')->store('products');
-        //dd(Storage::url($image));
-
-        Image::create([
-            'url'        => Storage::url($image),
-            'product_id' => $product->id
-        ]);
+        //
     }
 
     /**

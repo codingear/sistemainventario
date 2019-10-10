@@ -16,9 +16,10 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->string('description', 160)->nullable();
+            $table->string('sku', 20)->nullable();
             $table->bigInteger('category_id')->unsigned()->nullable();
-            $table->boolean('status')->default(true);
+            $table->text('description')->nullable();
+            $table->enum('status', ['ACTIVO', 'INACTIVO', 'ELIMINADO'])->default('ACTIVO');
             $table->integer('stock')->default(0)->nullable();
             $table->decimal('sale_price')->default(0)->nullable();
             $table->timestamps();

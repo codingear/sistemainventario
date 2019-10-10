@@ -137,20 +137,9 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
-        $typeMsg = '';
-        $msg = '';
-        try {
-            $category->delete();
-            $typeMsg = 'info';
-            $msg = 'La categoría ha sido eliminada exitosamente.';
-        } catch (QueryException $e) {
-            if ($e->getCode() == "23000") {
-                $typeMsg = 'error';
-                $msg = 'No puedes eliminar la categoría relacionada con un producto, elimina primero los producto.';
-            }
-        }
+        $category->delete();
         return redirect()
             ->route('categorias.index')
-            ->with($typeMsg, $msg);
+            ->with('info', 'La categoría ha sido eliminada exitosamente.');
     }
 }

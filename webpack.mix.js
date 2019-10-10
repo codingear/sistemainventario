@@ -24,6 +24,7 @@ mix.styles(
         'resources/assets/js/bootstrap.bundle.js',
         'resources/assets/js/bst-admin.js',
         'resources/assets/js/bootstrap-select.js',
+        'resources/assets/js/axios.min.js',
     ],
     'public/js/all.js'
 );

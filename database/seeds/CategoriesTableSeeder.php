@@ -13,20 +13,20 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         Category::create([
-            'name'  =>  'Categoría 1',
-            'description'   =>  'Descripción 1',
+            'name'  =>  'Garrafones',
+            'description'   =>  'Descripción Garrafones',
         ]);
         Category::create([
-            'name'  =>  'Categoría 2',
-            'description'   =>  'Descripción 2',
+            'name'  =>  'Insumos',
+            'description'   =>  'Descripción Insumos',
         ]);
         Category::create([
-            'name'  =>  'Categoría 3',
-            'description'   =>  'Descripción 3',
+            'name'  =>  'Repuestos',
+            'description'   =>  'Descripción Repuestos',
         ]);
         Category::create([
-            'name'  =>  'Categoría 4',
-            'description'   =>  'Descripción 4',
+            'name'  =>  'Tuberías',
+            'description'   =>  'Descripción Tuberías',
         ]);
     }
 }

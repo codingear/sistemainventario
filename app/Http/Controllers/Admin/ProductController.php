@@ -34,7 +34,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        //return view('admin.products.create');
     }
 
     /**
@@ -46,9 +46,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $product =  Product::create($request->all());
-
-        return redirect()
-            ->route('productos.edit', compact('product'));
+        return response()->json($product);
     }
 
 
@@ -88,15 +86,14 @@ class ProductController extends Controller
 
         $product->update([
             'name'          => $request['name'],
+            'sku'           => $request['sku'],
             'description'   => $request['description'],
             'category_id'   => $request['category_id'],
-            'status'        => $request['status'] ? true : false,
             'stock'         => $request['stock'],
             'sale_price'    => $request['sale_price']
         ]);
-        return redirect()
-            ->route('productos.index')
-            ->with('info', 'Producto creado exitosamente.');
+
+        return response()->json(['success' => 'Producto Editado correctamente.']);
     }
 
     /**

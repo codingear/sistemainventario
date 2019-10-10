@@ -10,10 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route Front
+// Guest Route
 Route::get('/', function () {
     return view('front.index');
 })->name('inicio');
+
+Route::get('store', 'StoreController@index')->name('store');
+
+
 
 // Authentication Routes...
 Auth::routes();
