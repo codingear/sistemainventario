@@ -37,12 +37,10 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ImageRequest $request, Product $product)
+    public function store(Request $request, Product $product)
     {
 
-        //return 'procesando img';
         $image =  $request->file('productImage')->store('products');
-        //dd(Storage::url($image));
 
         Image::create([
             'url'        => Storage::url($image),

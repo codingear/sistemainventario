@@ -29,7 +29,7 @@
             <div class="text-center">
                 <div class="position-relative d-inline-block">
                     <img class="img-profile rounded-circle wid-150"
-                        src="https://source.unsplash.com/K4mSJ7kc0As/150x150" alt="User image">
+                        src="https://source.unsplash.com/lySzv_cqxH8/150x150" alt="User image">
                 </div>
                 <h3 class="mb-1 mt-3 f-w-400"> {{auth()->user()->name}}</h3>
                 <p class="text-muted mb-0">{{auth::user()->roles->first()->name}}</p>
