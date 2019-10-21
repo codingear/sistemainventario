@@ -339,6 +339,10 @@ fieldset[disabled] .btn-white.active {
     display: inline-block;
 }
 
+.title-imgPreview {
+    font-size: 0.8rem;
+}
+
 .btn-primary {
     display: block;
     border-radius: 0px;
@@ -358,7 +362,7 @@ fieldset[disabled] .btn-white.active {
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 0px;
+    top: 18px;
     right: 8px;
     width: 30px;
     height: 30px;

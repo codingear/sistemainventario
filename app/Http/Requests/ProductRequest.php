@@ -31,7 +31,7 @@ class ProductRequest extends FormRequest
             $rules += ['description'     => 'required|max:200'];
             $rules += ['stock'           => 'required|numeric'];
             $rules += ['sale_price'      => 'required|between:1,999.99|numeric'];
-            $rules += ['sku'             => 'required|alpha_num|max:20'];
+            $rules += ['sku'             => 'required|alpha_num|max:20|unique:products,sku,' . $this->product];
         }
 
         return $rules;
@@ -45,16 +45,18 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'         => 'El nombre es obligatorio.',
+            'name.required'         => 'El nombre es requerido.',
             'name.max'              => 'No más de 60 caracateres.',
             'name.unique'           => 'Este nombre ya se ha registrado.',
-            'description.required'  => 'La descripción es obligatoria.',
+            'description.required'  => 'La descripción es requerida.',
             'description.max'       => 'No más de 160 caracateres.',
-            'stock.required'        => 'El stock es obligatorio',
+            'stock.required'        => 'El stock es requerido',
             'stock.numeric'         => 'stock inválido',
-            'sale_price.required'   => 'El precio de venta es obligatorio.',
+            'sale_price.required'   => 'El precio de venta es requerido.',
             'sale_price.numeric'    => 'Precio inválido.',
             'sale_price.between'    => 'El precio debe estar entre 1 y 999.99',
+            'sku.required'          => 'El SKU es requerido.',
+            'sku.unique'            => 'Este SKU ya se ha registrado.',
         ];
     }
 }

@@ -46,6 +46,7 @@ Luis Pastén
     -   Módulo de productos agregado ➕.
 
 -   1.2.0
+
     -   Modulo de productos actualizado 🔄:
         -   Dar de alta un producto sin agregar una categoría obligatoriamente.
         -   Activar o desactivar un producto desde el index.
@@ -54,4 +55,9 @@ Luis Pastén
     -   Se agrega una ruta **Store** para la interfaz de la tienda.
     -   Se filtran los productos y categorías a mostrar en la tienda por su estado inactivo.
     -   Agregado Middleware para usuarios inactivos.
-    -
+
+-   1.2.1
+
+    -   Se valida el SKU del producto como único ➕.
+    -   Se añade modal para confirmar la eliminación del producto ➕.
+    -   Se agrega titulo al thumbnail de imagen de producto ➕:

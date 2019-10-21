@@ -125,8 +125,9 @@
                         <div class="row justify-content-center">
                             @if($product->images->count()<=0)
                                 <div class="container-preview imgUp">
+                                    <span class="title-imgPreview">Imagen principal </span>
                                     <div class="imgPreview"
-                                         style="background: url(https://dummyimage.com/300x300/EBEBEB/807d80.png&text=Imagen+Principal); "></div>
+                                         style="background: url(https://dummyimage.com/300x300/EBEBEB/807d80.png&text=Imagen+del+Producto); "></div>
                                     <label class="btn btn-primary label-up">
                                         <i class="fas fa-cloud-upload-alt"></i>
                                         <span class="text-btnUp">Subir Imagen</span>
@@ -140,6 +141,7 @@
                                 @foreach($product->images as $key => $image)
                                     <div class="container-preview imgUp"
                                          data-imageId="{{($image->id>0) ? $image->id: 0}}">
+                                        <span class="title-imgPreview">Imagen de galería </span>
                                         <div class="imgPreview" style="background: url({{$image->url}}); "></div>
                                         <label class="btn btn-primary label-up">
                                             <i class="fas fa-cloud-upload-alt"></i>
@@ -238,6 +240,7 @@
                 .find('.imgAdd')
                 .before(
                     `<div class="container-preview imgUp" data-imageId="0">
+          <span class="title-imgPreview">Imagen de galería </span>
                          <div class="imgPreview" style="background: url(https://dummyimage.com/300x300/EBEBEB/807d80.png&text=Imagen+del+Producto); "></div>
                           <label class="btn btn-primary label-up">
                             <i class="fas fa-cloud-upload-alt"></i>

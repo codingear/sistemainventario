@@ -83,18 +83,13 @@
                                         @csrf
                                         @method('PUT')
                                     </form>
-                                    <a href="{{route('productos.destroy',$product->id)}}"
-                                       class='btn btn-circle btn-sm btn-danger mx-1 mb-1'
-                                       data-toggle="tooltip" data-placement="top" title="Eliminar"
-                                       onclick="event.preventDefault(); document.getElementById('deleteProduct-form').submit();">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                    <form id="deleteProduct-form"
-                                          action="{{ route('productos.destroy', $product->id) }}"
-                                          method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
+                                    <span data-toggle="modal" data-target="#deleteModal">
+                                    <button type="button" class="btn btn-circle btn-sm btn-danger mx-1 mb-1"
+                                            onclick="deleteData({{$product->id}})" data-toggle="tooltip"
+                                            data-placement="top" title="Eliminar">
+                                        <i class="fa fa-fw fa-trash-alt"></i>
+                                    </button>
+                                    </span>
                                 </td>
                             </tr>
                         @endforeach
@@ -138,6 +133,38 @@
             </div>
         </form>
     </div>
+    {{--    close Modal Create--}}
+
+    {{-- Modal Delete Course--}}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModal">¿Eliminar Producto?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" id="deleteForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-body">
+                        El producto no será eliminado de forma permanente, pero ya no podrás ver sus detalles.
+                        <input type="hidden" name="category_id" id="cat_id" value="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, mantener el registro.
+                        </button>
+                        <button type="submit" class="btn btn-danger">
+                            Si, eliminar registro.
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{--Modal--}}
     <script src="{{ asset('vendors/dataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.js') }}"></script>
     <script>
@@ -157,6 +184,17 @@
                 $('#name').focus();
             }, 750);
         });
+
+        function deleteData(productId) {
+            let id = productId;
+            let url = '{{ route("productos.destroy", ":id") }}';
+            url = url.replace(':id', id);
+            $("#deleteForm").attr('action', url);
+        }
+
+        function formSubmit() {
+            $("#deleteForm").submit();
+        }
     </script>
     <script>
         document.getElementById('Formcancel').addEventListener('click', function (e) {
@@ -192,10 +230,8 @@
         })();
 
         function clearErrors() {
-            // remove all error messages
             const errorMessages = document.querySelectorAll('.text-danger');
             errorMessages.forEach((element) => element.remove());
-            // remove all form controls with highlighted error text box
             const formControls = document.querySelectorAll('.form-control');
             formControls.forEach((element) => element.classList.remove('border', 'border-danger'))
         }
