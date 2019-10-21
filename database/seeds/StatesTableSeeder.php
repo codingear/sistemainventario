@@ -1,6 +1,6 @@
 <?php
 
-use App\state;
+use App\State;
 use Illuminate\Database\Seeder;
 
 class StatesTableSeeder extends Seeder
@@ -12,100 +12,100 @@ class StatesTableSeeder extends Seeder
      */
     public function run()
     {
-        state::create([
+        State::create([
             'name'              => 'Aguascalientes',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Baja California',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Baja California Sur',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Campeche',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Coahuila',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Colima',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Chiapas',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Chihuahua',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Distrito Federal',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Durango',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Guanajuato',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Guerrero',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Hidalgo',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Jalisco',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Ciudad de México',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Michoacán',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Morelos',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Nayarit',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Nuevo León',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Oaxaca',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Puebla',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Querétaro',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Quintana Roo',
         ]);
-        state::create([
+        State::create([
             'name'              => 'San Luis Potosí',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Sinaloa',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Sonora',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Tabasco',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Tamaulipas',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Tlaxcala',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Veracruz',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Yucatán',
         ]);
-        state::create([
+        State::create([
             'name'              => 'Zacatecas',
         ]);
     }
