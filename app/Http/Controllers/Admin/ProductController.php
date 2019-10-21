@@ -25,7 +25,6 @@ class ProductController extends Controller
 
         $products = Product::where('status', 'ACTIVO')->orWhere('status', 'INACTIVO')
             ->get();
-
         return view('admin.products.index', compact('products'));
     }
 
@@ -42,12 +41,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
     {
-        $product =  Product::create($request->all());
+        $product = Product::create($request->all());
         return response()->json($product);
     }
 
@@ -55,7 +54,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -66,7 +65,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
@@ -78,8 +77,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(ProductRequest $request, $id)
@@ -88,12 +87,12 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $product->update([
-            'name'          => $request['name'],
-            'sku'           => $request['sku'],
-            'description'   => $request['description'],
-            'category_id'   => $request['category_id'],
-            'stock'         => $request['stock'],
-            'sale_price'    => $request['sale_price']
+            'name' => $request['name'],
+            'sku' => $request['sku'],
+            'description' => $request['description'],
+            'category_id' => $request['category_id'],
+            'stock' => $request['stock'],
+            'sale_price' => $request['sale_price']
         ]);
 
         return response()->json(['success' => 'Producto Editado correctamente.']);
@@ -129,7 +128,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

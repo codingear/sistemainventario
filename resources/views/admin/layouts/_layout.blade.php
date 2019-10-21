@@ -10,6 +10,31 @@
         rel="stylesheet">
     @stack('stylesheets')
     <link href="{{asset('img/favicon.ico')}}" rel="icon" type="image/png">
+    <style>
+        /* these styles will animate bootstrap alerts. */
+        .alert-notifier {
+            z-index: 99;
+            top: 60px;
+            right: 18px;
+            min-width: 30%;
+            position: fixed;
+            animation: slide 0.5s forwards;
+        }
+
+        @keyframes slide {
+            100% {
+                top: 30px;
+            }
+        }
+
+        @media screen and (max-width: 668px) {
+            .alert-notifier { /* center the alert on small screens */
+                left: 10px;
+                right: 10px;
+                font-size: .8rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -40,7 +65,21 @@
                         <a href="{{route('admin.editProfile')}}" class="alert-link">Cambiar contraseña</a>.
                     </div>
                 @endif
-                @yield ('content')
+                    {{-- Info Alert --}}
+                    @if (session()->has('info'))
+                        <div class="alert-notifier alert alert-success alert-dismissible fade show" role="alert">
+                            {{session('info')}}
+                        </div>
+                    @endif
+
+                    {{-- Error Alert --}}
+                    @if (session()->has('error'))
+                        <div class="alert-notifier alert alert-danger alert-dismissible fade show" role="alert">
+                            {{session('error')}}
+                        </div>
+                    @endif
+
+                    @yield ('content')
             </div>
 
             {{--End Begin Page Content--}}
@@ -68,7 +107,7 @@
         $(".alert-notifier").fadeTo(600, 0).slideUp(600, function () {
             $(this).remove();
         });
-    }, 2500);
+    }, 2000);
 </script>
 @stack('optional_scripts')
 </body>

@@ -24,9 +24,8 @@ Auth::routes();
 
 Route::group(
     [
-        'prefix' => 'admin',
-        'namespace' => 'Admin',
-        'middleware' => 'auth'
+        'prefix' => 'admin', 'namespace' => 'Admin',
+        'middleware' => ['auth', 'CheckUserStatus']
     ],
     function () {
 
@@ -66,5 +65,16 @@ Route::group(
         ]);
         Route::match(['put', 'patch'], 'admin/change_ProductStatus/{id}', 'ProductController@changeProductStatus')->name('admin.editProductStatus');
         Route::post('productos/{product}/images', 'ImageController@store')->name('productos.image.store');
+        Route::match(['put', 'patch'], 'productos/images/update', 'ImageController@update')->name('productos.image.update');
+        Route::delete('productos/images/delete', 'ImageController@destroy')->name('productos.image.destroy');
+
+
+
+        //proveedores
+        Route::resource('proveedores', 'ProviderController', [
+            'parameters' => [
+                'proveedores' => 'provider',
+            ],
+        ]);
     }
 );

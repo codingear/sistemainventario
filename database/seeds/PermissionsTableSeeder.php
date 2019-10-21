@@ -73,5 +73,67 @@ class PermissionsTableSeeder extends Seeder
             'slug'           => 'categorias.destroy',
             'description'    => 'Eliminar una Categoria',
         ]);
+
+        // proveedores
+        Permission::create([
+            'name' => 'Navegar Proveedores',
+            'slug' => 'proveedores.index',
+            'description' => 'Listar proveedores',
+        ]);
+
+        Permission::create([
+            'name' => 'Crear Proveedores',
+            'slug' => 'proveedores.create',
+            'description' => 'Crear un proveedor',
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalle Proveedor',
+            'slug' => 'proveedores.show',
+            'description' => 'Ver detalle de cada proveedores',
+        ]);
+
+        Permission::create([
+            'name' => 'Editar Proveedor',
+            'slug' => 'proveedores.edit',
+            'description' => 'Editar un proveedores',
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar Proveedor',
+            'slug' => 'proveedores.destroy',
+            'description' => 'Eliminar un proveedores',
+        ]);
+
+        // productos
+        Permission::create([
+            'name' => 'Navegar Productos',
+            'slug' => 'productos.index',
+            'description' => 'Listar productos',
+        ]);
+
+        Permission::create([
+            'name' => 'Crear Producto',
+            'slug' => 'productos.create',
+            'description' => 'Crear un producto',
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalle producto',
+            'slug' => 'productos.show',
+            'description' => 'Ver detalle de cada producto',
+        ]);
+
+        Permission::create([
+            'name' => 'Editar producto',
+            'slug' => 'productos.edit',
+            'description' => 'Editar un producto',
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar producto',
+            'slug' => 'productos.destroy',
+            'description' => 'Eliminar un producto',
+        ]);
     }
 }

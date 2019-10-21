@@ -47,7 +47,7 @@ class AdministratorController extends Controller
      */
     public function create()
     {
-        $roles = Role::get();
+        $roles = Role::all()->take(2);
         return view('admin.administrators.create', compact('roles'));
     }
 
@@ -87,7 +87,7 @@ class AdministratorController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::get();
+        $roles = Role::all()->take(2);
         return view('admin.administrators.edit', compact('roles', 'user'));
     }
 

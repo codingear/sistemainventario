@@ -316,4 +316,89 @@ fieldset[disabled] .btn-white.active {
     color: #ffffff;
     background-color: #6e707e;
 }
-.bootstrap-select.dropdown-toggle: focus;
+
+.container-preview {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin: 0.2rem 0;
+    height: 255px;
+}
+
+.imgPreview {
+    margin: 0 0.5rem;
+    width: 175px;
+    height: 175px;
+    background-position: center center !important;
+    /* background: url(https://dummyimage.com/300x300/EBEBEB/807d80.png&text=Imagen+del+Producto); */
+    background-color: #fff !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    display: inline-block;
+}
+
+.btn-primary {
+    display: block;
+    border-radius: 0px;
+    box-shadow: 0px 4px 6px 2px rgba(0, 0, 0, 0.2);
+    width: 175px;
+}
+.label-up:hover {
+    cursor: pointer;
+}
+
+.imgUp {
+    margin-bottom: 15px;
+}
+
+.del {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    background-color: #e74a3b;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 2px;
+}
+.imgAdd {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #1cc88a;
+    color: #fff;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+    margin-top: 0px;
+    cursor: pointer;
+    font-size: 15px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+.imgAdd:hover {
+    cursor: pointer;
+}
+
+.info-img {
+    font-size: 1.2rem;
+}
+
+.info-img:hover {
+    cursor: pointer;
+}
+
+.img-error {
+    color: red;
+    font-size: 0.8rem;
+}
+
+.img-success {
+    color: #1cc88a;
+    font-size: 0.8rem;
+}

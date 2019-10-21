@@ -20,20 +20,9 @@
         </button>
     </div>
     {{--    Page Heading--}}
-
-    @if (session()->has('info'))
-        <div class="alert-notifier alert alert-success mt-2" role="alert">
-            <strong>Muy bien.</strong> {{session('info')}}
-        </div>
-    @endif
-    @if (session()->has('error'))
-        <div class="alert-notifier alert alert-danger mt-2" role="alert">
-            <strong>Ops¡</strong> {{session('error')}}
-        </div>
-    @endif
     @if($products->count()<=0)
         <div class="container mt-2 p-0">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <h4 class="alert-heading font-weight-bold">¡Sin Registros!</h4>
                 <p>Aún no tienes ningún producto agregado.</p>
             </div>
@@ -76,22 +65,17 @@
                                     </label>
                                 </td>
                                 <td class="d-flex flex-wrap justify-content-center align-items-center">
-                                    <a href="{{route('productos.show',$product)}}"
-                                       class="btn btn-circle btn-sm btn-primary mx-1 mb-1" data-toggle="tooltip"
-                                       data-placement="top" title="Ver detalles">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
                                     <a href="{{route('productos.edit',$product)}}"
                                        class="btn btn-circle btn-sm btn-warning mx-1 mb-1" data-toggle="tooltip"
-                                       data-placement="top" title="Editar">
+                                       data-placement="top" title="Ver detalles/Editar">
                                         <i class="fas fa-pen"></i>
                                     </a>
                                     <a href="{{route('admin.editProductStatus',$product->id)}}"
-                                       class='btn btn-circle btn-sm {{$product->status=== 'ACTIVO' ? 'btn-danger':'btn-success'}} mx-1 mb-1'
+                                       class='btn btn-circle btn-sm {{$product->status=== 'ACTIVO' ? 'btn-info':'btn-success'}} mx-1 mb-1'
                                        data-toggle="tooltip" data-placement="top"
                                        title="{{$product->status=== 'ACTIVO' ? 'Desactivar' :'Activar'}}"
                                        onclick="event.preventDefault(); document.getElementById('changeProductStatus-form').submit();">
-                                        <i class="fa fa-fw {{$product->status==='ACTIVO' ? 'fa-times' :'fa-check'}}"></i>
+                                        <i class="fa fa-check"></i>
                                     </a>
                                     <form id="changeProductStatus-form"
                                           action="{{ route('admin.editProductStatus', $product->id) }}"

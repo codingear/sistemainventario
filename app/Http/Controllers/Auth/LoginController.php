@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Caffeinated\Shinobi\Models\Role;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -24,6 +26,18 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = 'admin';
+
+    // protected function authenticated(Request $request, $user)
+    // {
+    //     if ($user->hasRole('administrador') || $user->hasRole('superAdministrador')) {
+    //         return redirect('/admin');
+    //     } else if ($user->hasRole('distribuidor') || $user->hasRole('cliente')) {
+    //         return redirect('/admin/mi-perfil');
+    //     }
+    // }
+
+
+
     /**
      * Create a new controller instance.
      *

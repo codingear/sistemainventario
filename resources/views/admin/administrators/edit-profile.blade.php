@@ -81,10 +81,4 @@
             </form>
         </div>
     </div>
-
-
-
-
-
-
 @endsection

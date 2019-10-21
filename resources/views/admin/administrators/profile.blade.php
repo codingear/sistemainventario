@@ -12,17 +12,6 @@
     </nav>
 </div>
 {{--    Page Heading--}}
-@if (session()->has('info'))
-<div class="alert-notifier alert alert-success mt-2" role="alert">
-    <strong>Muy bien.</strong> {{session('info')}}
-</div>
-@endif
-@if (session()->has('error'))
-<div class="alert-notifier alert alert-danger mt-2" role="alert">
-    <strong>Ops¡</strong> {{session('error')}}
-</div>
-@endif
-
 <div class="col-xl-4 col-md-6">
     <div class="card user-card user-card-3 support-bar1">
         <div class="card-body ">

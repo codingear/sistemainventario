@@ -34,15 +34,27 @@ class RolesTableSeeder extends Seeder
             'categorias.edit',
             'categorias.show',
             'categorias.destroy',
+            'productos.index',
+            'productos.create',
+            'productos.show',
+            'productos.edit',
+            'productos.show',
+            'productos.destroy',
+            'proveedores.index',
+            'proveedores.create',
+            'proveedores.show',
+            'proveedores.edit',
+            'proveedores.show',
+            'proveedores.destroy'
         ]);
 
-        $distribuidor = Role::create([
+        Role::create([
             'name' => 'Distribuidor',
             'slug' => 'distribuidor',
             'description' => 'Tiene acceso a su perfil y a la store',
         ]);
 
-        $cliente = Role::create([
+        Role::create([
             'name' => 'Cliente',
             'slug' => 'cliente',
             'description' => 'Tiene acceso a su perfil y a la store',

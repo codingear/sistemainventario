@@ -2,11 +2,9 @@
 @section('title', 'Dashboard')
 @section('content')
     <!-- Page Heading -->
-    @if (session('status'))
-        <div class="alert-notifier alert alert-success mt-2" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif
+
+
+
     <div class="d-sm-flex align-items-start justify-content-between">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">

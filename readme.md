@@ -14,7 +14,7 @@ Luis Pastén
 ## Historial de versiones
 
 -   0.1
-    -   Despliegue Inicial
+    -   Despliegue Inicial ⚡
 -   0.2
     -   Módulo de Altas de Administradores
     -   Login
@@ -28,7 +28,7 @@ Luis Pastén
         -   Dar de alta un administrador y seleccionar su rol.
         -   Activar o desactivar un administrador desde el index.
         -   Eliminar un administrador.
-    -   Módulo de **Mi Perfil** agregado:
+    -   Módulo de **Mi Perfil** agregado ➕:
         -   El administrador puede editar su información.
     -   Denegar o permitir acceso a ciertos módulos en función del rol asignado al administrador:
         -   **Super Administrador** tiene acceso a todas las funciones del sistema.
@@ -42,4 +42,16 @@ Luis Pastén
         -   Eliminar una categoría.
 
 -   1.0
-    -   Módulo de produtos agregado.
+
+    -   Módulo de productos agregado ➕.
+
+-   1.2.0
+    -   Modulo de productos actualizado 🔄:
+        -   Dar de alta un producto sin agregar una categoría obligatoriamente.
+        -   Activar o desactivar un producto desde el index.
+        -   Eliminar un producto.
+        -   Se ha modificado la interfaz para agregar,editar o eliminar imágenes.
+    -   Se agrega una ruta **Store** para la interfaz de la tienda.
+    -   Se filtran los productos y categorías a mostrar en la tienda por su estado inactivo.
+    -   Agregado Middleware para usuarios inactivos.
+    -

@@ -74,9 +74,17 @@
                                 <div class="card">
                                     <div class="card-image">
                                         <figure class="image is-4by3">
-                                            <img
-                                                src="{{empty($product->images->first()->url) ? 'https://bulma.io/images/placeholders/1280x960.png' : $product->images->first()->url}}"
-                                                alt="Placeholder image">
+                                            @if($product->images->count()==0)
+                                                <img
+                                                    src="https://dummyimage.com/300x300/EBEBEB/807d80.png&text=Imagen+del+Producto"
+                                                    alt="Producto {{$product->name}}  sin imagen">
+                                            @else
+                                            @endif
+                                            @foreach($product->images as $image)
+                                                @if($image->is_principal===1)
+                                                    <img src="{{$image->url}}" alt="{{$product->name}}">
+                                                @endif
+                                            @endforeach
                                         </figure>
                                     </div>
                                     <div class="card-content">
