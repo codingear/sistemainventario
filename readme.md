@@ -61,3 +61,4 @@ Luis Pastén
     -   Se valida el SKU del producto como único ➕.
     -   Se añade modal para confirmar la eliminación del producto ➕.
     -   Se agrega titulo al thumbnail de imagen de producto ➕:
+    -   Trabajando en galeria de imagenes rama luis
