@@ -12,12 +12,12 @@
                 <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Productos</li>
             </ol>
         </nav>
-        <button class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#newProductModal">
+        <a href="{{route('productos.create')}}"class="btn btn-success btn-icon-split btn-sm">
         <span class="icon text-white-50">
             <i class="fas fa-plus-circle fa-sm text-white-50"></i>
         </span>
-            <span class="text">Nuevo Producto</span>
-        </button>
+            <span class="text text-light">Nuevo Producto</span>
+        </a>
     </div>
     {{--    Page Heading--}}
     @if($products->count()<=0)
@@ -179,11 +179,11 @@
             });
             $('[data-toggle="tooltip"]').tooltip();
         });
-        $('#newProductModal').on('show.bs.modal', function (event) {
-            setTimeout(function () {
-                $('#name').focus();
-            }, 750);
-        });
+        // $('#newProductModal').on('show.bs.modal', function (event) {
+        //     setTimeout(function () {
+        //         $('#name').focus();
+        //     }, 750);
+        // });
 
         function deleteData(productId) {
             let id = productId;

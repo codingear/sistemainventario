@@ -24,16 +24,19 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         $rules  = [
-            'name'  => 'required|max:60|unique:products,name,' . $this->product,
+            'name'            => 'required|max:60|unique:products,name,' . $this->product,
+            'description'     => 'required|max:200',
+            'stock'           => 'required|numeric',
+            'sale_price'      => 'required|between:1,999.99|numeric',
+            'sku'             => 'required|alpha_num|max:20|unique:products,sku,' . $this->product
         ];
 
-        if ($this->getMethod() == 'PUT') {
-            $rules += ['description'     => 'required|max:200'];
-            $rules += ['stock'           => 'required|numeric'];
-            $rules += ['sale_price'      => 'required|between:1,999.99|numeric'];
-            $rules += ['sku'             => 'required|alpha_num|max:20|unique:products,sku,' . $this->product];
-        }
-
+        // if ($this->getMethod() == 'PUT' || $this->getMethod() == 'POST') {
+        //     $rules += ['description'     => 'required|max:200'];
+        //     $rules += ['stock'           => 'required|numeric'];
+        //     $rules += ['sale_price'      => 'required|between:1,999.99|numeric'];
+        //     $rules += ['sku'             => 'required|alpha_num|max:20|unique:products,sku,' . $this->product];
+        // }
         return $rules;
     }
 

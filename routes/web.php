@@ -67,6 +67,7 @@ Route::group(
         Route::post('productos/{product}/images', 'ImageController@store')->name('productos.image.store');
         Route::match(['put', 'patch'], 'productos/images/update', 'ImageController@update')->name('productos.image.update');
         Route::delete('productos/images/delete', 'ImageController@destroy')->name('productos.image.destroy');
+        Route::get('productos/crear','ProductController@create')->name('productos.create');
 
 
 

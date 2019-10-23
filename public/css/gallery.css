@@ -1,0 +1,20 @@
+.container__imgs{
+    display: flex;
+    align-content: space-around;
+    flex-wrap: wrap;
+    position: relative;
+}
+.img__item{
+    position: absolute;
+    float: left;
+    padding: 8px;
+    margin: 0;
+    color:#444;
+    cursor: pointer;
+    list-style: none;
+    text-align: center;
+    user-select: none;
+    width: 50px;
+    height: 50px;
+    box-sizing: border-box;
+}

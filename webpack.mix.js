@@ -29,4 +29,18 @@ mix.styles(
     'public/js/all.js'
 );
 
-mix.browserSync('https://sistemainventario.test/');
+
+// mix.sass(
+//     [
+//         'resources/assets/sass/public-home.scss',
+//     ],
+//     'public/css/public-home.css'
+// );
+// // ).scripts(
+// //     [
+// //         'resources/assets/js/public-home.js',
+// //     ],
+// //     'public/js/public-home.js'
+// // );
+
+mix.browserSync('http://inv.v');

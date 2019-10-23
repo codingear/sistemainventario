@@ -17,8 +17,7 @@ class Product extends Model
     /**
      * Get the images for the blog post.
      */
-    public function images()
-    {
-        return $this->hasMany('App\Image');
+    public function images(){
+        return $this->belongsToMany('App\Image','product_images');
     }
 }
