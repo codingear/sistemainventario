@@ -13002,3 +13002,53 @@ fieldset[disabled] .btn-white.active {
 span#image_title {
     margin-left: 0.4rem;
 }
+
+/* ESTILOS GALERIA HE IMAGEN (LUIS) */
+.ms-selected{
+    border: 3px solid rgb(54, 185, 204);
+    position: relative;
+}
+.ms-selected::before{
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(54, 185, 204);
+    border-radius: 50%;
+    top: -.5em;
+    left: -.5em; 
+}
+.ms-selected::after{
+    position: absolute;
+    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f00c";
+    top: -5px;
+    color: white;
+    left: -2px;
+}
+.data-product{
+    
+}
+.img-principal{
+    width: 100%;
+    flex-basis: unset;
+}
+.img__principal{
+    width: 234.167px;
+    height: 234.167px;
+    object-fit: cover;
+    border: 1px solid rgb(138, 138, 138,.3);
+    display: block;
+    margin: auto;
+}
+@media only screen and (min-width: 768px) { 
+    /* .img-principal{
+        flex: 0 0 300px;
+    } */
+}
+@media only screen and (min-width: 992px){
+    .img-principal{
+        flex: 0 0 300px;
+        flex-basis: 1 !important;
+    }
+    
+}

@@ -22,7 +22,7 @@
         @csrf
         @method('POST')
         <div class="row">
-            <div class="col-md-12 col-lg-9 d-flex align-items-stretch">
+            <div class="col d-flex align-items-stretch data-product">
                 <div class="card shadow mb-4 mt-2 border-bottom-main w-100">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-main">
@@ -107,7 +107,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-3 d-flex align-items-stretch">
+            <div class="col d-flex align-items-stretch img-principal">
                 <div class="card shadow mb-4 mt-2 border-bottom-main w-100">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-main">
@@ -115,10 +115,10 @@
                         </h6>
                     </div>
                     <div class="card-body mb-2">
-                        <p class="text-center align-middle">
-                            <img src="https://dummyimage.com/900x900/f8f9fc/919191.png&text=Sin+Imagen" class="img__principal" alt="" id="principal_image">
-                            <input type="text" class="visible" name="principal_image" id="principal_image_field" >
-                        </p>
+                        <img src="https://dummyimage.com/900x900/f8f9fc/919191.png&text=Sin+Imagen" class="img__principal" alt="" id="principal_image">
+                        <!-- <p class="text-center align-middle"> -->
+                            <input type="text" class="invisible" name="principal_image" id="principal_image_field" hidden>
+                        <!-- </p> -->
                     </div>
                     <div class="card-footer text-muted text-center">
                         <button type="button" class="btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target=".bd-example-modal-xl" data-action="to_principal">
@@ -146,7 +146,7 @@
                 </div>
                 <div class="card-body mb-2">
                     <p class="text-center align-middle">
-                        <div id="gallery_select" class="container__imgs">
+                        <div id="gallery_select" class="container__imgs grid">
                             <p class="card-text">Aún no se cuentan con imagenes</p>
                         </div>
                     </p>
@@ -182,33 +182,29 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
                             <!-- LISTA DE IMAGENES -->
-                            <ul id="gallery" class="container__imgs" data-selector="">
-                                <li class="" data-id="001">
-                                    <img src="https://dummyimage.com/100x100/F5B551/fff.png" alt="">
-                                </li>
-                                <li class="" data-id="002">
-                                    <img src="https://dummyimage.com/100x100/6CD7FD/fff.png" alt="">
-                                </li>
-                                <li class="" data-id="003">
-                                    <img src="https://dummyimage.com/100x100/9FA2FB/fff.png" alt="">
-                                </li>
-                                <li class="" data-id="004">
-                                    <img src="https://dummyimage.com/100x100/DAC514/fff.png" alt="">
-                                </li>
-                                <li class="" data-id="005">
-                                    <img src="https://dummyimage.com/100x100/de2fde/fff.png" alt="">
-                                </li>
-                            </ul>          
-                            <style>
-                                .ms-selected{
-                                    display: inline-block;
-                                    border: 2px solid blue;
-                                }
-                                .img__principal{
-                                    width: 100%;
-                                    margin-bottom: 1.5em;
-                                }
-                            </style>          
+                            <div id="gallery" class="grid" data-selector="">
+                                <div class="item" data-id="001" id="item-img">
+                                    <img class="thumbnail" src="https://loremflickr.com/640/360" alt="">
+                                </div>
+                                <div class="item" data-id="002" id="item-img">
+                                    <img class="thumbnail" src="http://lorempixel.com/640/360" alt="">
+                                </div>
+                                <div class="item" data-id="003" id="item-img">
+                                    <img class="thumbnail" src="http://lorempixel.com/640/361" alt="">
+                                </div>
+                                <div class="item" data-id="004" id="item-img">
+                                    <img class="thumbnail" src="http://lorempixel.com/640/362" alt="">
+                                </div>
+                                <div class="item" data-id="006" id="item-img">
+                                    <img class="thumbnail" src="http://lorempixel.com/640/363" alt="">
+                                </div>
+                                <div class="item" data-id="007" id="item-img">
+                                    <img class="thumbnail" src="http://lorempixel.com/640/364" alt="">
+                                </div>
+                                <div class="item" data-id="008" id="item-img">
+                                    <img class="thumbnail" src="http://lorempixel.com/640/365" alt="">
+                                </div>
+                            </div>          
                             <!-- LISTA DE IMAGENES -->   
                         </div>
                         <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="profile-tab">
@@ -242,7 +238,7 @@
         // SELECCIONAR IMAGENES DE GALERIA
         
         $('#gallery').multiSelector({
-            selector:'li',
+            selector:'#item-img',
             disableShift: false,
             disableCtrl: false,
         });
@@ -258,7 +254,7 @@
                 $('#gallery').unbind();
                 // LIMPIANDO EL PROTOTIPO
                 $('#gallery').multiSelector({
-                    selector:'li',
+                    selector:'#item-img',
                     disableShift: true,
                     disableCtrl: true,
                 });
@@ -270,7 +266,7 @@
                 $('#gallery').unbind();
                 // LIMPIANDO EL PROTOTIPO
                 $('#gallery[data-selector="to_gallery"]').multiSelector({
-                    selector:'li',
+                    selector:'#item-img',
                     disableShift: false,
                     disableCtrl: false,
                 });
@@ -340,7 +336,8 @@
             }else{
                 $("#gallery_select").html("");
                 $.each($list_images,function(ke,va){
-                    $("#gallery_select").append("<img src=" + va.src +"><input type=text value="+va.key+"><button id=deleteImg data-id="+va.key+">delete</button>");
+                    // <div class="item" data-id="001"></div>
+                    $("#gallery_select").append("<div class=item><img src=" + va.src +" class=thumbnail><input type=text value="+va.key+" hidden></div><button id=deleteImg data-id="+va.key+">delete</button>");
                 })
             }
         }
