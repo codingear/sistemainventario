@@ -150,7 +150,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- VENTANA MODAL -->
     <div id="myModal" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
@@ -172,9 +172,6 @@
                             <!-- LISTA DE IMAGENES -->
                             <div class="container__imgs">
                                 <div class="img__item">
-                                    
-                                </div>
-                                <div class="img__item">
 
                                 </div>
                                 <div class="img__item">
@@ -183,11 +180,14 @@
                                 <div class="img__item">
 
                                 </div>
-                            </div>                    
-                            <!-- LISTA DE IMAGENES -->   
+                                <div class="img__item">
+
+                                </div>
+                            </div>
+                            <!-- LISTA DE IMAGENES -->
                         </div>
                         <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="profile-tab">
-                          
+
                         </div>
                     </div>
                 </div>
@@ -208,9 +208,6 @@
             </div>
         </div>
     </div>
-    <script>
-        $('#myModal').modal('show');
-    </script>
     <!-- VENTANA MODAL -->
 @endsection
 @push('optional_scripts')
@@ -235,7 +232,7 @@
             document.querySelector('#editProductForm').addEventListener('submit', function (e) {
                 e.preventDefault();
                 console.log("submiteando")
-                axios.post(this.action, {
+                axios.put(this.action, {
                     'name': document.querySelector('#name').value,
                     'sku': document.querySelector('#sku').value,
                     'category_id': document.querySelector('#category_id').value,

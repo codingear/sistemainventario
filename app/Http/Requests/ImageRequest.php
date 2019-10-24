@@ -24,16 +24,17 @@ class ImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'productImage' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+            'title'     => 'required|max:20',
+            'text_alt'  => 'max:20'
         ];
     }
 
     public function messages()
     {
         return [
-            'productImage.image'       => 'Solo se admiten imagenes .jpg, .png o .jpeg',
-            'productImage.max'         => 'La imagen debe ser menor a 2mb',
-            'productImage.mimes'       => 'Solo se admiten imagenes .jpg, .png o .jpeg',
+            'title.required'        => 'El título es requerido.',
+            'title.max'             => 'No más de 20 caracteres.',
+            'text_alt.max'          => 'No más de 20 caracteres.',
         ];
     }
 }

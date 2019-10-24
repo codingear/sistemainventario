@@ -18,7 +18,6 @@ Route::get('/', function () {
 Route::get('store', 'StoreController@index')->name('store');
 
 
-
 // Authentication Routes...
 Auth::routes();
 
@@ -64,17 +63,19 @@ Route::group(
             ],
         ]);
         Route::match(['put', 'patch'], 'admin/change_ProductStatus/{id}', 'ProductController@changeProductStatus')->name('admin.editProductStatus');
-        Route::post('productos/{product}/images', 'ImageController@store')->name('productos.image.store');
-        Route::match(['put', 'patch'], 'productos/images/update', 'ImageController@update')->name('productos.image.update');
-        Route::delete('productos/images/delete', 'ImageController@destroy')->name('productos.image.destroy');
-        Route::get('productos/crear','ProductController@create')->name('productos.create');
-
-
 
         //proveedores
         Route::resource('proveedores', 'ProviderController', [
             'parameters' => [
                 'proveedores' => 'provider',
+            ],
+        ]);
+
+
+        //proveedores
+        Route::resource('imagenes', 'ImageController', [
+            'parameters' => [
+                'imagenes' => 'image',
             ],
         ]);
     }

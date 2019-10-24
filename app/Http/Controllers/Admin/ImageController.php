@@ -18,7 +18,10 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
+        $images = Image::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('admin.images.index', compact('images'));
     }
 
     /**
@@ -37,22 +40,13 @@ class ImageController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Product $product)
+    public function store(Request $request)
     {
-
-        if ($request->hasFile('imageProduct')) {
-            $image = $request->file('imageProduct')->store('products');
-
-            Image::create([
-                'url' => Storage::url($image),
-                'is_principal' => $request['is_principal'] === 'true' ? 1 : 0,
-                'product_id' => $product->id
-            ]);
-
-            return response()->json(['success' => 'Imagen recibida']);
-        } else {
-            return response()->json(['error' => 'Imagen No guardada']);
-        }
+        $urlImage = $request->file('image')->store('images_library');
+        $image = Image::create([
+            'url' => Storage::url($urlImage),
+        ]);
+        return response()->json($image);
     }
 
     /**
@@ -63,7 +57,8 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        //
+        $image = Image::findOrFail($id);
+        return response()->json($image);
     }
 
     /**
@@ -84,27 +79,14 @@ class ImageController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(ImageRequest $request, $id)
     {
-//Borra la imagen antigua de la carpeta
-        $oldImage = Image::findOrFail($request->id);
-        unlink(public_path($oldImage->url));
-
-        $image = Image::findOrFail($request->id);
-
-        if ($request->hasFile('imageProduct')) {
-            $urlImage = $request->file('imageProduct')->store('products');
-
-
-            $image->update([
-                'url' => Storage::url($urlImage),
-            ]);
-
-
-            return response()->json(['success' => 'Imagen Actualizada']);
-        } else {
-            return response()->json(['error' => 'Imagen No Actualizada']);
-        }
+        $image = Image::findOrFail($id);
+        $image->update([
+            'title' => $request['title'],
+            'text_alt' => $request['text_alt'],
+        ]);
+        return response()->json(['success' => 'Imagen Actualizada']);
 
     }
 
@@ -114,10 +96,10 @@ class ImageController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
 
-        $image = Image::findOrFail($request->id);
+        $image = Image::findOrFail($id);
         $image->delete();
         unlink(public_path($image->url));
         return response()->json(['success' => 'Imagen eliminada correctamente.']);
