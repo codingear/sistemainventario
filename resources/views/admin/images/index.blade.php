@@ -50,6 +50,13 @@
     </div>
 
 
+    <div class="container mt-2 p-0 container-alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading font-weight-bold">¡Sin Registros!</h4>
+            <p>Aún no tienes ningúna imagen agregada.</p>
+        </div>
+    </div>
+
     <!-- Page Content -->
     <div class="images-container mt-2">
         <div class="grid">
@@ -64,9 +71,9 @@
                 </div>
             @endforeach
         </div>
-
     </div>
     <!-- /.container -->
+
 
 
     <!-- Modal -->
@@ -137,6 +144,20 @@
     <script src="{{ asset('vendors/jqueryLazy/jquery.lazy.min.js') }}"></script>
     <script>
 
+        $(document).ready(function () {
+            $('.lazy').Lazy({
+                scrollDirection: 'vertical',
+                effect: 'fadeIn',
+            });
+
+            if ($(".item").toArray().length >= 1) {
+                $(".container-alert").addClass('d-none');
+            };
+
+
+        });
+
+
         let myDropzone = new Dropzone('.dropzone', {
             url: '/admin/imagenes',
             acceptedFiles: 'image/jpg, image/jpeg, image/png',
@@ -162,7 +183,10 @@
 
                 });
                 this.on("success", function (file, response) {
+
+
                     if ($(".item").toArray().length <= 0) {
+                        $(".container-alert").addClass('d-none');
                         $('.grid').append(`<div class="item">
                             <img class="lazy thumbnail"
                                 src="${response.url}"
@@ -197,14 +221,6 @@
 
         Dropzone.autoDiscover = false;
 
-
-        $(document).ready(function () {
-            $('.lazy').Lazy({
-                scrollDirection: 'vertical',
-                effect: 'fadeIn',
-            });
-
-        });
 
         $('#btnOpenAddImages').click(function () {
             $("#container-DropZone").removeClass('d-none');
