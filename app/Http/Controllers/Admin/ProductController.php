@@ -36,7 +36,9 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $images = Image::all();
+        $images = Image::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('admin.products.create', compact('categories', 'images'));
     }
 
