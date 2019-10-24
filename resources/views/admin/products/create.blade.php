@@ -162,7 +162,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- VENTANA MODAL -->
     <div id="myModal" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
@@ -363,7 +363,7 @@
             document.querySelector('#editProductForm').addEventListener('submit', function (e) {
                 e.preventDefault();
                 console.log("submiteando")
-                axios.post(this.action, {
+                axios.put(this.action, {
                     'name': document.querySelector('#name').value,
                     'sku': document.querySelector('#sku').value,
                     'category_id': document.querySelector('#category_id').value,

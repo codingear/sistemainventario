@@ -35,11 +35,11 @@ class CategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'         => 'El nombre es obligatorio.',
-            'name.max'              => 'No más de 60 caracateres.',
+            'name.required'         => 'El nombre es requerido.',
+            'name.max'              => 'No más de 60 caracteres.',
             'name.unique'           => 'Ésta categoría ya se ha registrado.',
-            'description.required'  => 'La descripción es obligatorio.',
-            'description.max'       => 'No más de 60 caracateres.',
+            'description.required'  => 'La descripción es requerida.',
+            'description.max'       => 'No más de 60 caracteres.',
         ];
     }
 }

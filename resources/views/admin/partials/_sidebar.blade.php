@@ -79,9 +79,24 @@
             </div>
         </li>
     @endcan
-
 <!-- Divider -->
     <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Multimedia
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('imagenes.index')}}">
+            <i class="fas fa-images"></i>
+            <span>Imágenes</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+
 
     <!-- Heading -->
     <div class="sidebar-heading">

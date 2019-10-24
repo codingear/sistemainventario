@@ -12829,7 +12829,6 @@ fieldset[disabled] .btn-white.active {
     width: 175px;
     height: 175px;
     background-position: center center !important;
-    /* background: url(https://dummyimage.com/300x300/EBEBEB/807d80.png&text=Imagen+del+Producto); */
     background-color: #fff !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
@@ -12902,4 +12901,104 @@ fieldset[disabled] .btn-white.active {
 .img-success {
     color: #1cc88a;
     font-size: 0.8rem;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnail:hover {
+    cursor: pointer;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-rows: 1fr;
+    column-gap: 0.75rem;
+    grid-gap: 0.75rem;
+}
+.grid::before {
+    content: '';
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+
+.grid > *:first-child {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+.grid > * {
+    border: 1px solid #e6e6e6;
+    height: 140px;
+}
+
+@media only screen and (min-width: 1600px) {
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+    }
+}
+
+.modal-thumbnail {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #e6e6e6;
+}
+
+.thumbnail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media only screen and (max-width: 425px) {
+    .modal-thumbnail {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+.modal-text {
+    display: flex;
+    font-size: 0.9rem;
+    padding: 0.2rem 0;
+}
+
+.col-modal {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.form-control-sm {
+    border-radius: 0.35rem;
+    -webkit-transition: border-color 0.15s ease-in-out,
+        -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out,
+        -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+        -webkit-box-shadow 0.15s ease-in-out;
+}
+
+.link-delete {
+    color: #e74a3b;
+    text-decoration: underline;
+}
+
+.link-delete:hover {
+    color: #e74a3b;
+}
+
+span#image_title {
+    margin-left: 0.4rem;
 }
