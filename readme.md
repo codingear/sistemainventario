@@ -62,3 +62,4 @@ Luis Pastén
     -   Se añade modal para confirmar la eliminación del producto ➕.
     -   Se agrega titulo al thumbnail de imagen de producto ➕:
     -   Trabajando en galeria de imagenes rama luis
+    -   Modulo de imagenes terminada, rama isidro
