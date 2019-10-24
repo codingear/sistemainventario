@@ -168,7 +168,7 @@
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Galería</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Galería de imágenes</h5>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link" id="home-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="home" aria-selected="true">Cargar Imágen</a>
@@ -182,7 +182,33 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
                             <!-- LISTA DE IMAGENES -->
+
+
+
+
+
+
+
+
                             <ul id="gallery" class="container__imgs" data-selector="">
+                                <div class="images-container mt-2">
+                                    <div class="grid">
+                                        @foreach($images as $image)
+                                            <div class="item">
+                                                <img class="lazy thumbnail"
+                                                     src="{{$image->url}}"
+                                                     data-src="{{$image->url}}"
+                                                     data-id="{{$image->id}}"
+                                                     data-toggle="modal"
+                                                     data-target="#modalInfoImage" alt="imagen"/>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+
+
+
                                 <li class="" data-id="001">
                                     <img src="https://dummyimage.com/100x100/F5B551/fff.png" alt="">
                                 </li>
@@ -198,7 +224,7 @@
                                 <li class="" data-id="005">
                                     <img src="https://dummyimage.com/100x100/de2fde/fff.png" alt="">
                                 </li>
-                            </ul>          
+                            </ul>
                             <style>
                                 .ms-selected{
                                     display: inline-block;
@@ -208,8 +234,8 @@
                                     width: 100%;
                                     margin-bottom: 1.5em;
                                 }
-                            </style>          
-                            <!-- LISTA DE IMAGENES -->   
+                            </style>
+                            <!-- LISTA DE IMAGENES -->
                         </div>
                         <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="profile-tab">
                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit non quaerat cumque, veniam odit sint.
@@ -240,14 +266,14 @@
     <script src="{{ asset('vendors/multiselector/multiselector.min.js') }}"></script>
     <script>
         // SELECCIONAR IMAGENES DE GALERIA
-        
+
         $('#gallery').multiSelector({
             selector:'li',
             disableShift: false,
             disableCtrl: false,
         });
-        
-   
+
+
         $('#myModal').on('shown.bs.modal', function (e) {
             $("#select_imgs").removeAttr("data-section");
             var $action = e.relatedTarget.dataset.action;
@@ -262,7 +288,7 @@
                     disableShift: true,
                     disableCtrl: true,
                 });
-                
+
             }else if($action == 'to_gallery'){
                 $("#gallery").attr("data-selector","to_gallery");
                 $("#select_imgs").attr("data-section","gallery");
@@ -284,7 +310,7 @@
 
         $("#select_imgs").click(function(e){
             var $section = e.currentTarget.dataset.section;
-            
+
             console.log($section);
 
             var $items = $("#gallery").multiSelector('get');
@@ -308,10 +334,10 @@
                     $list_images.splice(index,1);
                     break;
                 }
-            }            
+            }
             printImages();
         });
-     
+
         function checkImage($key,$src){
             if($list_images.length > 0){
                 var repetido = false;
@@ -345,9 +371,9 @@
             }
         }
 
-        
-        
-        
+
+
+
         // SELECCIONAR IMAGENES DE GALERIA
 
         $(document).ready(function () {

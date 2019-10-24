@@ -36,8 +36,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.products.create', compact('categories'));
-        //return view('admin.products.create');
+        $images = Image::all();
+        return view('admin.products.create', compact('categories', 'images'));
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        
+
         // $product = Product::create($request->all());
         // return response()->json($product);
     }
