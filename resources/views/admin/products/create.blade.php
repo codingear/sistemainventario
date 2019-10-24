@@ -146,8 +146,11 @@
                 </div>
                 <div class="card-body mb-2">
                     <p class="text-center align-middle">
+                        <div id="msg-gallery">
+                            <p class="card-text">Aún no se cuenta con imagenes</p>
+                        </div>
                         <div id="gallery_select" class="container__imgs grid">
-                            <p class="card-text">Aún no se cuentan con imagenes</p>
+
                         </div>
                     </p>
                 </div>
@@ -203,6 +206,12 @@
                                 </div>
                                 <div class="item" data-id="008" id="item-img">
                                     <img class="thumbnail" src="http://lorempixel.com/640/365" alt="">
+                                </div>
+                                <div class="item" data-id="009" id="item-img">
+                                    <img class="thumbnail" src="http://lorempixel.com/640/366" alt="">
+                                </div>
+                                <div class="item" data-id="010" id="item-img">
+                                    <img class="thumbnail" src="http://lorempixel.com/640/367" alt="">
                                 </div>
                             </div>          
                             <!-- LISTA DE IMAGENES -->   
@@ -297,8 +306,10 @@
             printImages();
         });
 
-        $("#gallery_select").on('click','button#deleteImg',function(i){
-            $id = i.target.dataset.id;
+        $("#gallery_select").on('click','#deleteImg',function(i){
+            i.stopPropagation(); 
+            var $btn = $(i.target).is('button') ? $(i.target) : $(i.target).parent();
+            $id = $btn[0].dataset.id;
             for (let index = 0; index < $list_images.length; index++) {
                 if($list_images[index].key == $id){
                     $list_images.splice(index,1);
@@ -332,12 +343,14 @@
 
         function printImages(){
             if($list_images.length == 0){
-                $("#gallery_select").html('<p class="card-text">Aún no se cuentan con imagenes</p>');
+                $("#msg-gallery").html('<p class="card-text">Aún no se cuentan con imagenes</p>');
+                $("#gallery_select").html("");
             }else{
+                $("#msg-gallery").html('');
                 $("#gallery_select").html("");
                 $.each($list_images,function(ke,va){
                     // <div class="item" data-id="001"></div>
-                    $("#gallery_select").append("<div class=item><img src=" + va.src +" class=thumbnail><input type=text value="+va.key+" hidden></div><button id=deleteImg data-id="+va.key+">delete</button>");
+                    $("#gallery_select").append("<div class='item container_item'><img src=" + va.src +" class=thumbnail><input type=text name='gallery_photos[]' value="+va.key+" hidden><button id=deleteImg class=btnDeleteImg data-id="+va.key+"><i class='fas fa-times' aria-hidden='true'></i></button></div>");
                 })
             }
         }

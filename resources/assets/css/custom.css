@@ -555,3 +555,19 @@ span#image_title {
     }
     
 }
+.container_item{
+    position: relative;
+}
+.btnDeleteImg{
+    width: 100%;
+    background-color: rgba(220, 53, 69, .7);
+    border: 0;
+    outline: 0;
+    /* margin-bottom: 1em; */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.btnDeleteImg i{
+    color: white;
+}
