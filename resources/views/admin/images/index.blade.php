@@ -207,10 +207,6 @@
                 });
 
                 this.on("error", function (file, res) {
-                    // window.setTimeout(function () {
-                    //     myDropzone.removeFile(file)
-                    // }, 3500);
-
                 });
             },
         });
@@ -265,7 +261,6 @@
                         'text_alt': document.querySelector('#text_alt').value,
                     }
                 }).then(function (response) {
-                    console.log(response)
                     const alert = document.querySelector('#alert_message');
                     alert.innerHTML = (`<div class="alert alert-success mt-2 alert-notifier" role="alert">Datos Actualizados.</div>`);
                     window.setTimeout(function () {

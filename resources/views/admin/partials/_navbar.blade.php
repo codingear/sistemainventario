@@ -17,7 +17,7 @@
                         {{auth::user()->roles->first()->name}}
                     </span>
                 </div>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/lySzv_cqxH8/60x60" alt="">
+                <img class="img-profile rounded-circle" src="{{auth::user()->avatar}}" alt="">
                 <i class="fas fa-chevron-down ml-3"></i>
             </a>
             <!-- Dropdown - User Information -->
