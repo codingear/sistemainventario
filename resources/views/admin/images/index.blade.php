@@ -139,7 +139,6 @@
 
 @endsection
 @push('optional_scripts')
-
     <script src="{{ asset('vendors/dropzone/dropzone.js') }}"></script>
     <script src="{{ asset('vendors/jqueryLazy/jquery.lazy.min.js') }}"></script>
     <script>
@@ -183,8 +182,6 @@
 
                 });
                 this.on("success", function (file, response) {
-
-
                     if ($(".item").toArray().length <= 0) {
                         $(".container-alert").addClass('d-none');
                         $('.grid').append(`<div class="item">
@@ -206,8 +203,7 @@
                                 data-toggle="modal"
                                 data-target="#modalInfoImage" alt="imagen"/>
                      </div>`);
-                    }
-                    ;
+                    };
                 });
 
                 this.on("error", function (file, res) {

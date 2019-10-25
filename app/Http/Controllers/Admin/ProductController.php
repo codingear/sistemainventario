@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Image;
 use App\Product;
 use App\Category;
+use App\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ImageRequest;
@@ -36,8 +37,10 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.products.create', compact('categories'));
-        //return view('admin.products.create');
+        $images = Image::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('admin.products.create', compact('categories', 'images'));
     }
 
     /**
@@ -47,10 +50,34 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
-    {
+    {   
+
+        // foreach($request->gallery as  $item){
+        //     echo $item['key'];
+        // }
+        // dd($request->gallery);
+
+        $product = Product::create(
+            [
+                'name' => $request['name'],
+                'sku' => $request['sku'],
+                'description' => $request['description'],
+                'category_id' => $request['category_id'],
+                'stock' => $request['stock'],
+                'sale_price' => $request['sale_price'],
+                'principal_image' => $request['principal_image']
+            ]
+        );
+        foreach($request->gallery as  $item){
+            ProductImage::create(
+                [
+                    'product_id' => $product->id,
+                    'image_id' => $item['key']
+                ]
+            );
+        }
         
         // $product = Product::create($request->all());
-        // return response()->json($product);
     }
 
 
@@ -74,7 +101,10 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
-        return view('admin.products.edit', compact('categories', 'product'));
+        $images = Image::query()
+            ->orderBy('created_at', 'asc')
+            ->get();
+        return view('admin.products.edit', compact('categories', 'product', 'images'));
     }
 
     /**
@@ -95,9 +125,19 @@ class ProductController extends Controller
             'description' => $request['description'],
             'category_id' => $request['category_id'],
             'stock' => $request['stock'],
-            'sale_price' => $request['sale_price']
+            'sale_price' => $request['sale_price'],
+            'principal_image' => $request['principal_image']
         ]);
-
+        
+        ProductImage::where('product_id', $id)->delete();
+        foreach($request->gallery as  $item){
+            ProductImage::create(
+                [
+                    'product_id' => $product->id,
+                    'image_id' => $item['key']
+                ]
+            );
+        }
         return response()->json(['success' => 'Producto Editado correctamente.']);
     }
 

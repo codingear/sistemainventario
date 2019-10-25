@@ -2,6 +2,8 @@
 @section('title', 'Productos')
 @push('stylesheets')
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.css')}}">
+    <!-- <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.dataTables.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.bootstrap4.min.css')}}"> -->
 @endpush
 @section('content')
     {{-- Page Heading --}}
@@ -167,14 +169,17 @@
     {{--Modal--}}
     <script src="{{ asset('vendors/dataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+    <!-- <script src="{{ asset('vendors/dataTables/dataTables.responsive.min.js') }}"></script> -->
+    <!-- <script src="{{ asset('vendors/dataTables/responsive.bootstrap4.min.js') }}"></script> -->
     <script>
         $(document).ready(function () {
-            $('#table-categories').dataTable({
+            var table = $('#table-categories').dataTable({
                 "ordering": true,
                 "language": {
                     "url": "{{ asset('vendors/dataTables/Spanish.json')}}",
                 },
                 "pageLength": 10,
+                "responsive": true,
                 // order: [1, 'asc']
             });
             $('[data-toggle="tooltip"]').tooltip();
