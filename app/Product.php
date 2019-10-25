@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Category;
+use App\Image;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -19,5 +20,9 @@ class Product extends Model
      */
     public function images(){
         return $this->belongsToMany('App\Image','product_images');
+    }
+
+    public function image(){
+        return $this->hasOne(Image::class,'id','principal_image');
     }
 }

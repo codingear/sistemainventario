@@ -17,7 +17,6 @@ class CreateProductImagesTable extends Migration
             
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->bigInteger('image_id')->unsigned()->nullable();
-            $table->enum('type', ['Galery', 'Product']);
             $table->foreign('product_id')->references('id')->on('products')
                 ->onDelete('cascade');
             $table->foreign('image_id')->references('id')->on('images')

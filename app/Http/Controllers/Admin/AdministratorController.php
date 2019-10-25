@@ -13,6 +13,8 @@ use App\Http\Requests\AdministratorUpdateProfile;
 use App\Notifications\NewAdmin;
 use Illuminate\Support\Str;
 use App\User;
+use Illuminate\Support\Facades\Storage;
+
 
 class AdministratorController extends Controller
 {
@@ -112,6 +114,16 @@ class AdministratorController extends Controller
             ->with('info', 'Datos editados exitosamente.');
     }
 
+
+    public function updateAvatarAdministrator(Request $request)
+    {
+        $user = Auth::User();
+        unlink(public_path($user->avatar));
+        $urlAvatar = $request->file('avatar')->store('profile_avatar');
+        $user->update([
+            'avatar' => Storage::url($urlAvatar),
+        ]);
+    }
 
     /**
      * Update the specified resource in storage.

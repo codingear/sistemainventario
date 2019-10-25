@@ -25,47 +25,73 @@
                       autocomplete="off" role="form">
                 @csrf
                 @method('PUT')
-                <div class="form-row">
-                    <div class="form-group col-lg-6 col-md-12">
-                        <label for="input-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control {{$errors->has('name') ? 'is-invalid' :'' }}"
-                               value="{{old('name',!empty($user) ? $user->name: '' )}}" id="input-name" name="name">
-                        @if ($errors->has('name'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('name') }}
-                            </div>
-                        @endif
-                    </div>
-                    <div class="form-group col-lg-6 col-md-12">
-                        <label for="input-email" class="col-form-label">Email:</label>
-                        <input type="email" class="form-control {{$errors->has('email') ? 'is-invalid' :'' }}"
-                               value="{{old('email',!empty($user) ? $user->email: '')}}" id="input-email" name="email">
-                        @if ($errors->has('email'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('email') }}
-                            </div>
-                        @endif
-                    </div>
-                    <div class="form-group col-lg-6 col-md-12">
-                        <label for="input-password" class="col-form-label">Contraseña:</label>
-                        <input type="password" class="form-control {{$errors->has('password') ? 'is-invalid' :'' }}"
-                               value="{{old('password')}}" id="input-password" name="password">
-                        @if ($errors->has('password'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('password') }}
-                            </div>
-                        @endif
-                    </div>
-                    <div class="form-group col-lg-6 col-md-12">
-                        <label for="input-password_confirmation" class="col-form-label">Confirmar contraseña:</label>
-                        <input type="password" class="form-control {{$errors->has('password') ? 'is-invalid' :'' }}"
-                               value="{{old('password_confirmation')}}" id="input-password_confirmation"
-                               name="password_confirmation">
-                    </div>
+                <div class="row align-items-center ">
+{{--                    <div class="col-lg-4 col-md-12">--}}
+{{--                        <div class="form-row d-flex justify-content-center">--}}
+{{--                            <div class="avatar-upload">--}}
 
+{{--                                <div class="avatar-edit">--}}
+{{--                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg"/>--}}
+{{--                                    <label for="imageUpload"></label>--}}
+{{--                                </div>--}}
+{{--                                <div class="avatar-preview">--}}
+{{--                                    <div id="imagePreview"--}}
+{{--                                         style="background-image: url(http://i.pravatar.cc/500?img=7);">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <span class="text-error"></span>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+                    <div class="col-12">
+                        <div class="form-row">
+                            <div class="form-group col-lg-6 col-md-12">
+                                <label for="input-name" class="col-form-label">Nombre:</label>
+                                <input type="text" class="form-control {{$errors->has('name') ? 'is-invalid' :'' }}"
+                                       value="{{old('name',!empty($user) ? $user->name: '' )}}" id="input-name"
+                                       name="name">
+                                @if ($errors->has('name'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('name') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-group col-lg-6 col-md-12">
+                                <label for="input-email" class="col-form-label">Email:</label>
+                                <input type="email" class="form-control {{$errors->has('email') ? 'is-invalid' :'' }}"
+                                       value="{{old('email',!empty($user) ? $user->email: '')}}" id="input-email"
+                                       name="email">
+                                @if ($errors->has('email'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('email') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-group col-lg-6 col-md-12">
+                                <label for="input-password" class="col-form-label">Contraseña:</label>
+                                <input type="password"
+                                       class="form-control {{$errors->has('password') ? 'is-invalid' :'' }}"
+                                       value="{{old('password')}}" id="input-password" name="password">
+                                @if ($errors->has('password'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('password') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-group col-lg-6 col-md-12">
+                                <label for="input-password_confirmation" class="col-form-label">Confirmar
+                                    contraseña:</label>
+                                <input type="password"
+                                       class="form-control {{$errors->has('password') ? 'is-invalid' :'' }}"
+                                       value="{{old('password_confirmation')}}" id="input-password_confirmation"
+                                       name="password_confirmation">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="btn-action">
-                    <button class="btn btn-success btn-icon-split btn-sm" type="submit">
+                <div class="btn-action d-flex justify-content-lg-end justify-content-sm-start">
+                    <button class="btn btn-success btn-icon-split btn-sm mr-2" type="submit">
                     <span class="icon text-white-50">
                         <i class="fas fa-save fa-sm text-white-50"></i>
                     </span>
@@ -82,3 +108,4 @@
         </div>
     </div>
 @endsection
+

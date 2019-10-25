@@ -45,6 +45,7 @@ Route::group(
         Route::get('mi-perfil', 'ShowAdminProfile')->name('admin.profile');
         Route::get('editar-perfil', 'AdministratorController@editAdminProfile')->name('admin.editProfile');
         Route::match(['put', 'patch'], 'admin/edit_profile/{user}', 'AdministratorController@updateAdminProfile')->name('admin.updateAdminProfile');
+        Route::match(['put', 'patch'], 'update_avatar', 'AdministratorController@updateAvatarAdministrator')->name('admin.updateAvatar');
 
 
         //Categorias

@@ -20,9 +20,11 @@ class CreateProductsTable extends Migration
             $table->bigInteger('category_id')->unsigned()->nullable();
             $table->text('description')->nullable();
             $table->enum('status', ['ACTIVO', 'INACTIVO', 'ELIMINADO'])->default('ACTIVO');
+            $table->bigInteger('principal_image')->unsigned()->nullable();
             $table->integer('stock')->default(0)->nullable();
             $table->decimal('sale_price')->default(0)->nullable();
             $table->timestamps();
+
         });
     }
 

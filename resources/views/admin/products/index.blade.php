@@ -2,6 +2,8 @@
 @section('title', 'Productos')
 @push('stylesheets')
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.css')}}">
+    {{-- <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.dataTables.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.bootstrap4.min.css')}}"> --}}
 @endpush
 @section('content')
     {{-- Page Heading --}}
@@ -12,7 +14,7 @@
                 <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Productos</li>
             </ol>
         </nav>
-        <a href="{{route('productos.create')}}"class="btn btn-success btn-icon-split btn-sm">
+        <a href="{{route('productos.create')}}" class="btn btn-success btn-icon-split btn-sm">
         <span class="icon text-white-50">
             <i class="fas fa-plus-circle fa-sm text-white-50"></i>
         </span>
@@ -78,8 +80,8 @@
                                         <i class="fa fa-check"></i>
                                     </a>
                                     <form id="changeProductStatus-form"
-                                          action="{{ route('admin.editProductStatus', $product->id) }}"
-                                          method="POST" style="display: none;">
+                                          action="{{ route('admin.editProductStatus', $product->id) }}" method="POST"
+                                          style="display: none;">
                                         @csrf
                                         @method('PUT')
                                     </form>
@@ -89,7 +91,7 @@
                                             data-placement="top" title="Eliminar">
                                         <i class="fa fa-fw fa-trash-alt"></i>
                                     </button>
-                                    </span>
+                                </span>
                                 </td>
                             </tr>
                         @endforeach
@@ -102,39 +104,6 @@
 @endsection
 
 @push('optional_scripts')
-    <!-- Modal Create Course-->
-    <div class="modal fade" id="newProductModal" tabindex="-1" role="dialog" aria-labelledby="newProductModalLabel"
-         aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <form enctype="multipart/form-data" id="newProductForm" class="form-course needs-validation" method="POST"
-              action="{{route('productos.store')}}" role="form" autocomplete="off">
-            @csrf
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="newProductModalLabel">Agregar nombre del producto:</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group col-12">
-                            <input type="text" class="form-control" value="{{old('name')}}" id="name" name="name"
-                                   placeholder="Ingresa nombre del producto">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="Formcancel" class="btn btn-danger" data-dismiss="modal">Cancelar
-                        </button>
-                        <button type="submit" class="btn btn-success">
-                            Crear Producto
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    {{--    close Modal Create--}}
-
     {{-- Modal Delete Course--}}
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
          aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -167,23 +136,21 @@
     {{--Modal--}}
     <script src="{{ asset('vendors/dataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+    {{--     <script src="{{ asset('vendors/dataTables/dataTables.responsive.min.js') }}"></script>--}}
+    {{--    <script src="{{ asset('vendors/dataTables/responsive.bootstrap4.min.js') }}"></script> --}}
     <script>
         $(document).ready(function () {
-            $('#table-categories').dataTable({
+            var table = $('#table-categories').dataTable({
                 "ordering": true,
                 "language": {
                     "url": "{{ asset('vendors/dataTables/Spanish.json')}}",
                 },
                 "pageLength": 10,
+                "responsive": true,
                 // order: [1, 'asc']
             });
             $('[data-toggle="tooltip"]').tooltip();
         });
-        // $('#newProductModal').on('show.bs.modal', function (event) {
-        //     setTimeout(function () {
-        //         $('#name').focus();
-        //     }, 750);
-        // });
 
         function deleteData(productId) {
             let id = productId;
@@ -195,39 +162,6 @@
         function formSubmit() {
             $("#deleteForm").submit();
         }
-    </script>
-    <script>
-        document.getElementById('Formcancel').addEventListener('click', function (e) {
-            document.getElementById("newProductForm").reset();
-            clearErrors();
-        });
-        (function () {
-            document.querySelector('#newProductForm').addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                axios.post(this.action, {
-                    'name': document.querySelector('#name').value
-                })
-                    .then(function (response) {
-                        const product = response.data;
-                        let url = '{{ route('productos.edit', ":id") }}';
-                        url = url.replace(':id', product.id);
-                        window.location.href = url;
-                        console.clear();
-                    })
-                    .catch(function (error) {
-                        clearErrors();
-                        const errors = error.response.data.errors;
-                        Object.keys(errors).forEach(function (k) {
-                            const itemDOM = document.getElementById(k);
-                            const errorMessage = errors[k];
-                            itemDOM.insertAdjacentHTML('afterend', `<div class="text-danger">${errorMessage}</div>`);
-                            itemDOM.classList.add('border', 'border-danger')
-                            console.clear();
-                        });
-                    });
-            });
-        })();
 
         function clearErrors() {
             const errorMessages = document.querySelectorAll('.text-danger');
@@ -235,5 +169,6 @@
             const formControls = document.querySelectorAll('.form-control');
             formControls.forEach((element) => element.classList.remove('border', 'border-danger'))
         }
+
     </script>
 @endpush

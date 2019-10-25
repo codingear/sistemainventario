@@ -505,3 +505,150 @@ fieldset[disabled] .btn-white.active {
 span#image_title {
     margin-left: 0.4rem;
 }
+
+/* ESTILOS GALERIA HE IMAGEN (LUIS) */
+.ms-selected {
+    border: 3px solid rgb(54, 185, 204);
+    position: relative;
+}
+.ms-selected::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(54, 185, 204);
+    border-radius: 50%;
+    top: -0.5em;
+    left: -0.5em;
+}
+.ms-selected::after {
+    position: absolute;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: '\f00c';
+    top: -5px;
+    color: white;
+    left: -2px;
+}
+
+.img-principal {
+    width: 100%;
+    flex-basis: unset;
+}
+.img__principal {
+    width: 234.167px;
+    height: 234.167px;
+    object-fit: cover;
+    border: 1px solid rgb(138, 138, 138, 0.3);
+    display: block;
+    margin: auto;
+}
+@media only screen and (min-width: 768px) {
+    /* .img-principal{
+        flex: 0 0 300px;
+    } */
+}
+@media only screen and (min-width: 992px) {
+    .img-principal {
+        flex: 0 0 300px;
+        flex-basis: 1 !important;
+    }
+}
+.container_item {
+    position: relative;
+}
+.btnDeleteImg {
+    width: 100%;
+    background-color: rgba(220, 53, 69, 0.7);
+    border: 0;
+    outline: 0;
+    /* margin-bottom: 1em; */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.btnDeleteImg i {
+    color: white;
+}
+
+/* ESTILOS TABS RESPONSIVE */
+
+@media only screen and (max-width: 370px) {
+    .nav-tabs .nav-item {
+        font-size: 0.9rem;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .nav-tabs .nav-item {
+        font-size: 0.8rem;
+    }
+}
+
+.avatar-upload {
+    position: relative;
+    max-width: 205px;
+    height: 220px;
+    text-align: center;
+}
+.avatar-upload .avatar-edit {
+    position: absolute;
+    right: 12px;
+    z-index: 1;
+    top: 6px;
+}
+.avatar-upload .avatar-edit input {
+    display: none;
+}
+.avatar-upload .avatar-edit input + label {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 0;
+    border-radius: 100%;
+    background: #ffffff;
+    border: 1px solid transparent;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    font-weight: normal;
+    transition: all 0.2s ease-in-out;
+}
+.avatar-upload .avatar-edit input + label:hover {
+    background: #f1f1f1;
+    border-color: #d6d6d6;
+}
+.avatar-upload .avatar-edit input + label:after {
+    content: '\f303';
+    font-family: 'Font Awesome\ 5 Free';
+    font-weight: 900; /* Fix version 5.0.9 */
+    color: #134b75;
+    position: absolute;
+    top: 6px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: auto;
+}
+.avatar-upload .avatar-preview {
+    width: 192px;
+    height: 192px;
+    position: relative;
+    border-radius: 100%;
+    border: 6px solid #f8f8f8;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+}
+.avatar-upload .avatar-preview > div {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.text-error {
+    color: #e74a3b;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 1rem;
+}

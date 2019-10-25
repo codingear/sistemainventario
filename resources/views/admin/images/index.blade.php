@@ -50,6 +50,13 @@
     </div>
 
 
+    <div class="container mt-2 p-0 container-alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading font-weight-bold">¡Sin Registros!</h4>
+            <p>Aún no tienes ningúna imagen agregada.</p>
+        </div>
+    </div>
+
     <!-- Page Content -->
     <div class="images-container mt-2">
         <div class="grid">
@@ -64,9 +71,9 @@
                 </div>
             @endforeach
         </div>
-
     </div>
     <!-- /.container -->
+
 
 
     <!-- Modal -->
@@ -132,10 +139,23 @@
 
 @endsection
 @push('optional_scripts')
-
     <script src="{{ asset('vendors/dropzone/dropzone.js') }}"></script>
     <script src="{{ asset('vendors/jqueryLazy/jquery.lazy.min.js') }}"></script>
     <script>
+
+        $(document).ready(function () {
+            $('.lazy').Lazy({
+                scrollDirection: 'vertical',
+                effect: 'fadeIn',
+            });
+
+            if ($(".item").toArray().length >= 1) {
+                $(".container-alert").addClass('d-none');
+            };
+
+
+        });
+
 
         let myDropzone = new Dropzone('.dropzone', {
             url: '/admin/imagenes',
@@ -163,6 +183,7 @@
                 });
                 this.on("success", function (file, response) {
                     if ($(".item").toArray().length <= 0) {
+                        $(".container-alert").addClass('d-none');
                         $('.grid').append(`<div class="item">
                             <img class="lazy thumbnail"
                                 src="${response.url}"
@@ -182,29 +203,16 @@
                                 data-toggle="modal"
                                 data-target="#modalInfoImage" alt="imagen"/>
                      </div>`);
-                    }
-                    ;
+                    };
                 });
 
                 this.on("error", function (file, res) {
-                    // window.setTimeout(function () {
-                    //     myDropzone.removeFile(file)
-                    // }, 3500);
-
                 });
             },
         });
 
         Dropzone.autoDiscover = false;
 
-
-        $(document).ready(function () {
-            $('.lazy').Lazy({
-                scrollDirection: 'vertical',
-                effect: 'fadeIn',
-            });
-
-        });
 
         $('#btnOpenAddImages').click(function () {
             $("#container-DropZone").removeClass('d-none');
@@ -253,7 +261,6 @@
                         'text_alt': document.querySelector('#text_alt').value,
                     }
                 }).then(function (response) {
-                    console.log(response)
                     const alert = document.querySelector('#alert_message');
                     alert.innerHTML = (`<div class="alert alert-success mt-2 alert-notifier" role="alert">Datos Actualizados.</div>`);
                     window.setTimeout(function () {

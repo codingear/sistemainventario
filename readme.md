@@ -63,3 +63,11 @@ Luis Pastén
     -   Se agrega titulo al thumbnail de imagen de producto ➕:
     -   Trabajando en galeria de imagenes rama luis
     -   Modulo de imagenes terminada, rama isidro
+
+-   2.0.0
+
+    -   Se agrega modulo de imágenes ➕.
+    -   Modulo de productos actualizado 🔄:
+        -   Elminado modal para dar de alta un producto.
+        -   Se elimina el limite de imágenes por producto.
+    -   El administrador puede cambiar su imagen de perfil ➕.
