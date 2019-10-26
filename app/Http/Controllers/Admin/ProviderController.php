@@ -41,7 +41,7 @@ class ProviderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(ProviderRequest $request)
@@ -53,18 +53,19 @@ class ProviderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $provider = Provider::findOrFail($id);
+        return view('admin.providers.show', compact('provider'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -79,8 +80,8 @@ class ProviderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(ProviderRequest $request, $id)
@@ -88,18 +89,18 @@ class ProviderController extends Controller
         $provider = Provider::findOrFail($id);
 
         $provider->update([
-            'name'          => $request['name'],
-            'contact_name'  => $request['contact_name'],
-            'rfc'           => $request['rfc'],
-            'telephone'     => $request['telephone'],
-            'email'         => $request['email'],
-            'website'       => $request['website'],
-            'state_id'      => $request['state_id'],
-            'city'          => $request['city'],
-            'website'       => $request['website'],
-            'zip_code'      => $request['zip_code'],
-            'address'       => $request['address'],
-            'notes'         => $request['notes'],
+            'name' => $request['name'],
+            'contact_name' => $request['contact_name'],
+            'rfc' => $request['rfc'],
+            'telephone' => $request['telephone'],
+            'email' => $request['email'],
+            'website' => $request['website'],
+            'state_id' => $request['state_id'],
+            'city' => $request['city'],
+            'website' => $request['website'],
+            'zip_code' => $request['zip_code'],
+            'address' => $request['address'],
+            'notes' => $request['notes'],
         ]);
 
         return response()->json(['success' => 'Proveedor Editado correctamente.']);
@@ -108,7 +109,7 @@ class ProviderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
