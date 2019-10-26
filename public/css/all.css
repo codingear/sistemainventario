@@ -10591,7 +10591,7 @@ a:focus {
 }
 
 #wrapper #content-wrapper {
-  background-color: #f8f9fc;
+  background-color: #F7FAFC;
   width: 100%;
   overflow-x: hidden;
 }
@@ -13148,4 +13148,40 @@ span#image_title {
     font-size: 0.8rem;
     text-align: center;
     margin-top: 1rem;
+}
+
+/* No data design */
+
+.container-noinfo {
+    margin-top: 120px;
+    text-align: center;
+}
+
+.container-noinfo_text p {
+    font-size: 20px;
+    text-align: center;
+    color: #596571;
+    margin: 20px 0;
+}
+
+.container-noinfo_icon i {
+    font-size: 120px;
+    color: #e3edf8;
+}
+
+.button-new {
+    color: #fff !important;
+    background-color: #1f548e;
+    padding: 8px 15px;
+    border: 0 solid #e2e8f0;
+    font-weight: 700;
+    border-radius: 0.25rem;
+    font-size: 14px;
+    line-height: inherit;
+    outline: 0;
+}
+
+.button-new:hover {
+    cursor: pointer;
+    background-color: #18416e !important;
 }

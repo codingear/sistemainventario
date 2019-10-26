@@ -1,5 +1,5 @@
 @extends('admin.layouts._layout')
-@section('title', 'Editar Categoría')
+@section('title', 'Editar Proveedor')
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between">

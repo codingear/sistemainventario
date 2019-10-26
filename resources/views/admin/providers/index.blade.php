@@ -4,38 +4,49 @@
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.css')}}">
 @endpush
 @section('content')
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-start justify-content-between">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="h5 breadcrumb-item ">
-                    <a class="text-main" href="{{route('dashboard')}}">
-                        Dashboard
-                    </a>
-                </li>
-                <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">
-                    Proveedores
-                </li>
-            </ol>
-        </nav>
-        <a href="{{route('proveedores.create')}}" class="btn btn-success btn-icon-split btn-sm">
-        <span class="icon text-white-50">
-            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-        </span>
-            <span class="text">
-                Nuevo Proveedor
-            </span>
-        </a>
-    </div>
-    {{-- Page Heading--}}
     @if($providers->count()<=0)
-        <div class="container mt-2 p-0">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <h4 class="alert-heading font-weight-bold">¡Sin Registros!</h4>
-                <p>Aún no tienes ningún proveedores agregado.</p>
+        <div class="container-noinfo">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <div class="container-noinfo_icon justify-content-center">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="container-noinfo_text justify-content-center">
+                    <p>
+                        Guarda la información de tus proveedores de insumos.
+                    </p>
+                    <a href="{{route('proveedores.create')}}" class="button-new">
+                        Crear proveedor
+                    </a>
+                </div>
+
             </div>
         </div>
     @else
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-start justify-content-between">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="h5 breadcrumb-item ">
+                        <a class="text-main" href="{{route('dashboard')}}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">
+                        Proveedores
+                    </li>
+                </ol>
+            </nav>
+            <a href="{{route('proveedores.create')}}" class="btn btn-success btn-icon-split btn-sm">
+        <span class="icon text-white-50">
+            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
+        </span>
+                <span class="text">
+                Nuevo Proveedor
+            </span>
+            </a>
+        </div>
+        {{-- Page Heading--}}
+
         <div class="card shadow mt-2 mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-main">Listado de proveedores</h6>
@@ -50,7 +61,7 @@
                             <th>Email</th>
                             <th>Ciudad</th>
                             <th>Teléfono</th>
-                            <th width="10%">Acciones</th>
+                            <th width="15%">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -63,6 +74,11 @@
                                 <td>{{$provider->telephone}}</td>
 
                                 <td class=" d-flex flex-wrap justify-content-center d-flex align-items-center">
+                                    <a href="{{route('proveedores.show',$provider->id)}}"
+                                       class="btn btn-circle btn-sm btn-info mx-1 mb-1" data-toggle="tooltip"
+                                       data-placement="top" title="Ver">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
                                     <a href="{{route('proveedores.edit',$provider->id)}}"
                                        class="btn btn-circle btn-sm btn-warning mx-1 mb-1" data-toggle="tooltip"
                                        data-placement="top" title="Editar">
@@ -85,6 +101,7 @@
             </div>
         </div>
     @endif
+
     {{-- Modal Delete Course--}}
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
          aria-hidden="true" data-backdrop="static" data-keyboard="false">

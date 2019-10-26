@@ -4,30 +4,42 @@
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.css')}}">
 @endpush
 @section('content')
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-start justify-content-between">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="h5 breadcrumb-item "><a class="text-main" href="{{route('dashboard')}}">Dashboard</a></li>
-                <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Categorías</li>
-            </ol>
-        </nav>
-        <a href="{{route('categorias.create')}}" class="btn btn-success btn-icon-split btn-sm">
-        <span class="icon text-white-50">
-            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-        </span>
-            <span class="text">Nueva Categoría</span>
-        </a>
-    </div>
-    {{-- Page Heading--}}
     @if($categories->count()<=0)
-        <div class="container mt-2 p-0">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <h4 class="alert-heading font-weight-bold">¡Sin Registros!</h4>
-                <p>Aún no tienes ninguna categoría agregada.</p>
+        <div class="container-noinfo">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <div class="container-noinfo_icon justify-content-center">
+                    <i class="fas fa-cubes"></i>
+                </div>
+                <div class="container-noinfo_text justify-content-center">
+                    <p>
+                        Clasifica tus productos mediante categorías.
+                    </p>
+                    <a href="{{route('categorias.create')}}" class="button-new">
+                        Crear categoría
+                    </a>
+                </div>
+
             </div>
         </div>
     @else
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-start justify-content-between">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="h5 breadcrumb-item "><a class="text-main" href="{{route('dashboard')}}">Dashboard</a>
+                    </li>
+                    <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Categorías</li>
+                </ol>
+            </nav>
+            <a href="{{route('categorias.create')}}" class="btn btn-success btn-icon-split btn-sm">
+        <span class="icon text-white-50">
+            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
+        </span>
+                <span class="text">Nueva Categoría</span>
+            </a>
+        </div>
+        {{-- Page Heading--}}
         <div class="card shadow mt-2 mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-main">Listado de Categorías</h6>
@@ -75,7 +87,21 @@
 
             </div>
         </div>
+
     @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
     {{-- Modal Delete Course--}}
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
          aria-hidden="true" data-backdrop="static" data-keyboard="false">
