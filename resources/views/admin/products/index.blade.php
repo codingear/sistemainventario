@@ -8,13 +8,13 @@
         <div class="container-noinfo">
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <div class="container-noinfo_icon justify-content-center">
-                    <i class="fas fa-box"></i>
+                    <i class="fas fa-box-open"></i>
                 </div>
                 <div class="container-noinfo_text justify-content-center">
                     <p>
                         Crea tu primer producto y dalo a conocer al mundo.
                     </p>
-                    <a href="{{route('productos.create')}}" class="button-new">
+                    <a href="{{route('productos.create')}}" class="button button-blue-primary">
                         Crear producto
                     </a>
                 </div>
@@ -31,21 +31,11 @@
                     <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Productos</li>
                 </ol>
             </nav>
-            <a href="{{route('productos.create')}}" class="btn btn-success btn-icon-split btn-sm">
-        <span class="icon text-white-50">
-            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-        </span>
-                <span class="text text-light">Nuevo Producto</span>
+            <a href="{{route('productos.create')}}" class="button button-blue-primary">
+                Crear producto
             </a>
         </div>
         {{--    Page Heading--}}
-
-        <div class="container mt-2 p-0">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <h4 class="alert-heading font-weight-bold">¡Sin Registros!</h4>
-                <p>Aún no tienes ningún producto agregado.</p>
-            </div>
-        </div>
 
         <div class="card shadow mt-2 mb-4">
             <div class="card-header py-3">

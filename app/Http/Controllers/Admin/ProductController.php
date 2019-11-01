@@ -24,7 +24,7 @@ class ProductController extends Controller
     public function index()
     {
 
-        $products = Product::where('status', 'ACTIVO')->orWhere('status', 'INACTIVO')
+        $products = Product::where('status', 'Publicado')->orWhere('status', 'Inactivo')
             ->get();
         return view('admin.products.index', compact('products'));
     }
@@ -50,7 +50,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
-    {   
+    {
 
         // foreach($request->gallery as  $item){
         //     echo $item['key'];
@@ -76,7 +76,7 @@ class ProductController extends Controller
                 ]
             );
         }
-        
+
         // $product = Product::create($request->all());
     }
 
@@ -128,7 +128,7 @@ class ProductController extends Controller
             'sale_price' => $request['sale_price'],
             'principal_image' => $request['principal_image']
         ]);
-        
+
         ProductImage::where('product_id', $id)->delete();
         foreach($request->gallery as  $item){
             ProductImage::create(
@@ -150,14 +150,14 @@ class ProductController extends Controller
     public function changeProductStatus($id)
     {
         $product = Product::findOrFail($id);
-        if ($product->status == 'ACTIVO') {
+        if ($product->status == 'Publicado') {
             $product->update([
-                'status' => 'INACTIVO'
+                'status' => 'Inactivo'
             ]);
             $msg = 'Producto Desactivado exitosamente.';
-        } else if ($product->status == 'INACTIVO') {
+        } else if ($product->status == 'Inactivo') {
             $product->update([
-                'status' => 'ACTIVO'
+                'status' => 'Publicado'
             ]);
             $msg = 'Producto activado exitosamente.';
         }

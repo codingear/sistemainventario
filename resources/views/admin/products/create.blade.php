@@ -82,17 +82,11 @@
                     </div>
                     <div class="card-footer">
                         <div class="btn-action">
-                            <button class="btn btn-success btn-icon-split btn-sm" type="submit" id="send_form">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-save fa-sm text-white-50"></i>
-                            </span>
-                                <span class="text">Guardar</span>
+                            <button class="button button-blue-primary" type="submit" id="send_form">
+                                Guardar
                             </button>
-                            <a href="{{route('productos.index')}}" class="btn btn-secondary btn-icon-split btn-sm">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-long-arrow-alt-left fa-sm text-white-50"></i>
-                            </span>
-                                <span class="text">Volver atrás</span>
+                            <a href="{{route('productos.index')}}" class="button button-blue-secondary">
+                                Cancelar
                             </a>
                         </div>
                     </div>

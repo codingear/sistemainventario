@@ -4,27 +4,42 @@
     <link rel="stylesheet" href="{{ asset('vendors/dropzone/dropzone.css')}}">
 @endpush
 @section('content')
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-start justify-content-between">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="h5 breadcrumb-item "><a class="text-main" href="{{route('dashboard')}}">Dashboard</a></li>
-                <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Biblioteca de Imágenes</li>
-            </ol>
-        </nav>
+    @if($images->count()<=0)
+        <div class="d-flex justify-content-center container-noinfo">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <div class="container-noinfo_icon justify-content-center">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="container-noinfo_text justify-content-center">
+                    <p>
+                        Gestiona tu galería de imagenes.
+                    </p>
+                    <button type="button" class="button button-blue-primary" name="btnOpenAddImages" id="btnOpenAddImages">
+                        Añadir Imágenes
+                    </button>
+                </div>
+            </div>
+        </div>
+    @else
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-start justify-content-between">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="h5 breadcrumb-item "><a class="text-main" href="{{route('dashboard')}}">Dashboard</a>
+                    </li>
+                    <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Galería de Imágenes</li>
+                </ol>
+            </nav>
 
-        <button type="button" name="btnOpenAddImages" id="btnOpenAddImages"
-                class="btn btn-success btn-icon-split btn-sm">
-        <span class="icon text-white-50">
-            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-        </span>
-            <span class="text">
-            Añadir Imágenes
-        </span>
-        </button>
+            <button type="button" class="button button-blue-primary" name="btnOpenAddImages" id="btnOpenAddImages">
+                Añadir Imágenes
+            </button>
 
-    </div>
-    {{-- Page Heading--}}
+        </div>
+        {{-- Page Heading--}}
+    @endif
+
+
 
     <div class="row d-none" id="container-DropZone">
         <div class="col-12">
@@ -50,12 +65,6 @@
     </div>
 
 
-    <div class="container mt-2 p-0 container-alert">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading font-weight-bold">¡Sin Registros!</h4>
-            <p>Aún no tienes ningúna imagen agregada.</p>
-        </div>
-    </div>
 
     <!-- Page Content -->
     <div class="images-container mt-2">
@@ -73,8 +82,6 @@
         </div>
     </div>
     <!-- /.container -->
-
-
 
     <!-- Modal -->
     <div class="modal fade" id="modalInfoImage" tabindex="-1" role="dialog" aria-labelledby="examplemodalInfoImage"
@@ -149,9 +156,10 @@
                 effect: 'fadeIn',
             });
 
-            if ($(".item").toArray().length >= 1) {
-                $(".container-alert").addClass('d-none');
-            };
+            // if ($(".item").toArray().length >= 1) {
+            //     $(".container-alert").addClass('d-none');
+            // }
+            // ;
 
 
         });
@@ -203,10 +211,22 @@
                                 data-toggle="modal"
                                 data-target="#modalInfoImage" alt="imagen"/>
                      </div>`);
-                    };
+                    }
+                    ;
+                });
+
+                let itemsLength = $(".item").toArray().length;
+                this.on("queuecomplete", function (file) {
+                    if (itemsLength === 0) {
+                        location.reload(true);
+                    }else{
+                        //myDropzone.removeAllFiles();
+                    }
                 });
 
                 this.on("error", function (file, res) {
+                    // myDropzone.removeAllFiles();
+                    // myDropzone.removeFile(file);
                 });
             },
         });
@@ -217,11 +237,15 @@
         $('#btnOpenAddImages').click(function () {
             $("#container-DropZone").removeClass('d-none');
             $("#container-DropZone").addClass('d-flex');
+            $(".container-noinfo").removeClass('d-flex');
+            $(".container-noinfo").addClass('d-none');
         });
 
         $('#btnCloseAddImages').click(function () {
             $("#container-DropZone").removeClass('d-flex');
             $("#container-DropZone").addClass('d-none');
+            $(".container-noinfo").removeClass('d-none');
+            $(".container-noinfo").addClass('d-flex');
             myDropzone.removeAllFiles();
         });
 
@@ -234,7 +258,6 @@
                 url: `/admin/imagenes/${id}`,
             })
                 .then(function (response) {
-                    console.log(response.data);
                     modal.find("#image_id").val(response.data.id);
                     modal.find('#image_title').text(response.data.title == '' ? ' sin título ' : response.data.title);
                     modal.find('.thumbnail-image').attr("src", response.data.url);
@@ -298,8 +321,10 @@
                 url: `/admin/imagenes/${id}`,
             }).then(function (response) {
                 $('#modalInfoImage').modal('toggle');
-                $('[data-id="' + id + '"]')[0].parentElement.remove()
-                console.log(response.data.success);
+                $('[data-id="' + id + '"]')[0].parentElement.remove();
+                if ($(".item").toArray().length === 0) {
+                    location.reload(true);
+                }
             }).catch(function (error) {
                 console.log(error);
             });

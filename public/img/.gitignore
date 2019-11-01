@@ -1,2 +1,5 @@
 /images_library/*
+
+
 /profile_avatar/*
+!profile_avatar/.gitkeep

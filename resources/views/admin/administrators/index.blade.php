@@ -18,11 +18,8 @@
                 </li>
             </ol>
         </nav>
-        <a href="{{route('administradores.create')}}" class="btn btn-success btn-icon-split btn-sm">
-        <span class="icon text-white-50">
-            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-        </span>
-            <span class="text">Nuevo Administrador</span>
+        <a href="{{route('administradores.create')}}" class="button button-blue-primary">
+            Crear Administrador
         </a>
     </div>
     {{--    Page Heading--}}

@@ -45,8 +45,8 @@
             </div>
             <div class="card-footer bg-light">
                 <div class="row d-flex justify-content-md-end justify-content-sm-center">
-                    <a href="{{route('admin.editProfile')}}" class="btn btn-success btn-icon-split btn-sm">
-                        <span class="text">Editar Datos</span>
+                    <a href="{{route('admin.editProfile')}}" class="button button-blue-primary">
+                        Editar Datos
                     </a>
                 </div>
             </div>

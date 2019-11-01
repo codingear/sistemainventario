@@ -26,24 +26,6 @@
                 @csrf
                 @method('PUT')
                 <div class="row align-items-center ">
-{{--                    <div class="col-lg-4 col-md-12">--}}
-{{--                        <div class="form-row d-flex justify-content-center">--}}
-{{--                            <div class="avatar-upload">--}}
-
-{{--                                <div class="avatar-edit">--}}
-{{--                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg"/>--}}
-{{--                                    <label for="imageUpload"></label>--}}
-{{--                                </div>--}}
-{{--                                <div class="avatar-preview">--}}
-{{--                                    <div id="imagePreview"--}}
-{{--                                         style="background-image: url(http://i.pravatar.cc/500?img=7);">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <span class="text-error"></span>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
                     <div class="col-12">
                         <div class="form-row">
                             <div class="form-group col-lg-6 col-md-12">
@@ -91,17 +73,11 @@
                     </div>
                 </div>
                 <div class="btn-action d-flex justify-content-lg-end justify-content-sm-start">
-                    <button class="btn btn-success btn-icon-split btn-sm mr-2" type="submit">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-save fa-sm text-white-50"></i>
-                    </span>
-                        <span class="text">Guardar</span>
+                    <button class="button button-blue-primary mr-2" type="submit">
+                        Guardar
                     </button>
-                    <a href="{{route('admin.profile')}}" class="btn btn-secondary btn-icon-split btn-sm">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-long-arrow-alt-left fa-sm text-white-50"></i>
-                    </span>
-                        <span class="text">Cancelar</span>
+                    <a href="{{route('admin.profile')}}" class="button button-blue-secondary">
+                        Cancelar
                     </a>
                 </div>
             </form>

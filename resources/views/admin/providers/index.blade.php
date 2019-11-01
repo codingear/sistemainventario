@@ -14,7 +14,7 @@
                     <p>
                         Guarda la información de tus proveedores de insumos.
                     </p>
-                    <a href="{{route('proveedores.create')}}" class="button-new">
+                    <a href="{{route('proveedores.create')}}" class="button button-blue-primary">
                         Crear proveedor
                     </a>
                 </div>
@@ -36,13 +36,8 @@
                     </li>
                 </ol>
             </nav>
-            <a href="{{route('proveedores.create')}}" class="btn btn-success btn-icon-split btn-sm">
-        <span class="icon text-white-50">
-            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-        </span>
-                <span class="text">
-                Nuevo Proveedor
-            </span>
+            <a href="{{route('proveedores.create')}}" class="button button-blue-primary">
+                Crear proveedor
             </a>
         </div>
         {{-- Page Heading--}}

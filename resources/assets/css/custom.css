@@ -261,8 +261,8 @@
 .page-item.active .page-link {
     z-index: 1;
     color: #fff;
-    background-color: var(--main-color);
-    border-color: var(--main-color);
+    background-color: #1C4C80;
+    border-color: #1C4C80;
 }
 
 .alert-rounded {
@@ -672,19 +672,82 @@ span#image_title {
     color: #e3edf8;
 }
 
-.button-new {
-    color: #fff !important;
-    background-color: #1f548e;
+/*custom buttons*/
+.button {
+    margin:0 2px;
+    outline: none;
     padding: 8px 15px;
-    border: 0 solid #e2e8f0;
     font-weight: 700;
     border-radius: 0.25rem;
     font-size: 14px;
     line-height: inherit;
     outline: 0;
+    letter-spacing: 0.2px;
+    text-decoration: none;
+    border: 0 solid #e2e8f0;
 }
 
-.button-new:hover {
-    cursor: pointer;
-    background-color: #18416e !important;
+.button:active,
+.button:focus{
+    outline: 0;
+}
+
+.button-blue-primary {
+    color: #fff !important;
+    background-color: #1f548e !important;
+}
+
+.button-blue-primary:hover{
+    background-color:#1C4C80 !important;
+}
+
+
+.button-blue-secondary {
+    color: #1f548e !important;
+    background-color: #E9EEF4 !important;
+}
+
+.button-blue-secondary:hover{
+    background-color:#C7D4E3 !important;
+    color: #1f548e !important;
+}
+
+.button-blue-tertiary {
+    color: #1f548e !important;
+    background-color: transparent !important;
+}
+
+/* green */
+.button-green-primary {
+    color: #fff !important;
+    background-color: #409318 !important;
+}
+
+.button-green-primary:hover{
+    background-color:#3A8416 !important;
+}
+
+.button-green-secondary {
+    color: #409318 !important;
+    background-color: #CFE4C5 !important;
+}
+
+.button-green-secondary:hover{
+    background-color:#B3D4A3 !important;
+}
+
+.button-green-tertiary {
+    color: #409318  !important;
+    background-color: transparent !important;
+}
+
+
+.button-modal-danger{
+    color: #B62020;
+    background-color: #FBE7E7;
+}
+
+.button-modal-cancel{
+    color: #495057;
+    background-color: #edf2f7;
 }

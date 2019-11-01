@@ -19,7 +19,8 @@ class UsersTableSeeder extends Seeder
             'name'              => 'Luis Macias',
             'email'             => 'admin@equibra.com',
             'password'          => Hash::make('981010'),
-            'change_password'   => true
+            'change_password'   => true,
+            'avatar' => '/img/profile_avatar/Luis_Macias_avatar.png'
         ]);
 
         $superAdmin->assignRoles('superAdministrador');

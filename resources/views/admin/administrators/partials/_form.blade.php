@@ -50,16 +50,10 @@
     @endif
 </div>
 <div class="btn-action">
-    <button class="btn btn-success btn-icon-split btn-sm" type="submit">
-        <span class="icon text-white-50">
-            <i class="fas fa-save fa-sm text-white-50"></i>
-        </span>
-        <span class="text">Guardar</span>
+    <button class="button button-blue-primary" type="submit">
+        Guardar
     </button>
-    <a href="{{route('administradores.index')}}" class="btn btn-secondary btn-icon-split btn-sm">
-        <span class="icon text-white-50">
-            <i class="fas fa-long-arrow-alt-left fa-sm text-white-50"></i>
-        </span>
-        <span class="text">Cancelar</span>
+    <a href="{{route('administradores.index')}}" class="button button-blue-secondary">
+        Cancelar
     </a>
 </div>

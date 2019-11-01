@@ -1,5 +1,5 @@
-<ul class="navbar-nav bg-main sidebar sidebar-dark accordion" id="accordionSidebar">
-    <!-- Sidebar - Brand -->
+<ul class="navbar-nav bg-main sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+<!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon rotate-n-15">
             <img class="img-sidebar" src="{{asset('img/EquibraIsotipo.svg')}}" alt="">
@@ -10,7 +10,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item">
         <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-home"></i>
             <span>Inicio</span>
@@ -31,22 +31,27 @@
 
 
     <!-- Nav Item - Almacen-->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAlmacen"
+    <li class="nav-item {{ request()->is('admin/categorias*','admin/productos*') ? 'active' : '' }}">
+        <a class="nav-link collapsed "
+           href="#" data-toggle="collapse" data-target="#collapseAlmacen"
            aria-expanded="true" aria-controls="collapseAlmacen">
             <i class="fas fa-boxes"></i>
             <span>Almacen</span>
         </a>
-        <div id="collapseAlmacen" class="collapse" aria-labelledby="headingAlmacen" data-parent="#accordionSidebar">
+        <div id="collapseAlmacen"
+             class="collapse"
+             aria-labelledby="headingAlmacen" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{route('categorias.index')}}">Categorías</a>
-                <a class="collapse-item" href="{{route('productos.index')}}">Productos</a>
+                <a class="collapse-item"
+                   href="{{route('categorias.index')}}">Categorías</a>
+                <a class="collapse-item"
+                   href="{{route('productos.index')}}">Productos</a>
             </div>
         </div>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('proveedores.index')}}">
+    <li class="nav-item {{ request()->is('admin/proveedores*') ? 'active' : '' }}">
+        <a class="nav-link " href="{{route('proveedores.index')}}">
             <i class="fas fa-handshake"></i>
             <span>Proveedores</span></a>
     </li>
@@ -78,8 +83,8 @@
         Multimedia
     </div>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('imagenes.index')}}">
+    <li class="nav-item {{ request()->is('admin/imagenes*') ? 'active' : '' }}">
+        <a class="nav-link " href="{{route('imagenes.index')}}">
             <i class="fas fa-images"></i>
             <span>Imágenes</span></a>
     </li>
@@ -87,12 +92,16 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-
     <!-- Heading -->
     <div class="sidebar-heading">
         E-Commerce
     </div>
 
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Ventas Online</span></a>
+    </li>
     <!-- Nav Item - Envíos -->
     <li class="nav-item">
         <a class="nav-link" href="#">
@@ -103,11 +112,6 @@
         <a class="nav-link" href="#">
             <i class="fas fa-shipping-fast"></i>
             <span>Envíos</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-shopping-bag"></i>
-            <span>Ventas Online</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">

@@ -14,7 +14,7 @@
                     <p>
                         Clasifica tus productos mediante categorías.
                     </p>
-                    <a href="{{route('categorias.create')}}" class="button-new">
+                    <a href="{{route('categorias.create')}}" class="button button-blue-primary">
                         Crear categoría
                     </a>
                 </div>
@@ -32,11 +32,8 @@
                     <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Categorías</li>
                 </ol>
             </nav>
-            <a href="{{route('categorias.create')}}" class="btn btn-success btn-icon-split btn-sm">
-        <span class="icon text-white-50">
-            <i class="fas fa-plus-circle fa-sm text-white-50"></i>
-        </span>
-                <span class="text">Nueva Categoría</span>
+            <a href="{{route('categorias.create')}}" class="button button-blue-primary">
+                Nueva Categoría
             </a>
         </div>
         {{-- Page Heading--}}
@@ -73,8 +70,7 @@
                                     </a>
                                     <span data-toggle="modal" data-target="#deleteModal">
                                     <button type="button" class="btn btn-circle btn-sm btn-danger mx-1 mb-1"
-                                            onclick="deleteData({{$category->id}})" data-toggle="tooltip"
-                                            data-placement="top" title="Eliminar">
+                                            onclick="deleteData({{$category->id}})" >
                                         <i class="fa fa-fw fa-trash-alt"></i>
                                     </button>
                                     </span>
@@ -90,41 +86,29 @@
 
     @endif
 
-
-
-
-
-
-
-
-
-
-
-
-
     {{-- Modal Delete Course--}}
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
          aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModal">¿Eliminar Categoría?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
                 <form action="" id="deleteForm" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">
-                        Está acción es irreversible, borrarás el registro de forma permanente.
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="modal-body-text">
+                            <p class="modal-body-text-title">Eliminar Categoria</p>
+                            <p class="modal-body-text-msj">¿Estás seguro que quieres eliminar la categoría?. Si lo haces
+                                perderás este registro de forma permanente.</p>
+                        </div>
                         <input type="hidden" name="category_id" id="cat_id" value="">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, mantener el registro.
+                        <button type="button" class="button button-modal-cancel" data-dismiss="modal">
+                            Cancelar
                         </button>
-                        <button type="submit" class="btn btn-danger">
-                            Si, eliminar registro.
+                        <button type="submit" class="button button-modal-danger">
+                            Eliminar registro.
                         </button>
                     </div>
                 </form>
