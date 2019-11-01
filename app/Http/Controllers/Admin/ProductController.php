@@ -29,6 +29,15 @@ class ProductController extends Controller
         return view('admin.products.index', compact('products'));
     }
 
+    public function getProducts(Request $request){
+        $products = Product::with(['category','image'])->where('status', 'ACTIVO')->orWhere('status', 'INACTIVO')->get();
+        if($request->ajax()) {
+            return response()->json($products);
+        }else{
+            return response()->json($products);
+            // abort(404);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -98,13 +107,14 @@ class ProductController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
+        $product = Product::findOrFail($id);
         $categories = Category::all();
         $images = Image::query()
             ->orderBy('created_at', 'asc')
             ->get();
-        return view('admin.products.edit', compact('categories', 'product', 'images'));
+        return view('admin.products.edit', compact('categories', 'product' , 'images'));
     }
 
     /**
@@ -174,13 +184,19 @@ class ProductController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $product = Product::findOrFail($id);
-        $product->update([
-            'status' => 'ELIMINADO'
-        ]);
-        return redirect()->route('productos.index')
-            ->with('info', 'Producto Eliminado exitosamente.');
+    public function destroy($id){
+        try{
+            $product = Product::findOrFail(100);
+            $product->update([
+                'status' => 'ELIMINADO'
+            ]);
+            return response()->json([
+                'msg' => 'Registro Eliminado',
+                'id' => $id
+            ]);
+        }catch(\Exception $ex){
+            return response('No se pudo eliminar intente mas tarde', 400)
+                    ->header('Content-Type', 'text/plain');
+        }
     }
 }

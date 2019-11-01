@@ -78,7 +78,9 @@
                             {{session('error')}}
                         </div>
                     @endif
-
+                    {{-- NOTIFY JAVASCRIPT --}}
+                    <div id="alert-notify-success" class="alert-notifier alert alert-success alert-dismissible fade" role="alert"></div>
+                    
                     @yield ('content')
             </div>
 

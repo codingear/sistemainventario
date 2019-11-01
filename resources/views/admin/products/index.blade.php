@@ -2,8 +2,9 @@
 @section('title', 'Productos')
 @push('stylesheets')
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.css')}}">
-    <!-- <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.dataTables.min.css')}}">
-    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.bootstrap4.min.css')}}"> -->
+    
+    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.dataTables.min.css')}}"> 
+    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.bootstrap4.min.css')}}">
 @endpush
 @section('content')
     {{-- Page Heading --}}
@@ -36,65 +37,19 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="table-categories" width="100%" cellspacing="0">
+                    <table class="table table-custom" id="t-products" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th width="30%">Nombre</th>
-                            <th>Categoría</th>
-                            <th width="5%">Stock</th>
-                            <th width="15%">Precio venta</th>
-                            <th width="5%">Status</th>
-                            <th width="20%">Acciones</th>
+                            <th width="10%">IMAGEN</th> 
+                            <th width="40%">NOMBRE / SKU</th>
+                            <th width="10%">EXISTENCIAS</th>
+                            <th width="10%">PRECIO</th>
+                            <th width="10%">ESTADO</th>
+                            <th width="20%">ACCIONES</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($products as $product)
-                            <tr>
-                                <td>{{$product->name}}</td>
-                                <td>{{empty($product->category->name) ? 'Sin Categoría' : $product->category->name}}
-                                </td>
-                                <td class="">
-                                    <label class="badge badge-{{$product->stock<= 5 ? 'warning':'success'}}"
-                                           style="font-size:.8rem;" data-toggle="tooltip" data-placement="top"
-                                           title="{{$product->stock<= 5 ? 'Stock Bajo':''}}">
-                                        {{$product->stock}}
-                                    </label>
-                                </td>
-                                <td>${{$product->sale_price}}</td>
-                                <td>
-                                    <label class="badge badge-{{$product->status=== 'ACTIVO' ? 'success':'danger'}}">
-                                        {{$product->status}}
-                                    </label>
-                                </td>
-                                <td class="d-flex flex-wrap justify-content-center align-items-center">
-                                    <a href="{{route('productos.edit',$product)}}"
-                                       class="btn btn-circle btn-sm btn-warning mx-1 mb-1" data-toggle="tooltip"
-                                       data-placement="top" title="Ver detalles/Editar">
-                                        <i class="fas fa-pen"></i>
-                                    </a>
-                                    <a href="{{route('admin.editProductStatus',$product->id)}}"
-                                       class='btn btn-circle btn-sm {{$product->status=== 'ACTIVO' ? 'btn-info':'btn-success'}} mx-1 mb-1'
-                                       data-toggle="tooltip" data-placement="top"
-                                       title="{{$product->status=== 'ACTIVO' ? 'Desactivar' :'Activar'}}"
-                                       onclick="event.preventDefault(); document.getElementById('changeProductStatus-form').submit();">
-                                        <i class="fa fa-check"></i>
-                                    </a>
-                                    <form id="changeProductStatus-form"
-                                          action="{{ route('admin.editProductStatus', $product->id) }}"
-                                          method="POST" style="display: none;">
-                                        @csrf
-                                        @method('PUT')
-                                    </form>
-                                    <span data-toggle="modal" data-target="#deleteModal">
-                                    <button type="button" class="btn btn-circle btn-sm btn-danger mx-1 mb-1"
-                                            onclick="deleteData({{$product->id}})" data-toggle="tooltip"
-                                            data-placement="top" title="Eliminar">
-                                        <i class="fa fa-fw fa-trash-alt"></i>
-                                    </button>
-                                    </span>
-                                </td>
-                            </tr>
-                        @endforeach
+                        
                         </tbody>
                     </table>
                 </div>
@@ -104,38 +59,6 @@
 @endsection
 
 @push('optional_scripts')
-    <!-- Modal Create Course-->
-    <div class="modal fade" id="newProductModal" tabindex="-1" role="dialog" aria-labelledby="newProductModalLabel"
-         aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <form enctype="multipart/form-data" id="newProductForm" class="form-course needs-validation" method="POST"
-              action="{{route('productos.store')}}" role="form" autocomplete="off">
-            @csrf
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="newProductModalLabel">Agregar nombre del producto:</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group col-12">
-                            <input type="text" class="form-control" value="{{old('name')}}" id="name" name="name"
-                                   placeholder="Ingresa nombre del producto">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="Formcancel" class="btn btn-danger" data-dismiss="modal">Cancelar
-                        </button>
-                        <button type="submit" class="btn btn-success">
-                            Crear Producto
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    {{--    close Modal Create--}}
 
     {{-- Modal Delete Course--}}
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
@@ -143,17 +66,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModal">¿Eliminar Producto?</h5>
+                    <h5 class="modal-title">¿Eliminar Producto?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="" id="deleteForm" method="POST">
+                <form id="deleteForm">
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">
                         El producto no será eliminado de forma permanente, pero ya no podrás ver sus detalles.
-                        <input type="hidden" name="category_id" id="cat_id" value="">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No, mantener el registro.
@@ -166,79 +88,168 @@
             </div>
         </div>
     </div>
-    {{--Modal--}}
+
+    {{-- Modal --}}
+
+    <script type="text/javascript">
+        var APP_URL = {!! json_encode(url('/admin/')) !!}
+    </script>
     <script src="{{ asset('vendors/dataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.js') }}"></script>
-    <!-- <script src="{{ asset('vendors/dataTables/dataTables.responsive.min.js') }}"></script> -->
-    <!-- <script src="{{ asset('vendors/dataTables/responsive.bootstrap4.min.js') }}"></script> -->
+
+    <script src="{{ asset('vendors/dataTables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('vendors/dataTables/responsive.bootstrap4.min.js') }}"></script>
     <script>
         $(document).ready(function () {
-            var table = $('#table-categories').dataTable({
+            var table = $('#t-products').DataTable({
                 "ordering": true,
                 "language": {
                     "url": "{{ asset('vendors/dataTables/Spanish.json')}}",
                 },
                 "pageLength": 10,
                 "responsive": true,
-                // order: [1, 'asc']
+                "ajax": {
+                    url: '/admin/all_productos',
+                    dataSrc: '',
+                },
+                "columns": [
+                    { 
+                        "data": "image.url", 
+                        render: function(data, type, row){
+                            if(data == null || data == undefined){
+                                return "<img class='img-table' src='https://dummyimage.com/50x50/f8f9fc/363537.png&text=Sin+Imagen'>";
+                            }else{
+                                return "<img class='img-table' src='"+data+"'>";
+                            }
+                        }
+                    },
+                    { 
+                        "data": "name",
+                        render: function(data, type, row){
+                            return "<p class='table-product table-cell-text'>"+data+"</p><p>"+row.sku+"</p>";
+                        }
+                    },
+                    { 
+                        "data": "stock",
+                        render: function(data, type, row){
+                            return "<p class='table-cell-text'><strong>"+data+"</strong></p><p>Unidades</p>";
+                        }
+                    },
+                    { 
+                        "data": "sale_price",
+                        render: function(data, type, row){
+                            return "<p class='table-cell-text'><strong>$" + data +"</strong></p><p>MXN</p>";
+                        }
+                    },
+                    { 
+                        "data": "status",
+                        render: function(data, type, row){
+                            var txt = data.toLowerCase();
+                            txt = txt.charAt(0).toUpperCase() + txt.slice(1);
+                            if(txt == 'Activo'){
+                                return "<span class='pill pill--success'>"+txt+"</span>";
+                            }else if(txt == 'Inactivo'){
+                                return "<span class='pill pill--warning'>"+txt+"</span>";
+                            }else{
+                                return "<span class='pill'>"+txt+"</span>";
+                            }
+                        }
+                    },
+                    {
+                        "data": null,
+                        render: function ( data, type, row ) {
+                            $tmp = `
+                                <a href='javascript:void(0);' class='control-button'><i class='far fa-eye fa-lg'></i></a>
+                                <a href='${APP_URL}/productos/${row.id}/editar' class='control-button'><i class='far fa-edit fa-lg'></i></a>
+                                <button id="showMod" onclick='deleteData(${row.id})' class='control-button' data-toggle="modal" data-target="#deleteModal" data-placement="top"><i class='far fa-trash-alt fa-lg'></i></button>
+                            `;
+                            return $tmp;
+                        }
+                    }
+                ],
             });
-            $('[data-toggle="tooltip"]').tooltip();
+       
+            var scope;
+            
+            $('#t-products tbody').on( 'click', 'button#showMod', function () {
+                scope = this;
+            });
+
+            $("#deleteForm").submit(function(ev){
+                ev.preventDefault();
+                $('button[type=submit]').prop('disabled', true);
+                var data = new FormData(this);
+                console.log(this.action);
+                axios.delete(this.action,data)
+                    .then(function(response){
+                        const res = response.data;
+                        $("#deleteModal").modal('hide');
+                        $('button[type=submit]').prop('disabled', false);
+                        shootAlert("success",res.msg);
+                        var row = $(scope).parents('tr');
+                        row.fadeOut(600, function () {
+                            table.row(row).remove().draw();
+
+                        });
+                    })
+                    .catch(function(error){
+                        const errors = error.response.data;
+                        $("#deleteModal").modal('hide');
+                        $('#deleteModal').on('hidden.bs.modal', function (e) {
+                            $('button[type=submit]').prop('disabled', false);
+                            shootAlert("error",errors);
+                        })
+                });
+            });
+
         });
-        // $('#newProductModal').on('show.bs.modal', function (event) {
-        //     setTimeout(function () {
-        //         $('#name').focus();
-        //     }, 750);
-        // });
+
+
+        function shootAlert(type, msg){
+            let tmp = ``;
+            if(type == "success"){
+                tmp = `
+                    <div class="alert alert-positive alert-notifier alert-dismissible fade show">
+                        <div class="alert-body">
+                        <div class="alert-icon icon-positive">
+                            <i class="far fa-check-circle"></i>
+                        </div>
+                        <div class="alert-msj">
+                            <p class="alert-title">${msg}</p>
+                            <p class="alert-text">El registro se ha eliminado con exito</p>
+                        </div>
+                        </div>
+                    </div>
+                `;
+            }else if(type== "error"){
+                tmp = `
+                    <div class="alert alert-negative alert-notifier alert-dismissible fade show">
+                        <div class="alert-body">
+                        <div class="alert-icon icon-negative">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="alert-msj">
+                            <p class="alert-title">Ups, algo ha salido mal</p>
+                            <p class="alert-text">${msg}.</p>
+                        </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            $("body").prepend(tmp);
+            setTimeout(function () {
+                $(".alert-notifier").fadeTo(600, 0).slideUp(600, function () {
+                    $(this).remove();
+                });
+            }, 2000);
+        }
 
         function deleteData(productId) {
             let id = productId;
             let url = '{{ route("productos.destroy", ":id") }}';
             url = url.replace(':id', id);
             $("#deleteForm").attr('action', url);
-        }
-
-        function formSubmit() {
-            $("#deleteForm").submit();
-        }
-    </script>
-    <script>
-        document.getElementById('Formcancel').addEventListener('click', function (e) {
-            document.getElementById("newProductForm").reset();
-            clearErrors();
-        });
-        (function () {
-            document.querySelector('#newProductForm').addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                axios.post(this.action, {
-                    'name': document.querySelector('#name').value
-                })
-                    .then(function (response) {
-                        const product = response.data;
-                        let url = '{{ route('productos.edit', ":id") }}';
-                        url = url.replace(':id', product.id);
-                        window.location.href = url;
-                        console.clear();
-                    })
-                    .catch(function (error) {
-                        clearErrors();
-                        const errors = error.response.data.errors;
-                        Object.keys(errors).forEach(function (k) {
-                            const itemDOM = document.getElementById(k);
-                            const errorMessage = errors[k];
-                            itemDOM.insertAdjacentHTML('afterend', `<div class="text-danger">${errorMessage}</div>`);
-                            itemDOM.classList.add('border', 'border-danger')
-                            console.clear();
-                        });
-                    });
-            });
-        })();
-
-        function clearErrors() {
-            const errorMessages = document.querySelectorAll('.text-danger');
-            errorMessages.forEach((element) => element.remove());
-            const formControls = document.querySelectorAll('.form-control');
-            formControls.forEach((element) => element.classList.remove('border', 'border-danger'))
-        }
+        }   
     </script>
 @endpush

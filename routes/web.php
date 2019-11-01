@@ -63,6 +63,7 @@ Route::group(
             ],
         ]);
         Route::match(['put', 'patch'], 'admin/change_ProductStatus/{id}', 'ProductController@changeProductStatus')->name('admin.editProductStatus');
+        Route::get('all_productos','ProductController@getProducts')->name('getproducts');
 
         //proveedores
         Route::resource('proveedores', 'ProviderController', [

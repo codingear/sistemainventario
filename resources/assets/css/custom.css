@@ -585,3 +585,145 @@ span#image_title {
         font-size: 0.8rem;
     }
 }
+
+
+/* ESTILOS DATATABLES */
+.img-table{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+    border-radius: 50%;
+}
+.pill{
+    background-color: #E2E2E2;
+    /* border: 1px solid #B6B6B6; */
+    color: #B6B6B6;
+    border-radius: 3em;
+    padding: .2em .9em;
+    font-size: 13px;
+    font-weight: 700;
+    
+}
+.pill--success{
+    background-color: #E6FFFA;
+    color: #38B2AC;
+    /* border: 1px solid #38B2AC; */
+}
+.pill--danger{
+    background-color: #FFF5F5;
+    color: #F56565;
+    /* border: 1px solid #F56565; */
+}
+.pill--warning{
+    background-color: #FFFAF0;
+    color: #ED8936;
+    /* border: 1px solid #ED8936; */
+}
+.pill--info{
+    background-color: #EBF8FF;
+    color:#4299E1;
+    /* border: 1px solid #4299E1; */
+}
+.table-custom{
+    font-size: 14px;
+}
+.table-product{
+    font-weight: 700;
+    color: #698DB3;
+}
+.table-cell-text{
+    margin: .1em 0;
+}
+.control-button{
+    background: none;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 .4em;
+    padding: 0;
+    outline: 0;
+}
+.control-button:focus{
+    outline: 0;
+}
+.control-button i{
+    color: rgb(133, 135, 150,.5);
+    transition: color .2s;
+}
+.control-button i:hover{
+    color: rgb(133, 135, 150, 1);
+}
+
+/* CUSTOM ALERTS */
+
+.alert {
+    max-width: 400px;
+    padding: .75rem 1.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    border-top-style: solid;
+    border-top-width: 4px;
+  }
+
+.alert-body {
+    display: flex;
+}
+
+.alert-icon {
+    padding-bottom: 0.25rem;
+    margin-right: 1rem;
+    font-size: 20px;
+}
+
+.alert-title {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.alert-text {
+    font-size: 15px;
+}
+
+.alert-positive {
+    border-color: #38b2ac;
+    background-color: #e6fffa;
+    color: #234e52;
+}
+
+.icon-positive{
+    color: #38b2ac;
+}
+
+.alert-negative {
+    border-color: #f56565;
+    background-color: #fff5f5;
+    color: #c53030;
+}
+
+.icon-negative{
+    color: #c53030;
+}
+
+.alert-warning {
+    border-color: #ed8936;
+    background-color: #fffaf0;
+    color: #c05621;
+}
+
+.icon-warning{
+    color: #c05621;
+}
+
+.alert-info {
+    border-color: #4299e1;
+    background-color: #ebf8ff;
+    color: #2B6BB0;
+}
+
+.icon-info{
+    color: #2B6BB0;
+}
