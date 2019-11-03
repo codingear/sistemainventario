@@ -27,8 +27,9 @@ class AdministratorUpdateProfile extends FormRequest
         return [
             'name'      => 'required|max:60',
             'email'     => 'required|email|max:255|unique:users,email,' . $userId . ',id',
-            'password'  => 'required|string|min:6|confirmed'
+            'password'  => 'confirmed'
         ];
+
     }
 
 
@@ -42,9 +43,7 @@ class AdministratorUpdateProfile extends FormRequest
             'name.max'                  => 'No más de 60 caracateres.',
             'email.required'            => 'El email es obligatorio.',
             'email.unique'              => 'Este email ya se ha registrado.',
-            'password.required'         => 'La contraseña es obligatoria.',
             'password.confirmed'        => 'La contraseña no coincide.',
-            'rol.required'           => 'El rol es obligatorio.'
         ];
     }
 }

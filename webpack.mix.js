@@ -42,4 +42,4 @@ mix.styles(
 // //     'public/js/public-home.js'
 // // );
 
-mix.browserSync('http://inv.v/');
+mix.browserSync('https://sistemainventario.test');

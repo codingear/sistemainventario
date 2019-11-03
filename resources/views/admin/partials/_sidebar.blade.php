@@ -1,5 +1,5 @@
-<ul class="navbar-nav bg-main sidebar sidebar-dark accordion" id="accordionSidebar">
-    <!-- Sidebar - Brand -->
+<ul class="navbar-nav bg-main sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+<!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon rotate-n-15">
             <img class="img-sidebar" src="{{asset('img/EquibraIsotipo.svg')}}" alt="">
@@ -10,7 +10,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item">
         <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-home"></i>
             <span>Inicio</span>
@@ -31,52 +31,48 @@
 
 
     <!-- Nav Item - Almacen-->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAlmacen"
+    <li class="nav-item {{ request()->is('admin/categorias*','admin/productos*') ? 'active' : '' }}">
+        <a class="nav-link collapsed "
+           href="#" data-toggle="collapse" data-target="#collapseAlmacen"
            aria-expanded="true" aria-controls="collapseAlmacen">
             <i class="fas fa-boxes"></i>
             <span>Almacen</span>
         </a>
-        <div id="collapseAlmacen" class="collapse" aria-labelledby="headingAlmacen" data-parent="#accordionSidebar">
+        <div id="collapseAlmacen"
+             class="collapse"
+             aria-labelledby="headingAlmacen" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{route('categorias.index')}}">Categorías</a>
-                <a class="collapse-item" href="{{route('productos.index')}}">Productos</a>
-                <a class="collapse-item" href="{{route('proveedores.index')}}">Proveedores</a>
+                <a class="collapse-item"
+                   href="{{route('categorias.index')}}">Categorías</a>
+                <a class="collapse-item"
+                   href="{{route('productos.index')}}">Productos</a>
             </div>
         </div>
     </li>
 
-    <!-- Nav Item -Ventas -->
+    <li class="nav-item {{ request()->is('admin/proveedores*') ? 'active' : '' }}">
+        <a class="nav-link " href="{{route('proveedores.index')}}">
+            <i class="fas fa-handshake"></i>
+            <span>Proveedores</span></a>
+    </li>
+
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVentas" aria-expanded="true"
-           aria-controls="collapseVentas">
-            <i class="fas fa-shopping-cart"></i>
-            <span>Ventas</span>
-        </a>
-        <div id="collapseVentas" class="collapse" aria-labelledby="headingVentas" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Clientes</a>
-                <a class="collapse-item" href="#">Ventas</a>
-            </div>
-        </div>
+        <a class="nav-link" href="#">
+            <i class="fas fa-user-tie"></i>
+            <span>Clientes</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-store"></i>
+            <span>Ventas Mostrador</span></a>
     </li>
 
     <!-- Nav Item -Reportes -->
     @can('administradores.index')
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes"
-               aria-expanded="true" aria-controls="collapseReportes">
+            <a class="nav-link" href="#">
                 <i class="fas fa-chart-pie"></i>
-                <span>Reportes</span>
-            </a>
-
-            <div id="collapseReportes" class="collapse" aria-labelledby="headingReportes"
-                 data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Reportes Compras</a>
-                    <a class="collapse-item" href="#">Reportes Ventas</a>
-                </div>
-            </div>
+                <span>Reportes Ventas</span></a>
         </li>
     @endcan
 <!-- Divider -->
@@ -87,8 +83,8 @@
         Multimedia
     </div>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('imagenes.index')}}">
+    <li class="nav-item {{ request()->is('admin/imagenes*') ? 'active' : '' }}">
+        <a class="nav-link " href="{{route('imagenes.index')}}">
             <i class="fas fa-images"></i>
             <span>Imágenes</span></a>
     </li>
@@ -96,13 +92,16 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-
-
     <!-- Heading -->
     <div class="sidebar-heading">
         E-Commerce
     </div>
 
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Ventas Online</span></a>
+    </li>
     <!-- Nav Item - Envíos -->
     <li class="nav-item">
         <a class="nav-link" href="#">
@@ -114,6 +113,12 @@
             <i class="fas fa-shipping-fast"></i>
             <span>Envíos</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-ticket-alt"></i>
+            <span>Tickets</span></a>
+    </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -125,7 +130,7 @@
         <!-- Nav Item - Usuarios -->
         <li class="nav-item {{ request()->is('admin/administradores','admin/administradores/*') ? 'active' : '' }}">
             <a class="nav-link" href="{{route('administradores.index')}}">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-user-shield"></i>
                 <span>Administradores</span></a>
         </li>
     @endcan

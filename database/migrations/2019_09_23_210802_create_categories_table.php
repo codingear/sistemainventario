@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 60)->unique();
             $table->string('description', 160)->nullable();
-            $table->boolean('status')->default(true);
+            $table->enum('status', ['Publicado', 'Inactivo', 'Eliminado'])->default('Publicado');
             $table->timestamps();
         });
     }

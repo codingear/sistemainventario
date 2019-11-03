@@ -261,8 +261,8 @@
 .page-item.active .page-link {
     z-index: 1;
     color: #fff;
-    background-color: var(--main-color);
-    border-color: var(--main-color);
+    background-color: #1C4C80;
+    border-color: #1C4C80;
 }
 
 .alert-rounded {
@@ -553,14 +553,13 @@ span#image_title {
         flex: 0 0 300px;
         flex-basis: 1 !important;
     }
-    
 }
-.container_item{
+.container_item {
     position: relative;
 }
-.btnDeleteImg{
+.btnDeleteImg {
     width: 100%;
-    background-color: rgba(220, 53, 69, .7);
+    background-color: rgba(220, 53, 69, 0.7);
     border: 0;
     outline: 0;
     /* margin-bottom: 1em; */
@@ -568,7 +567,7 @@ span#image_title {
     bottom: 0;
     left: 0;
 }
-.btnDeleteImg i{
+.btnDeleteImg i {
     color: white;
 }
 
@@ -726,4 +725,170 @@ span#image_title {
 
 .icon-info{
     color: #2B6BB0;
+}
+.avatar-upload {
+    position: relative;
+    max-width: 205px;
+    height: 220px;
+    text-align: center;
+}
+.avatar-upload .avatar-edit {
+    position: absolute;
+    right: 12px;
+    z-index: 1;
+    top: 6px;
+}
+.avatar-upload .avatar-edit input {
+    display: none;
+}
+.avatar-upload .avatar-edit input + label {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 0;
+    border-radius: 100%;
+    background: #ffffff;
+    border: 1px solid transparent;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    font-weight: normal;
+    transition: all 0.2s ease-in-out;
+}
+.avatar-upload .avatar-edit input + label:hover {
+    background: #f1f1f1;
+    border-color: #d6d6d6;
+}
+.avatar-upload .avatar-edit input + label:after {
+    content: '\f303';
+    font-family: 'Font Awesome\ 5 Free';
+    font-weight: 900; /* Fix version 5.0.9 */
+    color: #134b75;
+    position: absolute;
+    top: 6px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: auto;
+}
+.avatar-upload .avatar-preview {
+    width: 192px;
+    height: 192px;
+    position: relative;
+    border-radius: 100%;
+    border: 6px solid #f8f8f8;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+}
+.avatar-upload .avatar-preview > div {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.text-error {
+    color: #e74a3b;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* No data design */
+
+.container-noinfo {
+    margin-top: 120px;
+    text-align: center;
+}
+
+.container-noinfo_text p {
+    font-size: 20px;
+    text-align: center;
+    color: #596571;
+    margin: 20px 0;
+}
+
+.container-noinfo_icon i {
+    font-size: 120px;
+    color: #e3edf8;
+}
+
+/*custom buttons*/
+.button {
+    margin:0 2px;
+    outline: none;
+    padding: 8px 15px;
+    font-weight: 700;
+    border-radius: 0.25rem;
+    font-size: 14px;
+    line-height: inherit;
+    outline: 0;
+    letter-spacing: 0.2px;
+    text-decoration: none;
+    border: 0 solid #e2e8f0;
+}
+
+.button:active,
+.button:focus{
+    outline: 0;
+}
+
+.button-blue-primary {
+    color: #fff !important;
+    background-color: #1f548e !important;
+}
+
+.button-blue-primary:hover{
+    background-color:#1C4C80 !important;
+}
+
+
+.button-blue-secondary {
+    color: #1f548e !important;
+    background-color: #E9EEF4 !important;
+}
+
+.button-blue-secondary:hover{
+    background-color:#C7D4E3 !important;
+    color: #1f548e !important;
+}
+
+.button-blue-tertiary {
+    color: #1f548e !important;
+    background-color: transparent !important;
+}
+
+/* green */
+.button-green-primary {
+    color: #fff !important;
+    background-color: #409318 !important;
+}
+
+.button-green-primary:hover{
+    background-color:#3A8416 !important;
+}
+
+.button-green-secondary {
+    color: #409318 !important;
+    background-color: #CFE4C5 !important;
+}
+
+.button-green-secondary:hover{
+    background-color:#B3D4A3 !important;
+}
+
+.button-green-tertiary {
+    color: #409318  !important;
+    background-color: transparent !important;
+}
+
+
+.button-modal-danger{
+    color: #B62020;
+    background-color: #FBE7E7;
+}
+
+.button-modal-cancel{
+    color: #495057;
+    background-color: #edf2f7;
 }

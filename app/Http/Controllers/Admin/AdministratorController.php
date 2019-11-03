@@ -13,6 +13,11 @@ use App\Http\Requests\AdministratorUpdateProfile;
 use App\Notifications\NewAdmin;
 use Illuminate\Support\Str;
 use App\User;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
+//use Laravolt\Avatar\Avatar;
+
 
 class AdministratorController extends Controller
 {
@@ -59,15 +64,22 @@ class AdministratorController extends Controller
      */
     public function store(AdministratorRequest $request)
     {
-
         //Password aleatorio que se envía al usuario antes de encriptar
         $temp_password = Str::random(6);
+
+        $basePath = "/img/profile_avatar";
+        $avatarName = (str_replace(" ", "_", $request['name'])) . '_avatar';
+        $avatar = \Avatar::create($request['name'])->getImageObject()->encode('png');
+        Storage::put('profile_avatar/' . $avatarName . '.png', (string)$avatar);
+        $avatar_url = $basePath . '/' . $avatarName . '.png';
 
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($temp_password),
+            'avatar' => $avatar_url
         ]);
+
 
         $user->temp_pass = $temp_password;
         $user->assignRoles($request['rol']);
@@ -100,10 +112,17 @@ class AdministratorController extends Controller
     public function updateAdminProfile(AdministratorUpdateProfile $request, User $user)
     {
         $u = User::findOrFail($user->id);
+        $password = '';
+        if ($request['password'] == null) {
+            $password = $user->password;
+        } else {
+            $password = Hash::make($request['password']);
+        }
+
         $u->update([
             'name' => $request['name'],
             'email' => $request['email'],
-            'password' => Hash::make($request['password']),
+            'password' => $password,
         ]);
         $u->change_password = true;
         $u->save();
@@ -112,6 +131,16 @@ class AdministratorController extends Controller
             ->with('info', 'Datos editados exitosamente.');
     }
 
+
+    public function updateAvatarAdministrator(Request $request)
+    {
+        $user = Auth::User();
+        unlink(public_path($user->avatar));
+        $urlAvatar = $request->file('avatar')->store('profile_avatar');
+        $user->update([
+            'avatar' => Storage::url($urlAvatar),
+        ]);
+    }
 
     /**
      * Update the specified resource in storage.

@@ -105,6 +105,46 @@
 
 <script src="{{asset('js/all.js')}}"></script>
 <script>
+    var APP_URL = {!! json_encode(url('/admin/')) !!}
+    function shootAlert(type, msg){
+        let tmp = ``;
+        if(type == "success"){
+            tmp = `
+                <div class="alert alert-positive alert-notifier alert-dismissible fade show">
+                    <div class="alert-body">
+                    <div class="alert-icon icon-positive">
+                        <i class="far fa-check-circle"></i>
+                    </div>
+                    <div class="alert-msj">
+                        <p class="alert-title">${msg}</p>
+                        <p class="alert-text">El registro se ha eliminado con exito</p>
+                    </div>
+                    </div>
+                </div>
+            `;
+        }else if(type== "error"){
+            tmp = `
+                <div class="alert alert-negative alert-notifier alert-dismissible fade show">
+                    <div class="alert-body">
+                    <div class="alert-icon icon-negative">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="alert-msj">
+                        <p class="alert-title">Ups, algo ha salido mal</p>
+                        <p class="alert-text">${msg}.</p>
+                    </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        $("body").prepend(tmp);
+        setTimeout(function () {
+            $(".alert-notifier").fadeTo(600, 0).slideUp(600, function () {
+                $(this).remove();
+            });
+        }, 2000);
+    }
     window.setTimeout(function () {
         $(".alert-notifier").fadeTo(600, 0).slideUp(600, function () {
             $(this).remove();

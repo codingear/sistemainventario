@@ -34,6 +34,15 @@ class CategoryController extends Controller
         return view('admin.categories.index', compact('categories'));
     }
 
+    public function getCategories(Request $request){
+        $categories = Category::query()->orderBy('id', 'asc')->get();
+        if($request->ajax()) {
+            return response()->json($categories);
+        }else{
+            abort(404);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -99,7 +108,7 @@ class CategoryController extends Controller
         $category->update([
             'name'          => $request['name'],
             'description'   => $request['description'],
-            'status'        => $request['status'] ? true : false,
+            'status'        => $request['status'] ? 'Publicado' : 'Inactivo',
         ]);
 
         return redirect()
@@ -136,10 +145,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
-        return redirect()
-            ->route('categorias.index')
-            ->with('info', 'La categoría ha sido eliminada exitosamente.');
+        try{
+            $category = Category::findOrFail($id);
+            $category->delete();
+            return response()->json([
+                'msg' => 'Registro Eliminado',
+                'id' => $id
+            ]);
+        }catch(\Exception $ex){
+            return response('No se pudo eliminar intente mas tarde', 400)
+                    ->header('Content-Type', 'text/plain');
+        }
     }
 }

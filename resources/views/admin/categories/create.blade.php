@@ -5,7 +5,6 @@
 <div class="d-sm-flex align-items-center justify-content-between">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="h5 breadcrumb-item"><a class="text-main" href="{{route('dashboard')}}">Dashboard</a></li>
             <li class="h5 breadcrumb-item"><a class="text-main" href="{{route('categorias.index')}}">Categorías</a></li>
             <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Nueva Categoría</li>
         </ol>
