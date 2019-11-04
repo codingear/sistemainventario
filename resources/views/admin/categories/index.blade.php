@@ -107,6 +107,7 @@
     <!-- <script src="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.js') }}"></script> -->
     <script>
         $(document).ready(function () {
+            var scope;
             var table = $('#t-categories').DataTable({
                 "ordering": true,
                 "language": {
@@ -163,41 +164,53 @@
                         }
                     }
                 ],
-            });
-        });
-
-        var scope;
-            
-        $('#t-categories tbody').on( 'click', 'button#showMod', function () {
-            scope = this;
-        });
-
-        $("#deleteForm").submit(function(ev){
-            ev.preventDefault();
-            $('button[type=submit]').prop('disabled', true);
-            var data = new FormData(this);
-            axios.delete(this.action,data)
-                .then(function(response){
-                    const res = response.data;
-                    $("#deleteModal").modal('hide');
-                    $('button[type=submit]').prop('disabled', false);
-                    shootAlert("success",res.msg);
-                    var row = $(scope).parents('tr');
-                    row.fadeOut(600, function () {
-                        table.row(row).remove().draw();
-
+                initComplete: function () {
+                    this.api().on( 'draw', function () {
+                        console.log($(this).find('tbody tr').length);
+                        if($(this).find('tbody tr td').first().attr('colspan')){
+                            window.location.replace(APP_URL + '/categorias');
+                        }
                     });
-                })
-                .catch(function(error){
-                    const errors = error.response.data;
-                    $("#deleteModal").modal('hide');
-                    $('#deleteModal').on('hidden.bs.modal', function (e) {
+                }
+            });
+            
+                
+            $('#t-categories tbody').on( 'click', 'button#showMod', function () {
+                scope = this;
+            });
+
+            $("#deleteForm").submit(function(ev){
+                ev.preventDefault();
+                $('button[type=submit]').prop('disabled', true);
+                var data = new FormData(this);
+                axios.delete(this.action,data)
+                    .then(function(response){
+                        const res = response.data;
+                        $("#deleteModal").modal('hide');
                         $('button[type=submit]').prop('disabled', false);
-                        shootAlert("error",errors);
+                        shootAlert("success", res.msg);
+                        var row;
+                        if($(scope).closest('table').hasClass("collapsed")) {
+                            var child = $(scope).parents("tr.child");
+                            row = $(child).prev(".parent");
+                        } else {
+                            row = $(scope).parents('tr');
+                        }
+                        row.fadeOut(600, function () {
+                            table.row(row).remove().draw();
+                        });
                     })
+                    .catch(function(error){
+                        const errors = error.response.data;
+                        $("#deleteModal").modal('hide');
+                        $('#deleteModal').on('hidden.bs.modal', function (e) {
+                            $('button[type=submit]').prop('disabled', false);
+                            shootAlert("error",errors);
+                        })
+                    });
             });
         });
-
+        
         function deleteData(categoryId) {
             let id = categoryId;
             let url = '{{ route("categorias.destroy", ":id") }}';
@@ -205,8 +218,5 @@
             $("#deleteForm").attr('action', url);
         }
 
-        // function formSubmit() {
-        //     $("#deleteForm").submit();
-        // }
     </script>
 @endpush

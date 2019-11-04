@@ -171,6 +171,14 @@
                         }
                     }
                 ],
+                initComplete: function () {
+                    this.api().on( 'draw', function () {
+                        console.log($(this).find('tbody tr').length);
+                        if($(this).find('tbody tr td').first().attr('colspan')){
+                            window.location.replace(APP_URL + '/productos');
+                        }
+                    });
+                }
             });
        
             var scope;
@@ -189,7 +197,13 @@
                         $("#deleteModal").modal('hide');
                         $('button[type=submit]').prop('disabled', false);
                         shootAlert("success",res.msg);
-                        var row = $(scope).parents('tr');
+                        var row;
+                        if($(scope).closest('table').hasClass("collapsed")) {
+                            var child = $(scope).parents("tr.child");
+                            row = $(child).prev(".parent");
+                        } else {
+                            row = $(scope).parents('tr');
+                        }
                         row.fadeOut(600, function () {
                             table.row(row).remove().draw();
 

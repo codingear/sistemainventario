@@ -111,10 +111,9 @@
     <script src="{{ asset('vendors/dataTables/responsive.bootstrap4.min.js') }}"></script>
     
     <script>
+        $(document).ready(function(){
+            var scope;
 
-        var scope;
-
-        $(document).ready(function () {
             var table = $('#table-providers').DataTable({
                 "ordering": true,
                 "language": {
@@ -160,41 +159,53 @@
                             return $tmp;
                         }
                     }
-                ]
-            });
-        });
-            
-        $('#table-providers tbody').on( 'click', 'button#showMod', function () {
-            scope = this;
-        });
-
-        
-        $("#deleteForm").submit(function(ev){
-            ev.preventDefault();
-            $('button[type=submit]').prop('disabled', true);
-            var data = new FormData(this);
-            axios.delete(this.action,data)
-                .then(function(response){
-                    const res = response.data;
-                    $("#deleteModal").modal('hide');
-                    $('button[type=submit]').prop('disabled', false);
-                    shootAlert("success",res.msg);
-                    var row = $(scope).parents('tr');
-                    row.fadeOut(600, function () {
-                        table.row(row).remove().draw();
-
+                ],
+                initComplete: function () {
+                    this.api().on( 'draw', function () {
+                        console.log($(this).find('tbody tr').length);
+                        if($(this).find('tbody tr td').first().attr('colspan')){
+                            window.location.replace(APP_URL + '/proveedores');
+                        }
                     });
-                })
-                .catch(function(error){
-                    const errors = error.response.data;
-                    $("#deleteModal").modal('hide');
-                    $('#deleteModal').on('hidden.bs.modal', function (e) {
+                }
+            });
+                
+            $('#table-providers tbody').on( 'click', 'button#showMod', function () {
+                scope = this;
+            });
+            
+            $("#deleteForm").submit(function(ev){
+                ev.preventDefault();
+                $('button[type=submit]').prop('disabled', true);
+                var data = new FormData(this);
+                axios.delete(this.action,data)
+                    .then(function(response){
+                        const res = response.data;
+                        $("#deleteModal").modal('hide');
                         $('button[type=submit]').prop('disabled', false);
-                        shootAlert("error",errors);
+                        shootAlert("success",res.msg);
+                        var row;
+                        if($(scope).closest('table').hasClass("collapsed")) {
+                            var child = $(scope).parents("tr.child");
+                            row = $(child).prev(".parent");
+                            console.log(row);
+                        } else {
+                            row = $(scope).parents('tr');
+                        }
+                        row.fadeOut(600, function () {
+                            table.row(row).remove().draw();
+                        });
                     })
+                    .catch(function(error){
+                        const errors = error.response.data;
+                        $("#deleteModal").modal('hide');
+                        $('#deleteModal').on('hidden.bs.modal', function (e) {
+                            $('button[type=submit]').prop('disabled', false);
+                            shootAlert("error",errors);
+                        })
+                });
             });
         });
-
         function deleteData($providerId) {
             let id = $providerId;
             let url = '{{ route("proveedores.destroy", ":id") }}';
