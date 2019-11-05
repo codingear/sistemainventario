@@ -1,5 +1,5 @@
 @extends('admin.layouts._layout')
-@section('title', 'Usuarios')
+@section('title', 'Administadores')
 @push('stylesheets')
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.css')}}">
 @endpush
@@ -35,11 +35,12 @@
         </div>
     @else
         <div class="card shadow mt-2 mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-main">Listado de Administradores</h6>
-                <p class="text-danger font-weight-bold font-italic" style="font-size: 13px;">
-                    *Recuerda que los administradores inactivos no tienen acceso al sistema.
-                </p>
+            <div class="card-header py-3 d-flex align-items-center">
+                <h6 class="m-0 font-weight-bold text-main mr-1">Listado de Administradores</h6>
+                <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="Ayuda"
+                   data-content="Los administradores inactivos no tienen acceso al sistema.">
+                    <i class="fas fa-question-circle info-img"></i>
+                </a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -61,34 +62,19 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->roles->first()->name}}</td>
                                 <td>
-                                    <label class="badge badge-{{$user->status=== 1 ? 'success':'danger'}}">
-                                        {{$user->status=== 1 ? 'ACTIVO':'INACTIVO'}}
+                                    <label class="pill {{$user->status=== 1 ? 'pill--success':'pill pill--warning'}}">
+                                        {{$user->status=== 1 ? 'Activo':'Inactivo'}}
                                     </label>
                                 </td>
                                 <td class=" d-flex flex-wrap justify-content-center d-flex align-items-center">
                                     @if($user->id!=1)
                                         <a href="{{route('administradores.edit',$user)}}"
-                                           class="btn btn-circle btn-sm btn-warning mx-1 mb-1" data-toggle="tooltip"
-                                           data-placement="top" title="Editar">
+                                           class="btn btn-circle btn-sm btn-warning mx-1 mb-1">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a href="{{route('admin.editAdminStatus',$user)}}"
-                                           class='btn btn-circle btn-sm {{$user->status ? 'btn-info ' :'btn-success'}} mx-1 mb-1'
-                                           data-toggle="tooltip" data-placement="top"
-                                           title="{{$user->status ? 'Desactivar' :'Activar'}}" onclick="event.preventDefault();
-                                           document.getElementById('changeStatus-form').submit();">
-                                            <i class="fa fa-check"></i>
-                                        </a>
-                                        <form id="changeStatus-form"
-                                              action="{{ route('admin.editAdminStatus', $user->id) }}"
-                                              method="POST" style="display: none;">
-                                            @csrf
-                                            @method('PUT')
-                                        </form>
                                         <span data-toggle="modal" data-target="#deleteModal">
                                     <button type="button" class="btn btn-circle btn-sm btn-danger mx-1 mb-1"
-                                            onclick="deleteData({{$user->id}})" data-toggle="tooltip"
-                                            data-placement="top" title="Eliminar">
+                                            onclick="deleteData({{$user->id}})">
                                         <i class="fa fa-fw fa-trash-alt"></i>
                                     </button>
                                     </span>
@@ -103,32 +89,29 @@
             </div>
         </div>
     @endif
-@endsection
-
-@push('optional_scripts')
-    {{--    Modal Delete Course--}}
+    {{-- Modal Delete Course--}}
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
          aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModal">¿Eliminar Registro?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
                 <form action="" id="deleteForm" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">
-                        Está acción es irreversible, borrarás el registro de forma permanente.
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="modal-body-text">
+                            <p class="modal-body-text-title">Eliminar Categoria</p>
+                            <p class="modal-body-text-msj">¿Estás seguro que quieres eliminar la categoría?. Si lo haces
+                                perderás este registro de forma permanente.</p>
+                        </div>
                         <input type="hidden" name="user_id" id="u_id" value="">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, mantener el registro.
+                        <button type="button" class="button button-modal-cancel" data-dismiss="modal">
+                            Cancelar
                         </button>
-                        <button type="submit" class="btn btn-danger">
-                            Si, eliminar registro.
+                        <button type="submit" class="button button-modal-danger">
+                            Eliminar registro.
                         </button>
                     </div>
                 </form>
@@ -136,6 +119,11 @@
         </div>
     </div>
     {{--Modal--}}
+
+@endsection
+
+@push('optional_scripts')
+
     <script src="{{ asset('vendors/dataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.js') }}"></script>
     <script>
@@ -148,7 +136,9 @@
                 "pageLength": 10,
                 order: [1, 'asc']
             });
-            $('[data-toggle="tooltip"]').tooltip();
+            $(function () {
+                $('[data-toggle="popover"]').popover()
+            })
         });
 
         function deleteData(userId) {
@@ -158,8 +148,29 @@
             $("#deleteForm").attr('action', url);
         }
 
-        function formSubmit() {
-            $("#deleteForm").submit();
-        }
+        $("#deleteForm").submit(function (ev) {
+            ev.preventDefault();
+            var data = new FormData(this);
+            axios.delete(this.action, data)
+                .then(function (response) {
+                    const res = response.data;
+                    $("#deleteModal").modal('hide');
+                    $('button[type=submit]').prop('disabled', false);
+                    shootAlert('success', 'Administrador eliminado', res.msg);
+                    window.setTimeout(function () {
+                        location.reload(true);
+                    }, 1200);
+                })
+                .catch(function (error) {
+                    const errors = error.response.data;
+                    $("#deleteModal").modal('hide');
+                    $('#deleteModal').on('hidden.bs.modal', function (e) {
+                        $('button[type=submit]').prop('disabled', false);
+                        shootAlert('error', 'Ups. Algo salió mal.', errors);
+                    })
+                });
+        });
+
+
     </script>
 @endpush

@@ -81,13 +81,17 @@ class ImageController extends Controller
      */
     public function update(ImageRequest $request, $id)
     {
-        $image = Image::findOrFail($id);
-        $image->update([
-            'title' => $request['title'],
-            'text_alt' => $request['text_alt'],
-        ]);
-        return response()->json(['success' => 'Imagen Actualizada']);
-
+        try {
+            $image = Image::findOrFail($id);
+            $image->update([
+                'title' => $request['title'],
+                'text_alt' => $request['text_alt'],
+            ]);
+            return response()->json(['msg' => 'El registro se ha editado correctamente.',]);
+        } catch (\Exception $ex) {
+            return response('No se pudo crear, intente mas tarde', 500)
+                ->header('Content-Type', 'text/plain');
+        }
     }
 
     /**

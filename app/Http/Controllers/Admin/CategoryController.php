@@ -34,11 +34,12 @@ class CategoryController extends Controller
         return view('admin.categories.index', compact('categories'));
     }
 
-    public function getCategories(Request $request){
+    public function getCategories(Request $request)
+    {
         $categories = Category::query()->orderBy('id', 'asc')->get();
-        if($request->ajax()) {
+        if ($request->ajax()) {
             return response()->json($categories);
-        }else{
+        } else {
             abort(404);
         }
     }
@@ -56,36 +57,27 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return Response
      */
     public function store(CategoryRequest $request)
     {
-        Category::create([
-            'name'          => $request['name'],
-            'description'   => $request['description'],
-        ]);
-
-        return redirect()
-            ->route('categorias.index')
-            ->with('info', 'Categoría registrada exitosamente.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
+        try {
+            Category::create([
+                'name' => $request['name'],
+                'description' => $request['description'],
+            ]);
+            return response()->json(['msg' => 'El registro se ha creado correctamente.',]);
+        } catch (\Exception $ex) {
+            return response('No se pudo crear, intente mas tarde', 500)
+                ->header('Content-Type', 'text/plain');
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -97,64 +89,45 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  CategoryRequest
-     * @param  int  $id
+     * @param CategoryRequest
+     * @param int $id
      * @return Response
      */
     public function update(CategoryRequest $request, $id)
     {
+        try {
+            $category = Category::findOrFail($id);
+            $category->update([
+                'name' => $request['name'],
+                'description' => $request['description'],
+                'status' => $request['status'] ? 'Publicado' : 'Inactivo',
+            ]);
+            return response()->json(['msg' => 'El registro se ha editado correctamente.',]);
+        } catch (\Exception $ex) {
+            return response('No se pudo editar, intente mas tarde', 500)
+                ->header('Content-Type', 'text/plain');
+        }
 
-        $category = Category::findOrFail($id);
-        $category->update([
-            'name'          => $request['name'],
-            'description'   => $request['description'],
-            'status'        => $request['status'] ? 'Publicado' : 'Inactivo',
-        ]);
-
-        return redirect()
-            ->route('categorias.index')
-            ->with('info', 'Categoría editada exitosamente.');
     }
-
-
-    /**
-     * Cambia el status de la categoría
-     * @param int $id
-     * @return Response
-     */
-    public function changeCategoryStatus($id)
-    {
-        $category = Category::findOrFail($id);
-
-        $currentStatus = $category->status;
-        $category->update([
-            'status' => !$currentStatus,
-        ]);
-
-        return redirect()
-            ->route('categorias.index')
-            ->with('info', 'Categoría editada exitosamente.');
-    }
-
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function destroy($id)
     {
-        try{
+        try {
             $category = Category::findOrFail($id);
             $category->delete();
             return response()->json([
-                'msg' => 'Registro Eliminado',
+                'msg' => 'El registro se ha eliminado correctamente.',
                 'id' => $id
             ]);
-        }catch(\Exception $ex){
-            return response('No se pudo eliminar intente mas tarde', 400)
-                    ->header('Content-Type', 'text/plain');
+        } catch (\Exception $ex) {
+            return response('No se pudo eliminar, intente mas tarde', 400)
+                ->header('Content-Type', 'text/plain');
         }
     }
 }

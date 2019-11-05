@@ -26,7 +26,8 @@
             <h6 class="m-0 font-weight-bold text-main">Editar Proveedor</h6>
         </div>
         <div class="card-body">
-            <form enctype="multipart/form-data" id="editProviderForm" class="form-course needs-validation" novalidate method="POST"
+            <form enctype="multipart/form-data" id="editProviderForm" class="form-course needs-validation" novalidate
+                  method="POST"
                   action={{route('proveedores.update',$provider->id)}} autocomplete="off" role="form">
                 @csrf
                 @method('PUT')
@@ -34,39 +35,6 @@
             </form>
         </div>
     </div>
-
-    {{--    Modal Delete Course--}}
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-         aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModal">¿Eliminar Registro?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="" id="deleteForm" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-body">
-                        Antes de borrar asegurate que algunos productos no dependan de esta categoría.
-                        <br>
-                        Está acción es irreversible, borrarás el registro de forma permanente.
-                        <input type="hidden" name="category_id" id="cat_id" value="">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, mantener el registro.
-                        </button>
-                        <button type="submit" class="btn btn-danger">
-                            Si, eliminar registro.
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    {{--Modal--}}
 @endsection
 @push('optional_scripts')
     <script>
@@ -88,27 +56,25 @@
 
                 })
                     .then(function (response) {
-                        const alert = document.querySelector('#alert_message');
-                        alert.innerHTML = (`<div class="alert alert-success mt-2" role="alert"><strong> Muy bien.</strong>${response.data.success}</div>`);
-                        document.body.scrollTop = document.documentElement.scrollTop = 0;
+                        clearErrors();
+                        console.clear();
+                        shootAlert('success', 'Proveedor editado.', response.data.msg);
                         window.setTimeout(function () {
                             window.location.href = '{{ route('proveedores.index') }}'
                         }, 1200);
-                        clearErrors();
-                        console.clear();
                     })
                     .catch(function (error) {
                         document.body.scrollTop = document.documentElement.scrollTop = 0;
                         const errors = error.response.data.errors;
                         clearErrors();
-                        Object.keys(errors).forEach(function (i) {
-                            const itemDOM = document.getElementById(i);
-                            const errorMessage = errors[i];
-                            itemDOM.insertAdjacentHTML('afterend', `<div class="invalid-feedback">${errorMessage}</div>`);
+                        Object.keys(errors).forEach(function (k) {
+                            const itemDOM = document.getElementById(k);
+                            const errorMessage = errors[k];
+                            itemDOM.insertAdjacentHTML('afterend',
+                                `<div class="invalid-feedback">${errorMessage}</div>`);
                             itemDOM.classList.add('is-invalid');
                             console.clear();
                         });
-                        console.clear();
                     });
             });
         })();

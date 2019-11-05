@@ -3,8 +3,6 @@
 @section('content')
     <!-- Page Heading -->
 
-
-
     <div class="d-sm-flex align-items-start justify-content-between">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">

@@ -14,7 +14,8 @@
                     <p>
                         Gestiona tu galería de imagenes.
                     </p>
-                    <button type="button" class="button button-blue-primary" name="btnOpenAddImages" id="btnOpenAddImages">
+                    <button type="button" class="button button-blue-primary" name="btnOpenAddImages"
+                            id="btnOpenAddImages">
                         Añadir Imágenes
                     </button>
                 </div>
@@ -83,65 +84,136 @@
     </div>
     <!-- /.container -->
 
-    <!-- Modal -->
-    <div class="modal fade" id="modalInfoImage" tabindex="-1" role="dialog" aria-labelledby="examplemodalInfoImage"
+
+    <div class="modal fade" id="modalInfoImage" tabindex="-1" role="dialog" aria-labelledby="modalInfoImage"
          aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-main" id="examplemodalInfoImage">Detalles Imagen </h5>
+                    <h5 class="modal-title text-main" id="modalInfoImage">Detalles Imagen </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="container-fluid">
-                        <div id="alert_message">
+                    <div class="container d-flex flex-column align-items-start">
+                        <div class="row w-100">
+                            <label class="modal-body-label">Imagen:</label>
+                            <div class="modal-thumbnail">
+                                <img src="" alt="..." class="thumbnail-image ">
+                            </div>
                         </div>
 
-                        <div class="row d-flex justify-content-start align-items-center">
-                            <div
-                                class="col-lg-6 col-12 d-flex flex-lg-column flex-row-reverse justify-content-end col-modal">
-                                <div class="modal-thumbnail">
-                                    <img src="" alt="..." class="thumbnail-image ">
-                                </div>
+                        <form class="row w-100 mt-3" id="FormImage" method="post">
+                            @csrf
+                            @method('PUT')
+                            <input type="text" hidden id="image_id">
+                            <div class="d-flex flex-row align-items-center my-2 w-100 ">
+                                <label for="title" class="modal-body-label">Título:</label>
+                                <input type="text" class="modal-body-input form-control" id="title" name="title">
                             </div>
-                            <div
-                                class="col-lg-6 col-12 d-flex justify-content-lg-start col-modal mt-4">
-                                <div class="col-data">
-                                    <form class="form-row" id="FormImage" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="text" hidden id="image_id">
-                                        <div class="form-group col-12">
-                                            <label for="title">Título</label>
-                                            <input type="text" class="form-control" id="title" name="title">
-                                        </div>
-                                        <div class="form-group col-12">
-                                            <label for="text_alt">Texto alternativo</label>
-                                            <input type="text" class="form-control" id="text_alt" name="text_alt">
-                                        </div>
-                                        <div class="btn-action d-flex align-items-end">
-                                            <button type="submit" name="btnFormImage" id="btnFormImage"
-                                                    class="btn btn-success btn-icon-split btn-sm">
-                                    <span class="icon text-white-50">
-                                        <i class="fas fa-redo fa-sm text-white-50"></i>
-                                    </span>
-                                                <span class="text">
-                                            Actualizar
-                                    </span>
-                                            </button>
-                                            <a href="#" class="ml-2 link-delete">Borrar imagen</a>
-                                        </div>
-                                    </form>
-                                </div>
+                            <div class="d-flex flex-row align-items-center my-2 w-100 ">
+                                <label for="text_alt" class="modal-body-label">Alter:</label>
+                                <input type="text" class="modal-body-input" id="text_alt" name="text_alt">
                             </div>
-                        </div>
+                            <div class="w-100 my-3 btn-action w-100 d-flex justify-content-start">
+                                <button type="submit" class="button button-blue-secondary" name="btnFormImage"
+                                        id="btnFormImage">
+                                    Actualizar
+                                </button>
+                                <button class="button button-modal-danger drop-img">
+                                    Eliminar imagen
+                                </button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    {{--    <div class="modal fade" id="#" tabindex="-1" role="dialog" aria-labelledby="examplemodalInfoImage"--}}
+    {{--         aria-hidden="true" data-backdrop="static" data-keyboard="false">--}}
+    {{--        <div class="modal-dialog modal-dialog-centered" role="document">--}}
+    {{--            <div class="modal-content">--}}
+    {{--                <div class="modal-header">--}}
+    {{--                    <h5 class="modal-title text-main" id="examplemodalInfoImage">Detalles Imagen </h5>--}}
+    {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+    {{--                        <span aria-hidden="true">&times;</span>--}}
+    {{--                    </button>--}}
+    {{--                </div>--}}
+    {{--                <div class="modal-body">--}}
+    {{--                    <div class="container-fluid">--}}
+    {{--                        <div id="alert_message">--}}
+    {{--                        </div>--}}
+
+    {{--                        <div class="row d-flex justify-content-start align-items-center">--}}
+    {{--                            <div--}}
+    {{--                                class="col-lg-6 col-12 d-flex flex-lg-column flex-row-reverse justify-content-end col-modal">--}}
+    {{--                                <div class="modal-thumbnail">--}}
+    {{--                                    <img src="" alt="..." class="thumbnail-image ">--}}
+    {{--                                </div>--}}
+    {{--                            </div>--}}
+    {{--                            <div--}}
+    {{--                                class="col-lg-6 col-12 d-flex justify-content-lg-start col-modal mt-4">--}}
+    {{--                                <div class="col-data">--}}
+    {{--                                    <form class="form-row" id="FormImage" method="post">--}}
+    {{--                                        @csrf--}}
+    {{--                                        @method('PUT')--}}
+    {{--                                        <input type="text" hidden id="image_id">--}}
+    {{--                                        <div class="form-group col-12">--}}
+    {{--                                            <label for="title">Título</label>--}}
+    {{--                                            <input type="text" class="form-control" id="title" name="title">--}}
+    {{--                                        </div>--}}
+    {{--                                        <div class="form-group col-12">--}}
+    {{--                                            <label for="text_alt">Texto alternativo</label>--}}
+    {{--                                            <input type="text" class="form-control" id="text_alt" name="text_alt">--}}
+    {{--                                        </div>--}}
+    {{--                                        <div class="btn-action d-flex align-items-end">--}}
+    {{--                                            <button type="submit" class="button button-blue-primary" name="btnFormImage"--}}
+    {{--                                                    id="btnFormImage">--}}
+    {{--                                                Actualizar--}}
+    {{--                                            </button>--}}
+
+    {{--                                        </div>--}}
+    {{--                                    </form>--}}
+    {{--                                </div>--}}
+    {{--                            </div>--}}
+    {{--                        </div>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 
 
 @endsection
@@ -155,13 +227,6 @@
                 scrollDirection: 'vertical',
                 effect: 'fadeIn',
             });
-
-            // if ($(".item").toArray().length >= 1) {
-            //     $(".container-alert").addClass('d-none');
-            // }
-            // ;
-
-
         });
 
 
@@ -219,7 +284,7 @@
                 this.on("queuecomplete", function (file) {
                     if (itemsLength === 0) {
                         location.reload(true);
-                    }else{
+                    } else {
                         //myDropzone.removeAllFiles();
                     }
                 });
@@ -284,20 +349,14 @@
                         'text_alt': document.querySelector('#text_alt').value,
                     }
                 }).then(function (response) {
-                    const alert = document.querySelector('#alert_message');
-                    alert.innerHTML = (`<div class="alert alert-success mt-2 alert-notifier" role="alert">Datos Actualizados.</div>`);
-                    window.setTimeout(function () {
-                        $(".alert-notifier").fadeTo(600, 0).slideUp(600, function () {
-                            $(this).remove();
-                        });
-                    }, 1000);
+                    clearErrors();
+                    console.clear();
+                    shootAlert('success', 'Imagen editada.', response.data.msg);
                 }).catch(function (error) {
                     const errors = error.response.data.errors;
                     clearErrors();
                     Object.keys(errors).forEach(function (k) {
                         const itemDOM = document.getElementById(k);
-                        const errorMessage = errors[k];
-                        itemDOM.insertAdjacentHTML('afterend', `<div class="invalid-feedback">${errorMessage}</div>`);
                         itemDOM.classList.add('is-invalid');
                         console.clear();
                     });
@@ -313,8 +372,9 @@
         }
 
 
-        $(document).on('click', '.link-delete', function (e) {
+        $(document).on('click', '.drop-img', function (e) {
             e.preventDefault();
+            console.log('delete');
             let id = document.querySelector('#image_id').value;
             axios({
                 method: 'delete',
@@ -329,7 +389,6 @@
                 console.log(error);
             });
         });
-
 
     </script>
 @endpush

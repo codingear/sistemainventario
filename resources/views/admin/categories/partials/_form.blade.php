@@ -1,8 +1,8 @@
 <div class="form-row">
     <div class="form-group col-lg-6 col-md-12">
-        <label for="input-name" class="col-form-label">Nombre:</label>
+        <label for="name" class="col-form-label">Nombre:</label>
         <input type="text" class="form-control {{$errors->has('name') ? 'is-invalid' :'' }}"
-               value="{{old('name',!empty($category) ? $category->name: '' )}}" id="input-name" name="name">
+               value="{{old('name',!empty($category) ? $category->name: '' )}}" id="name" name="name">
         @if ($errors->has('name'))
             <div class="invalid-feedback">
                 {{ $errors->first('name') }}
@@ -10,9 +10,9 @@
         @endif
     </div>
     <div class="form-group col-lg-6 col-md-12">
-        <label for="input-description" class="col-form-label">Descripción:</label>
+        <label for="description" class="col-form-label">Descripción:</label>
         <input type="text" class="form-control"
-               value="{{old('description',!empty($category) ? $category->description: '' )}}" id="input-description"
+               value="{{old('description',!empty($category) ? $category->description: '' )}}" id="description"
                name="description">
     </div>
     @if (!Request::is('admin/categorias/crear'))

@@ -1,5 +1,5 @@
 @extends('admin.layouts._layout')
-@section('title', 'Nuevo Producto')
+@section('title', 'Crear Producto')
 @push('stylesheets')
     <link rel="stylesheet" href="{{ asset('vendors/bootstrap-select/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/dropzone/dropzone.css')}}">
@@ -173,7 +173,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body d-inline">
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
                             <!-- LISTA DE IMAGENES -->
@@ -421,19 +421,12 @@
                 'gallery': $list_images,
             })
                 .then(function (response) {
-                    const alert = document.querySelector('#alert_message');
-                    alert.innerHTML = (`<div class="alert alert-success mt-2 alert-notifier" role="alert">Producto Guardado.</div>`);
-                    window.setTimeout(function () {
-                        $(".alert-notifier").fadeTo(600, 0).slideUp(600, function () {
-                            $(this).remove();
-                        });
-                    }, 1800);
                     clearErrors();
                     console.clear();
+                    shootAlert('success', 'Producto creado.', response.data.msg);
                     window.setTimeout(function () {
-                        window.location.href = '{{route('productos.index')}}';
-                    }, 1000);
-
+                        window.location.href = '{{ route('productos.index') }}'
+                    }, 1200);
                 })
                 .catch(function (error) {
                     document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -462,28 +455,4 @@
         });
 
     </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @endpush
