@@ -21,7 +21,8 @@ class CheckUserStatus
 
         if (Auth::check() && Auth::user()->status == false) {
             Auth::logout();
-            return redirect('/login')->with('error', 'Lo sentimos tu cuenta ha sido suspendida temporalmente, ponte en contacto con un Administrador.');
+            return redirect('/login')->with('error', 'Lo sentimos tu cuenta ha sido suspendida
+            temporalmente, ponte en contacto con un Administrador.');
         }
 
         return $next($request);

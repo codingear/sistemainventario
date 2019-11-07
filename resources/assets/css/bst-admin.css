@@ -12893,25 +12893,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 
-/*.modal-body {*/
-/*    padding: 1.3rem;*/
-/*}*/
-
-/*.modal-body-title {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    margin-top: .8rem;*/
-/*    margin-bottom: 1.2rem;*/
-/*}*/
-
-/*.modal-body-title p {*/
-/*    color: #2d3748;*/
-/*    font-weight: 700;*/
-/*    margin: 0;*/
-/*    font-size: 1.2rem;*/
-/*}*/
-
-.modal-body i {
+.modal-icon {
     font-size: 2rem;
     margin-right: .5rem;
     color: #DC3030;
@@ -12963,13 +12945,6 @@ body.sidebar-toggled footer.sticky-footer {
         font-size: 1.1rem;
     }
 }
-
-@media (max-width: 991px) {
-    .btn-action-mt {
-        margin-top: 2.2rem;
-    }
-}
-
 
 .button-is-invalid {
     border-color: #e74a3b !important;

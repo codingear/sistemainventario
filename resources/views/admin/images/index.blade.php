@@ -116,104 +116,21 @@
                                 <label for="text_alt" class="modal-body-label">Alter:</label>
                                 <input type="text" class="modal-body-input" id="text_alt" name="text_alt">
                             </div>
-                            <div class="w-100 my-3 btn-action w-100 d-flex justify-content-start">
+                            <div class="w-100 my-3 btn-action w-100 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="button button-blue-secondary" name="btnFormImage"
                                         id="btnFormImage">
-                                    Actualizar
+                                    <span>Actualizar</span>
                                 </button>
-                                <button class="button button-modal-danger drop-img">
-                                    Eliminar imagen
-                                </button>
+                                <a href="#" class="link-delete ml-2 drop-img" id="btnDeleteImage">
+                                    <span>Eliminar</span>
+                                </a>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Modal -->
-    {{--    <div class="modal fade" id="#" tabindex="-1" role="dialog" aria-labelledby="examplemodalInfoImage"--}}
-    {{--         aria-hidden="true" data-backdrop="static" data-keyboard="false">--}}
-    {{--        <div class="modal-dialog modal-dialog-centered" role="document">--}}
-    {{--            <div class="modal-content">--}}
-    {{--                <div class="modal-header">--}}
-    {{--                    <h5 class="modal-title text-main" id="examplemodalInfoImage">Detalles Imagen </h5>--}}
-    {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-    {{--                        <span aria-hidden="true">&times;</span>--}}
-    {{--                    </button>--}}
-    {{--                </div>--}}
-    {{--                <div class="modal-body">--}}
-    {{--                    <div class="container-fluid">--}}
-    {{--                        <div id="alert_message">--}}
-    {{--                        </div>--}}
-
-    {{--                        <div class="row d-flex justify-content-start align-items-center">--}}
-    {{--                            <div--}}
-    {{--                                class="col-lg-6 col-12 d-flex flex-lg-column flex-row-reverse justify-content-end col-modal">--}}
-    {{--                                <div class="modal-thumbnail">--}}
-    {{--                                    <img src="" alt="..." class="thumbnail-image ">--}}
-    {{--                                </div>--}}
-    {{--                            </div>--}}
-    {{--                            <div--}}
-    {{--                                class="col-lg-6 col-12 d-flex justify-content-lg-start col-modal mt-4">--}}
-    {{--                                <div class="col-data">--}}
-    {{--                                    <form class="form-row" id="FormImage" method="post">--}}
-    {{--                                        @csrf--}}
-    {{--                                        @method('PUT')--}}
-    {{--                                        <input type="text" hidden id="image_id">--}}
-    {{--                                        <div class="form-group col-12">--}}
-    {{--                                            <label for="title">Título</label>--}}
-    {{--                                            <input type="text" class="form-control" id="title" name="title">--}}
-    {{--                                        </div>--}}
-    {{--                                        <div class="form-group col-12">--}}
-    {{--                                            <label for="text_alt">Texto alternativo</label>--}}
-    {{--                                            <input type="text" class="form-control" id="text_alt" name="text_alt">--}}
-    {{--                                        </div>--}}
-    {{--                                        <div class="btn-action d-flex align-items-end">--}}
-    {{--                                            <button type="submit" class="button button-blue-primary" name="btnFormImage"--}}
-    {{--                                                    id="btnFormImage">--}}
-    {{--                                                Actualizar--}}
-    {{--                                            </button>--}}
-
-    {{--                                        </div>--}}
-    {{--                                    </form>--}}
-    {{--                                </div>--}}
-    {{--                            </div>--}}
-    {{--                        </div>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
 
 
 @endsection
@@ -324,7 +241,7 @@
             })
                 .then(function (response) {
                     modal.find("#image_id").val(response.data.id);
-                    modal.find('#image_title').text(response.data.title == '' ? ' sin título ' : response.data.title);
+                    modal.find('#image_title').text(response.data.title);
                     modal.find('.thumbnail-image').attr("src", response.data.url);
                     modal.find('#title').val(response.data.title);
                     modal.find('#text_alt').val(response.data.text_alt);
@@ -339,6 +256,9 @@
         (function () {
             document.querySelector('#FormImage').addEventListener('submit', function (e) {
                 e.preventDefault();
+                clearErrors();
+                let btn = document.querySelector("#btnFormImage");
+                disableSubmit(btn, 'Actualizando');
                 let id = document.querySelector('#image_id').value;
                 axios({
                     method: 'put',
@@ -348,11 +268,14 @@
                         'title': document.querySelector('#title').value,
                         'text_alt': document.querySelector('#text_alt').value,
                     }
-                }).then(function (response) {
+                }).then((response) => {
+                    enableSubmit(btn, 'Actualizar');
                     clearErrors();
                     console.clear();
+                    $('#modalInfoImage').modal('hide');
                     shootAlert('success', 'Imagen editada.', response.data.msg);
-                }).catch(function (error) {
+                }).catch((error) => {
+                    enableSubmit(btn, 'Actualizar');
                     const errors = error.response.data.errors;
                     clearErrors();
                     Object.keys(errors).forEach(function (k) {
@@ -360,6 +283,8 @@
                         itemDOM.classList.add('is-invalid');
                         console.clear();
                     });
+                }).finally(() => {
+                    enableSubmit(btn, 'Actualizar');
                 });
             });
         })();
@@ -374,21 +299,41 @@
 
         $(document).on('click', '.drop-img', function (e) {
             e.preventDefault();
-            console.log('delete');
+            clearErrors();
+            let btn = document.querySelector("#btnDeleteImage");
+            disableSubmit(btn, 'Eliminando');
             let id = document.querySelector('#image_id').value;
             axios({
                 method: 'delete',
                 url: `/admin/imagenes/${id}`,
-            }).then(function (response) {
-                $('#modalInfoImage').modal('toggle');
+            }).then((response) => {
+                $('#modalInfoImage').modal('hide');
+                shootAlert('success', 'Imagen eliminada.', response.data.msg);
                 $('[data-id="' + id + '"]')[0].parentElement.remove();
                 if ($(".item").toArray().length === 0) {
                     location.reload(true);
                 }
-            }).catch(function (error) {
-                console.log(error);
+            }).catch((error) => {
+                disableSubmit(btn, 'Eliminar');
+                const errors = error.response.data;
+                shootAlert('error', 'Imagen no eliminada', errors);
+            }).finally(() => {
+                enableSubmit(btn, 'Eliminar');
             });
         });
+
+        function disableSubmit(btn, msg) {
+            btn.style.opacity = ".5";
+            btn.disabled = true;
+            btn.innerHTML = `<span>${msg}</span> <i class="fas fa-circle-notch fa-spin"></i>`;
+        }
+
+        function enableSubmit(btn, msg) {
+            btn.style.opacity = 'initial';
+            btn.disabled = false;
+            btn.innerHTML = `<span>${msg}</span>`;
+        }
+
 
     </script>
 @endpush

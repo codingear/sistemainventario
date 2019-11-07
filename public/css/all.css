@@ -12893,25 +12893,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 
-/*.modal-body {*/
-/*    padding: 1.3rem;*/
-/*}*/
-
-/*.modal-body-title {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    margin-top: .8rem;*/
-/*    margin-bottom: 1.2rem;*/
-/*}*/
-
-/*.modal-body-title p {*/
-/*    color: #2d3748;*/
-/*    font-weight: 700;*/
-/*    margin: 0;*/
-/*    font-size: 1.2rem;*/
-/*}*/
-
-.modal-body i {
+.modal-icon {
     font-size: 2rem;
     margin-right: .5rem;
     color: #DC3030;
@@ -12963,13 +12945,6 @@ body.sidebar-toggled footer.sticky-footer {
         font-size: 1.1rem;
     }
 }
-
-@media (max-width: 991px) {
-    .btn-action-mt {
-        margin-top: 2.2rem;
-    }
-}
-
 
 .button-is-invalid {
     border-color: #e74a3b !important;
@@ -13858,11 +13833,11 @@ fieldset[disabled] .btn-white.active {
     height: 140px;
 }
 
-@media only screen and (min-width: 1600px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    }
-}
+/*@media only screen and (min-width: 1600px) {*/
+/*    .grid {*/
+/*        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));*/
+/*    }*/
+/*}*/
 
 @media only screen and (max-width: 768px) {
     .grid {
@@ -13907,7 +13882,15 @@ fieldset[disabled] .btn-white.active {
 
 .link-delete {
     color: #e74a3b;
+    font-weight: 700;
+    border-radius: 0.25rem;
+    font-size: 14px;
+    line-height: inherit;
+    outline: 0;
+    letter-spacing: 0.2px;
     text-decoration: underline;
+    border: 0 solid #e2e8f0;
+
 }
 
 .link-delete:hover {
@@ -14085,10 +14068,55 @@ span#image_title {
     color: rgb(133, 135, 150, 1);
 }
 
+
+/*card profile*/
+
+.user-card {
+    min-width: 28rem;
+}
+
+.user-card_name {
+    font-size: 1.25em;
+}
+
+.user-card_text {
+    color: #718096;
+}
+
+
+.user-card .card-body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card-body_text {
+    margin-left: 1.5rem;
+    text-align: left;
+}
+
+
+@media only screen and (max-width: 520px) {
+    .user-card .card-body {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-card {
+        min-width: 18rem;
+    }
+
+    .card-body_text {
+        margin-left: 0;
+        margin-top: 1.3rem;
+        text-align: center;
+    }
+
+}
+
 .avatar-upload {
     position: relative;
     max-width: 205px;
-    height: 220px;
     text-align: center;
 }
 
@@ -14136,12 +14164,10 @@ span#image_title {
 }
 
 .avatar-upload .avatar-preview {
-    width: 192px;
-    height: 192px;
+    width: 10rem;
+    height: 10rem;
     position: relative;
     border-radius: 100%;
-    border: 6px solid #f8f8f8;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .avatar-upload .avatar-preview > div {
@@ -14402,6 +14428,7 @@ span#image_title {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+
 @media screen and (max-width: 350px) {
     .modal-body-input {
         width: 65%;

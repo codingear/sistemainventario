@@ -88,11 +88,11 @@
                     </div>
                     <div class="card-footer">
                         <div class="btn-action">
-                            <button class="button button-blue-primary" type="submit" id="send_form">
-                                Guardar
+                            <button class="button button-blue-primary" type="submit" id="btnUpdateProduct">
+                                <span>Actualizar</span>
                             </button>
                             <a href="{{route('productos.index')}}" class="button button-blue-secondary">
-                                Cancelar
+                                Volver
                             </a>
                         </div>
                     </div>
@@ -443,7 +443,9 @@
 
         document.querySelector('#editProductForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            console.log("submiteando")
+            clearErrors();
+            let btn = document.querySelector("#btnUpdateProduct");
+            disableSubmit(btn, 'Actualizando');
             axios.put(this.action, {
                 'name': document.querySelector('#name').value,
                 'sku': document.querySelector('#sku').value,
@@ -454,18 +456,20 @@
                 'principal_image': document.querySelector('#principal_image_field').value,
                 'gallery': $list_images,
             })
-                .then(function (response) {
+
+
+                .then((response) => {
+                    enableSubmit(btn, 'Actualizar');
                     clearErrors();
                     console.clear();
                     shootAlert('success', 'Producto editado.', response.data.msg);
-                    window.setTimeout(function () {
-                        window.location.href = '{{ route('productos.index') }}'
-                    }, 1200);
+                    document.body.scrollTop = document.documentElement.scrollTop = 0;
                 })
-                .catch(function (error) {
+                .catch((error) => {
+                    enableSubmit(btn, 'Actualizar');
+                    clearErrors();
                     document.body.scrollTop = document.documentElement.scrollTop = 0;
                     const errors = error.response.data.errors;
-                    clearErrors();
                     Object.keys(errors).forEach(function (k) {
                         const itemDOM = document.getElementById(k);
                         const errorMessage = errors[k];
@@ -474,7 +478,10 @@
                         itemDOM.classList.add('is-invalid');
                         console.clear();
                     });
-                });
+                })
+                .finally(() => {
+                    enableSubmit(btn, 'Actualizar');
+                })
         });
 
         function clearErrors() {

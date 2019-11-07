@@ -104,6 +104,20 @@
             });
         }, 2000);
     }
+
+    function enableSubmit(btn, msg) {
+        btn.style.opacity = 'initial';
+        btn.disabled = false;
+        btn.innerHTML = `<span>${msg}</span>`;
+    }
+
+
+    function disableSubmit(btn, msg) {
+        btn.style.opacity = ".5";
+        btn.disabled = true;
+        btn.innerHTML = `<span>${msg}</span> <i class="fas fa-circle-notch fa-spin"></i>`;
+    }
+
 </script>
 @stack('optional_scripts')
 </body>

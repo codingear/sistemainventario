@@ -75,7 +75,7 @@
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">
-                        <i class="fas fa-exclamation-circle"></i>
+                        <i class="fas fa-exclamation-circle modal-icon"></i>
                         <div class="modal-body-text">
                             <p class="modal-body-text-title">Eliminar Producto</p>
                             <p class="modal-body-text-msj">¿Estás seguro que quieres eliminar el producto?. No se
@@ -86,8 +86,8 @@
                         <button type="button" class="button button-modal-cancel" data-dismiss="modal">
                             Cancelar
                         </button>
-                        <button type="submit" class="button button-modal-danger">
-                            Eliminar producto.
+                        <button type="submit" class="button button-modal-danger" id="btnDeleteProduct">
+                            <span>Eliminar</span>
                         </button>
                     </div>
                 </form>
@@ -171,6 +171,14 @@
                         }
                     }
                 ],
+                initComplete: function () {
+                    this.api().on('draw', function () {
+                        console.log($(this).find('tbody tr').length);
+                        if ($(this).find('tbody tr td').first().attr('colspan')) {
+                            window.location.replace(APP_URL + '/productos');
+                        }
+                    });
+                }
             });
 
             var scope;
@@ -181,30 +189,39 @@
 
             $("#deleteForm").submit(function (ev) {
                 ev.preventDefault();
-                $('button[type=submit]').prop('disabled', true);
+                let btn = document.querySelector("#btnDeleteProduct");
+                disableSubmit(btn);
                 var data = new FormData(this);
                 axios.delete(this.action, data)
-                    .then(function (response) {
+                    .then((response) => {
+                        enableSubmit(btn);
                         const res = response.data;
                         $("#deleteModal").modal('hide');
-                        $('button[type=submit]').prop('disabled', false);
                         shootAlert('success', 'Producto eliminado', res.msg);
-                        var row = $(scope).parents('tr');
+                        var row;
+                        if ($(scope).closest('table').hasClass("collapsed")) {
+                            var child = $(scope).parents("tr.child");
+                            row = $(child).prev(".parent");
+                        } else {
+                            row = $(scope).parents('tr');
+                        }
                         row.fadeOut(600, function () {
                             table.row(row).remove().draw();
 
                         });
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
+                        enableSubmit(btn);
                         const errors = error.response.data;
                         $("#deleteModal").modal('hide');
                         $('#deleteModal').on('hidden.bs.modal', function (e) {
-                            $('button[type=submit]').prop('disabled', false);
                             shootAlert('error', 'Ups. Algo salió mal.', errors);
                         })
+                    })
+                    .finally(() => {
+                        enableSubmit(btn);
                     });
             });
-
         });
 
         function deleteData(productId) {
@@ -212,6 +229,18 @@
             let url = '{{ route("productos.destroy", ":id") }}';
             url = url.replace(':id', id);
             $("#deleteForm").attr('action', url);
+        }
+
+        function disableSubmit(btn) {
+            btn.style.opacity = ".5";
+            btn.disabled = true;
+            btn.innerHTML = `<span>Eliminando</span> <i class="fas fa-circle-notch fa-spin"></i>`;
+        }
+
+        function enableSubmit(btn) {
+            btn.style.opacity = 'initial';
+            btn.disabled = false;
+            btn.innerHTML = `<span>Eliminar</span>`;
         }
     </script>
 @endpush
