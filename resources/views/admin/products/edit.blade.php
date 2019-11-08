@@ -74,8 +74,21 @@
                             </div>
                             <div class="form-group col-lg-4 col-md-12">
                                 <label for="stock" class="col-form-label">Stock:</label>
-                                <input type="number" class="form-control" value="{{old('stock', $product->stock)}}"
-                                       id="stock" name="stock">
+                                <input type="number" class="form-control"
+                                       value="{{$product->stock}}"
+                                       id="stock"
+                                       name="stock" {{(auth::user()->roles->first()->slug==='administrador')? 'disabled': ''}} >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                                <label for="label-status" class="col-form-label">Status:</label>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" onclick="checkStatus('status','label_status');"
+                                           class="custom-control-input" name="status"
+                                           id="status" {{(auth::user()->roles->first()->slug==='administrador')? 'disabled': ''}}
+                                        {{($product->status ==='Publicado') ? 'checked="checked"' : ''}} >
+                                    <label class="custom-control-label" for="status"
+                                           name="label_status" id="label_status">{{$product->status}}</label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
@@ -128,7 +141,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12">
                 <div class="card shadow mb-4 mt-2 border-bottom-main text-center">
@@ -262,6 +274,18 @@
             });
             // LLENAR EL ARRAY DE IMAGENES DE GALERIA
         });
+
+
+        function checkStatus(checkbox, label) {
+
+            let checkboxvar = document.getElementById(checkbox);
+            let labelvar = document.getElementById(label);
+            if (checkboxvar.checked) {
+                labelvar.innerHTML = "Publicado";
+            } else {
+                labelvar.innerHTML = "Inactivo";
+            }
+        }
 
 
         // SELECCIONAR IMAGENES DE GALERIA
@@ -454,6 +478,7 @@
                 'stock': document.querySelector('#stock').value,
                 'description': document.querySelector('#description').value,
                 'principal_image': document.querySelector('#principal_image_field').value,
+                'status': (document.querySelector('#status').checked) ? 'Publicado' : 'Inactivo',
                 'gallery': $list_images,
             })
 

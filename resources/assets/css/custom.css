@@ -933,6 +933,7 @@ span#image_title {
     margin: 0;
 }
 
+
 ._alert-positive {
     border-color: #38b2ac;
     background-color: #e6fffa;
@@ -961,6 +962,16 @@ span#image_title {
 
 ._icon-warning {
     color: #c05621;
+}
+
+._alert-warning a {
+    color: #c05621;
+    text-decoration: underline;
+}
+
+
+._alert-warning a:hover {
+    color: #ed8936;
 }
 
 ._alert-info {

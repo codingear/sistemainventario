@@ -1,5 +1,5 @@
 <ul class="navbar-nav bg-main sidebar sidebar-dark accordion toggled" id="accordionSidebar">
-<!-- Sidebar - Brand -->
+    <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon rotate-n-15">
             <img class="img-sidebar" src="{{asset('img/EquibraIsotipo.svg')}}" alt="">
@@ -10,15 +10,18 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
+    <li class="nav-item  {{ request()->is('admin') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-home"></i>
             <span>Inicio</span>
         </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{route('store')}}" target="_blank">
             <i class="fas fa-store"></i>
             <span>Ir a Tienda</span>
         </a>
+
     </li>
 
     <!-- Divider -->

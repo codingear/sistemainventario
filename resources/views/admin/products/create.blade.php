@@ -12,7 +12,9 @@
                 <li class="h5 breadcrumb-item"><a class="text-main" href="{{route('dashboard')}}">Dashboard</a></li>
                 <li class="h5 breadcrumb-item"><a class="text-main" href="{{route('productos.index')}}">Productos</a>
                 </li>
-                <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Crear Producto</li>
+                <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Crear
+                    Producto
+                </li>
             </ol>
         </nav>
     </div>
@@ -70,7 +72,20 @@
                             </div>
                             <div class="form-group col-lg-4 col-md-12">
                                 <label for="stock" class="col-form-label">Stock:</label>
-                                <input type="number" class="form-control" value="" id="stock" name="stock">
+                                <input type="number" class="form-control"
+                                       value="{{(auth::user()->roles->first()->slug==='administrador')? 0: ''}}"
+                                       id="stock"
+                                       name="stock" {{(auth::user()->roles->first()->slug==='administrador')? 'disabled': ''}} >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                                <label for="label-status" class="col-form-label">Status:</label>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" onclick="checkStatus('status','label_status');"
+                                           class="custom-control-input" name="status"
+                                           id="status" {{(auth::user()->roles->first()->slug==='administrador')? 'disabled': ''}}>
+                                    <label class="custom-control-label" for="status"
+                                           name="label_status" id="label_status">Inactivo</label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
@@ -239,6 +254,18 @@
             disableShift: false,
             disableCtrl: false,
         });
+
+
+        function checkStatus(checkbox, label) {
+
+            let checkboxvar = document.getElementById(checkbox);
+            let labelvar = document.getElementById(label);
+            if (checkboxvar.checked) {
+                labelvar.innerHTML = "Publicado";
+            } else {
+                labelvar.innerHTML = "Inactivo";
+            }
+        }
 
 
         $('#myModal').on('shown.bs.modal', function (e) {
@@ -420,12 +447,14 @@
                 'stock': document.querySelector('#stock').value,
                 'description': document.querySelector('#description').value,
                 'principal_image': document.querySelector('#principal_image_field').value,
+                'status': (document.querySelector('#status').checked) ? 'Publicado' : 'Inactivo',
                 'gallery': $list_images,
             })
                 .then((response) => {
                     enableSubmit(btn, 'Guardar');
                     clearErrors();
                     console.clear();
+                    document.body.scrollTop = document.documentElement.scrollTop = 0;
                     shootAlert('success', 'Producto creado.', response.data.msg);
                     window.setTimeout(function () {
                         window.location.href = '{{ route('productos.index') }}'
@@ -443,7 +472,7 @@
                         itemDOM.insertAdjacentHTML('afterend',
                             `<div class="invalid-feedback">${errorMessage}</div>`);
                         itemDOM.classList.add('is-invalid');
-                        console.clear();
+                        //console.clear();
                     });
                 })
                 .finally(() => {
