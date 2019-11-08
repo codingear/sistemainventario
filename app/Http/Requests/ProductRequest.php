@@ -23,21 +23,15 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        $rules  = [
+        return[
             'name'            => 'required|max:60|unique:products,name,' . $this->product,
             'description'     => 'required|max:200',
             'stock'           => 'required|numeric',
+            'status'          => 'required',
             'sale_price'      => 'required|between:1,999.99|numeric',
-            'sku'             => 'required|alpha_num|max:20|unique:products,sku,' . $this->product
+            'sku'             => 'required|alpha_num|max:20|unique:products,sku,' . $this->product,
         ];
 
-        // if ($this->getMethod() == 'PUT' || $this->getMethod() == 'POST') {
-        //     $rules += ['description'     => 'required|max:200'];
-        //     $rules += ['stock'           => 'required|numeric'];
-        //     $rules += ['sale_price'      => 'required|between:1,999.99|numeric'];
-        //     $rules += ['sku'             => 'required|alpha_num|max:20|unique:products,sku,' . $this->product];
-        // }
-        return $rules;
     }
 
     /**
@@ -55,6 +49,7 @@ class ProductRequest extends FormRequest
             'description.max'       => 'No más de 160 caracateres.',
             'stock.required'        => 'El stock es requerido',
             'stock.numeric'         => 'stock inválido',
+            'status.required'       => 'El status es requerido.',
             'sale_price.required'   => 'El precio de venta es requerido.',
             'sale_price.numeric'    => 'Precio inválido.',
             'sale_price.between'    => 'El precio debe estar entre 1 y 999.99',

@@ -24,6 +24,16 @@ class ProviderController extends Controller
         return view('admin.providers.index', compact('providers'));
     }
 
+    public function getProviders(Request $request)
+    {
+        $providers = Provider::get();
+        if ($request->ajax()) {
+            return response()->json($providers);
+        } else {
+            abort(404);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -46,8 +56,14 @@ class ProviderController extends Controller
      */
     public function store(ProviderRequest $request)
     {
-        Provider::create($request->all());
-        return response()->json(['success' => 'Proveedor creado correctamente.']);
+        try {
+            Provider::create($request->all());
+            return response()->json(['msg' => 'El registro se ha creado correctamente.',]);
+        } catch (\Exception $ex) {
+            return response('No se pudo crear, intente mas tarde', 500)
+                ->header('Content-Type', 'text/plain');
+        }
+
     }
 
     /**
@@ -87,23 +103,28 @@ class ProviderController extends Controller
     public function update(ProviderRequest $request, $id)
     {
         $provider = Provider::findOrFail($id);
+        try {
+            $provider->update([
+                'name' => $request['name'],
+                'contact_name' => $request['contact_name'],
+                'rfc' => $request['rfc'],
+                'telephone' => $request['telephone'],
+                'email' => $request['email'],
+                'website' => $request['website'],
+                'state_id' => $request['state_id'],
+                'city' => $request['city'],
+                'zip_code' => $request['zip_code'],
+                'address' => $request['address'],
+                'notes' => $request['notes'],
+            ]);
 
-        $provider->update([
-            'name' => $request['name'],
-            'contact_name' => $request['contact_name'],
-            'rfc' => $request['rfc'],
-            'telephone' => $request['telephone'],
-            'email' => $request['email'],
-            'website' => $request['website'],
-            'state_id' => $request['state_id'],
-            'city' => $request['city'],
-            'website' => $request['website'],
-            'zip_code' => $request['zip_code'],
-            'address' => $request['address'],
-            'notes' => $request['notes'],
-        ]);
+            return response()->json(['msg' => 'El registro se ha editado correctamente.']);
+        } catch (\Exception $ex) {
+            return response('No se pudo editar, intente mas tarde', 500)
+                ->header('Content-Type', 'text/plain');
+        }
 
-        return response()->json(['success' => 'Proveedor Editado correctamente.']);
+
     }
 
     /**
@@ -114,10 +135,16 @@ class ProviderController extends Controller
      */
     public function destroy($id)
     {
-        $provider = Provider::findOrFail($id);
-        $provider->delete();
-        return redirect()
-            ->route('proveedores.index')
-            ->with('info', 'El administrador ha sido eliminado exitosamente.');
+        try {
+            $provider = Provider::findOrFail($id);
+            $provider->delete();
+            return response()->json([
+                'msg' => 'El registro se ha eliminado correctamente.',
+                'id' => $id
+            ]);
+        } catch (\Exception $ex) {
+            return response('No se pudo eliminar, intente mas tarde', 400)
+                ->header('Content-Type', 'text/plain');
+        }
     }
 }

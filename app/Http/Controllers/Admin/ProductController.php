@@ -24,9 +24,22 @@ class ProductController extends Controller
     public function index()
     {
 
-        $products = Product::where('status', 'ACTIVO')->orWhere('status', 'INACTIVO')
+        $products = Product::where('status', 'Publicado')->orWhere('status', 'Inactivo')
             ->get();
         return view('admin.products.index', compact('products'));
+    }
+
+    public function getProducts(Request $request)
+    {
+        $products = Product::with(['category', 'image'])
+            ->where('status', 'Publicado')
+            ->orWhere('status', 'Inactivo')
+            ->get();
+        if ($request->ajax()) {
+            return response()->json($products);
+        } else {
+            abort(404);
+        }
     }
 
     /**
@@ -50,34 +63,34 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
-    {   
-
-        // foreach($request->gallery as  $item){
-        //     echo $item['key'];
-        // }
-        // dd($request->gallery);
-
-        $product = Product::create(
-            [
-                'name' => $request['name'],
-                'sku' => $request['sku'],
-                'description' => $request['description'],
-                'category_id' => $request['category_id'],
-                'stock' => $request['stock'],
-                'sale_price' => $request['sale_price'],
-                'principal_image' => $request['principal_image']
-            ]
-        );
-        foreach($request->gallery as  $item){
-            ProductImage::create(
+    {
+        try {
+            $product = Product::create(
                 [
-                    'product_id' => $product->id,
-                    'image_id' => $item['key']
+                    'name' => $request['name'],
+                    'sku' => $request['sku'],
+                    'description' => $request['description'],
+                    'category_id' => $request['category_id'],
+                    'stock' => $request['stock'],
+                    'status' => $request['status'],
+                    'sale_price' => $request['sale_price'],
+                    'principal_image' => $request['principal_image']
                 ]
             );
+            foreach ($request->gallery as $item) {
+                ProductImage::create(
+                    [
+                        'product_id' => $product->id,
+                        'image_id' => $item['key']
+                    ]
+                );
+            }
+            return response()->json(['msg' => 'El registro se ha creado correctamente.',]);
+        } catch (\Exception $ex) {
+            return response('No se pudo crear, intente mas tarde', 500)
+                ->header('Content-Type', 'text/plain');
         }
-        
-        // $product = Product::create($request->all());
+
     }
 
 
@@ -98,8 +111,9 @@ class ProductController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
+        $product = Product::findOrFail($id);
         $categories = Category::all();
         $images = Image::query()
             ->orderBy('created_at', 'asc')
@@ -117,54 +131,34 @@ class ProductController extends Controller
     public function update(ProductRequest $request, $id)
     {
 
-        $product = Product::findOrFail($id);
-
-        $product->update([
-            'name' => $request['name'],
-            'sku' => $request['sku'],
-            'description' => $request['description'],
-            'category_id' => $request['category_id'],
-            'stock' => $request['stock'],
-            'sale_price' => $request['sale_price'],
-            'principal_image' => $request['principal_image']
-        ]);
-        
-        ProductImage::where('product_id', $id)->delete();
-        foreach($request->gallery as  $item){
-            ProductImage::create(
-                [
-                    'product_id' => $product->id,
-                    'image_id' => $item['key']
-                ]
-            );
-        }
-        return response()->json(['success' => 'Producto Editado correctamente.']);
-    }
-
-
-    /**
-     * Cambia el status del producto
-     * @param int $id
-     * @return Response
-     */
-    public function changeProductStatus($id)
-    {
-        $product = Product::findOrFail($id);
-        if ($product->status == 'ACTIVO') {
+        try {
+            $product = Product::findOrFail($id);
             $product->update([
-                'status' => 'INACTIVO'
+                'name' => $request['name'],
+                'sku' => $request['sku'],
+                'description' => $request['description'],
+                'category_id' => $request['category_id'],
+                'stock' => $request['stock'],
+                'status' => $request['status'],
+                'sale_price' => $request['sale_price'],
+                'principal_image' => $request['principal_image']
             ]);
-            $msg = 'Producto Desactivado exitosamente.';
-        } else if ($product->status == 'INACTIVO') {
-            $product->update([
-                'status' => 'ACTIVO'
-            ]);
-            $msg = 'Producto activado exitosamente.';
+
+            ProductImage::where('product_id', $id)->delete();
+            foreach ($request->gallery as $item) {
+                ProductImage::create(
+                    [
+                        'product_id' => $product->id,
+                        'image_id' => $item['key']
+                    ]
+                );
+            }
+            return response()->json(['msg' => 'El registro se ha editado correctamente.',]);
+        } catch (\Exception $ex) {
+            return response('No se pudo editar, intente mas tarde', 400)
+                ->header('Content-Type', 'text/plain');
         }
 
-        return redirect()
-            ->route('productos.index')
-            ->with('info', $msg);
     }
 
 
@@ -176,11 +170,18 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->update([
-            'status' => 'ELIMINADO'
-        ]);
-        return redirect()->route('productos.index')
-            ->with('info', 'Producto Eliminado exitosamente.');
+        try {
+            $product = Product::findOrFail($id);
+            $product->update([
+                'status' => 'ELIMINADO'
+            ]);
+            return response()->json([
+                'msg' => 'El registro se ha eliminado correctamente.',
+                'id' => $id
+            ]);
+        } catch (\Exception $ex) {
+            return response('No se pudo eliminar, intente mas tarde', 400)
+                ->header('Content-Type', 'text/plain');
+        }
     }
 }

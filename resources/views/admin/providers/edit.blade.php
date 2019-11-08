@@ -26,7 +26,8 @@
             <h6 class="m-0 font-weight-bold text-main">Editar Proveedor</h6>
         </div>
         <div class="card-body">
-            <form enctype="multipart/form-data" id="editProviderForm" class="form-course needs-validation" novalidate method="POST"
+            <form enctype="multipart/form-data" id="editProviderForm" class="form-course needs-validation" novalidate
+                  method="POST"
                   action={{route('proveedores.update',$provider->id)}} autocomplete="off" role="form">
                 @csrf
                 @method('PUT')
@@ -34,45 +35,15 @@
             </form>
         </div>
     </div>
-
-    {{--    Modal Delete Course--}}
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-         aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModal">¿Eliminar Registro?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="" id="deleteForm" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-body">
-                        Antes de borrar asegurate que algunos productos no dependan de esta categoría.
-                        <br>
-                        Está acción es irreversible, borrarás el registro de forma permanente.
-                        <input type="hidden" name="category_id" id="cat_id" value="">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, mantener el registro.
-                        </button>
-                        <button type="submit" class="btn btn-danger">
-                            Si, eliminar registro.
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    {{--Modal--}}
 @endsection
 @push('optional_scripts')
     <script>
         (function () {
             document.querySelector('#editProviderForm').addEventListener('submit', function (e) {
                 e.preventDefault();
+                clearErrors();
+                let btn = document.querySelector("#submit-btn");
+                disableSubmit(btn, 'Actualizando');
                 axios.put(this.action, {
                     'name': document.querySelector('#name').value,
                     'contact_name': document.querySelector('#contact_name').value,
@@ -85,31 +56,42 @@
                     'zip_code': document.querySelector('#zip_code').value,
                     'address': document.querySelector('#address').value,
                     'notes': document.querySelector('#notes').value,
-
                 })
-                    .then(function (response) {
-                        const alert = document.querySelector('#alert_message');
-                        alert.innerHTML = (`<div class="alert alert-success mt-2" role="alert"><strong> Muy bien.</strong>${response.data.success}</div>`);
-                        document.body.scrollTop = document.documentElement.scrollTop = 0;
-                        window.setTimeout(function () {
-                            window.location.href = '{{ route('proveedores.index') }}'
-                        }, 1200);
+                    .then((response) => {
+                        enableSubmit(btn, 'Actualizar');
                         clearErrors();
                         console.clear();
+                        document.body.scrollTop = document.documentElement.scrollTop = 0;
+                        shootAlert('success', 'Categoría editada.', response.data.msg);
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
+                        enableSubmit(btn, 'Actualizar');
+                        clearErrors();
                         document.body.scrollTop = document.documentElement.scrollTop = 0;
                         const errors = error.response.data.errors;
-                        clearErrors();
-                        Object.keys(errors).forEach(function (i) {
-                            const itemDOM = document.getElementById(i);
-                            const errorMessage = errors[i];
-                            itemDOM.insertAdjacentHTML('afterend', `<div class="invalid-feedback">${errorMessage}</div>`);
-                            itemDOM.classList.add('is-invalid');
+
+                        Object.keys(errors).forEach(function (k) {
+                            const itemDOM = document.getElementById(k);
+                            const errorMessage = errors[k];
+
+                            if (itemDOM.attributes.name.value !== "state_id") {
+                                itemDOM.insertAdjacentHTML('afterend',
+                                    `<div class="invalid-feedback">${errorMessage}</div>`);
+                                itemDOM.classList.add('is-invalid');
+                            } else {
+                                const buttonDropdown = itemDOM.parentElement.childNodes[1];
+                                const formGroup = itemDOM.parentElement.childNodes[1].parentElement;
+
+                                formGroup.insertAdjacentHTML('afterend',
+                                    `<div class="invalid-feedback d-block">${errorMessage}</div>`);
+                                buttonDropdown.classList.add('button-is-invalid');
+                                buttonDropdown.classList.add('form-control');
+                            }
                             console.clear();
                         });
-                        console.clear();
-                    });
+                    }).finally(() => {
+                    enableSubmit(btn, 'Actualizar');
+                })
             });
         })();
 
@@ -121,6 +103,5 @@
             const formControls = document.querySelectorAll('.form-control');
             formControls.forEach((element) => element.classList.remove('is-invalid'))
         }
-
     </script>
 @endpush

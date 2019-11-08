@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AdministratorUpdateProfile extends FormRequest
 {
@@ -23,7 +24,7 @@ class AdministratorUpdateProfile extends FormRequest
      */
     public function rules()
     {
-        $userId = isset($this->user) ? $this->user->id : null;
+        $userId = Auth::User()->id;
         return [
             'name'      => 'required|max:60',
             'email'     => 'required|email|max:255|unique:users,email,' . $userId . ',id',

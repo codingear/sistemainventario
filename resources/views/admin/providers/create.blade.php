@@ -1,5 +1,5 @@
 @extends('admin.layouts._layout')
-@section('title', 'Nuevo Proveedor')
+@section('title', 'Crear Proveedor')
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between">
@@ -43,6 +43,9 @@
         (function () {
             document.querySelector('#newProviderForm').addEventListener('submit', function (e) {
                 e.preventDefault();
+                clearErrors();
+                let btn = document.querySelector("#submit-btn");
+                disableSubmit(btn, 'Guardando');
                 axios.post(this.action, {
                     'name': document.querySelector('#name').value,
                     'contact_name': document.querySelector('#contact_name').value,
@@ -57,30 +60,43 @@
                     'notes': document.querySelector('#notes').value,
 
                 })
-                    .then(function (response) {
-                        const alert = document.querySelector('#alert_message');
-                        alert.innerHTML = (`<div class="alert alert-success mt-2" role="alert"><strong> Muy bien.</strong>${response.data.success}</div>`);
-                        document.body.scrollTop = document.documentElement.scrollTop = 0;
+                    .then((response) => {
+                        enableSubmit(btn, 'Guardar');
+                        clearErrors();
+                        console.clear();
+                        shootAlert('success', 'Proveedor creado.', response.data.msg);
                         window.setTimeout(function () {
                             window.location.href = '{{ route('proveedores.index') }}'
                         }, 1200);
-                        clearErrors();
-                        console.clear();
                     })
-                    .catch(function (error) {
-                        console.log(error)
+                    .catch((error) => {
+                        enableSubmit(btn, 'Guardar');
+                        clearErrors();
                         document.body.scrollTop = document.documentElement.scrollTop = 0;
                         const errors = error.response.data.errors;
-                        clearErrors();
-                        Object.keys(errors).forEach(function (i) {
-                            const itemDOM = document.getElementById(i);
-                            const errorMessage = errors[i];
-                            itemDOM.insertAdjacentHTML('afterend', `<div class="invalid-feedback">${errorMessage}</div>`);
-                            itemDOM.classList.add('is-invalid');
+
+                        Object.keys(errors).forEach(function (k) {
+                            const itemDOM = document.getElementById(k);
+                            const errorMessage = errors[k];
+
+                            if (itemDOM.attributes.name.value !== "state_id") {
+                                itemDOM.insertAdjacentHTML('afterend',
+                                    `<div class="invalid-feedback">${errorMessage}</div>`);
+                                itemDOM.classList.add('is-invalid');
+                            } else {
+                                const buttonDropdown = itemDOM.parentElement.childNodes[1];
+                                const formGroup = itemDOM.parentElement.childNodes[1].parentElement;
+
+                                formGroup.insertAdjacentHTML('afterend',
+                                    `<div class="invalid-feedback d-block">${errorMessage}</div>`);
+                                buttonDropdown.classList.add('button-is-invalid');
+                                buttonDropdown.classList.add('form-control');
+                            }
                             console.clear();
                         });
-                        console.clear();
-                    });
+                    }).finally(() => {
+                    enableSubmit(btn, 'Guardar');
+                })
             });
         })();
 
@@ -90,6 +106,7 @@
             errorMessages.forEach((element) => element.remove());
             // remove all form controls with highlighted error text box
             const formControls = document.querySelectorAll('.form-control');
+            formControls.forEach((element) => element.classList.remove('button-is-invalid'))
             formControls.forEach((element) => element.classList.remove('is-invalid'))
         }
 

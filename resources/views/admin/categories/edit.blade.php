@@ -5,7 +5,6 @@
     <div class="d-sm-flex align-items-center justify-content-between">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="h5 breadcrumb-item"><a class="text-main" href="{{route('dashboard')}}">Dashboard</a></li>
                 <li class="h5 breadcrumb-item"><a class="text-main" href="{{route('categorias.index')}}">Categorías</a>
                 </li>
                 <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Editar Categoría</li>
@@ -17,7 +16,8 @@
             <h6 class="m-0 font-weight-bold text-main">Editar categoría</h6>
         </div>
         <div class="card-body">
-            <form enctype="multipart/form-data" class="form-course needs-validation" novalidate method="POST"
+            <form enctype="multipart/form-data" id="editCategoryForm" class="form-course needs-validation" novalidate
+                  method="POST"
                   action={{route('categorias.update',$category->id)}} autocomplete="off" role="form">
                 @csrf
                 @method('PUT')
@@ -26,3 +26,52 @@
         </div>
     </div>
 @endsection
+@push('optional_scripts')
+    <script>
+        (function () {
+            document.querySelector('#editCategoryForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                clearErrors();
+                let btn = document.querySelector("#submit-btn");
+                disableSubmit(btn, 'Actualizando');
+                axios.put(this.action, {
+                    'name': document.querySelector('#name').value,
+                    'description': document.querySelector('#description').value,
+                    'status': document.querySelector('#status').checked,
+                })
+                    .then((response) => {
+                        enableSubmit(btn, 'Actualizar');
+                        clearErrors();
+                        console.clear();
+                        document.body.scrollTop = document.documentElement.scrollTop = 0;
+                        shootAlert('success', 'Categoría editada.', response.data.msg);
+                    }).catch((error) => {
+                    enableSubmit(btn, 'Actualizar');
+                    clearErrors();
+                    document.body.scrollTop = document.documentElement.scrollTop = 0;
+                    const errors = error.response.data.errors;
+                    Object.keys(errors).forEach(function (k) {
+                        const itemDOM = document.getElementById(k);
+                        const errorMessage = errors[k];
+                        itemDOM.insertAdjacentHTML('afterend',
+                            `<div class="invalid-feedback">${errorMessage}</div>`);
+                        itemDOM.classList.add('is-invalid');
+                        console.clear();
+                    });
+                }).finally(() => {
+                    enableSubmit(btn, 'Actualizar');
+                });
+            });
+        })();
+
+        function clearErrors() {
+            // remove all error messages
+            const errorMessages = document.querySelectorAll('.invalid-feedback');
+            errorMessages.forEach((element) => element.remove());
+            // remove all form controls with highlighted error text box
+            const formControls = document.querySelectorAll('.form-control');
+            formControls.forEach((element) => element.classList.remove('is-invalid'))
+        }
+
+    </script>
+@endpush

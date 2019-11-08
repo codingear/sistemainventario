@@ -14,6 +14,9 @@ use App\Notifications\NewAdmin;
 use Illuminate\Support\Str;
 use App\User;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
+//use Laravolt\Avatar\Avatar;
 
 
 class AdministratorController extends Controller
@@ -61,23 +64,35 @@ class AdministratorController extends Controller
      */
     public function store(AdministratorRequest $request)
     {
+        try {
+            //Password aleatorio que se envía al usuario antes de encriptar
+            $temp_password = Str::random(6);
 
-        //Password aleatorio que se envía al usuario antes de encriptar
-        $temp_password = Str::random(6);
+            $basePath = "/img/profile_avatar";
+            $avatarName = (str_replace(" ", "_", $request['name'])) . '_avatar';
+            $avatar = \Avatar::create($request['name'])->getImageObject()->encode('png');
+            Storage::put('profile_avatar/' . $avatarName . '.png', (string)$avatar);
+            $avatar_url = $basePath . '/' . $avatarName . '.png';
 
-        $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($temp_password),
-        ]);
+            $user = User::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => Hash::make($temp_password),
+                'avatar' => $avatar_url
+            ]);
 
-        $user->temp_pass = $temp_password;
-        $user->assignRoles($request['rol']);
 
-        $user->notify(new NewAdmin($user));
-        return redirect()
-            ->route('administradores.index')
-            ->with('info', 'Administrador registrado, accesos enviados exitosamente.');
+            $user->temp_pass = $temp_password;
+            $user->assignRoles($request['rol']);
+
+            $user->notify(new NewAdmin($user));
+
+            return response()->json(['msg' => 'El registro se ha creado correctamente.',]);
+        } catch (\Exception $ex) {
+            return response('No se pudo crear, intente mas tarde', 500)
+                ->header('Content-Type', 'text/plain');
+        }
+
     }
 
 
@@ -99,30 +114,49 @@ class AdministratorController extends Controller
         return view('admin.administrators.edit-profile', ['user' => Auth::User()]);
     }
 
-    public function updateAdminProfile(AdministratorUpdateProfile $request, User $user)
+    public function updateAdminProfile(AdministratorUpdateProfile $request)
     {
-        $u = User::findOrFail($user->id);
-        $u->update([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
-        $u->change_password = true;
-        $u->save();
-        return redirect()
-            ->route('admin.profile')
-            ->with('info', 'Datos editados exitosamente.');
+
+        try {
+            $user = User::findOrFail(Auth::User()->id);
+            $password = '';
+            if ($request['password'] == null) {
+                $password = Auth::User()->password;
+            } else {
+                $password = Hash::make($request['password']);
+            }
+
+            $user->update([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => $password,
+            ]);
+
+
+            return response()->json(['msg' => 'El registro se ha editado correctamente.']);
+        } catch (\Exception $ex) {
+            return response('No se pudo editar, intente mas tarde', 400)
+                ->header('Content-Type', 'text/plain');
+        }
+
+
     }
 
 
     public function updateAvatarAdministrator(Request $request)
     {
-        $user = Auth::User();
-        unlink(public_path($user->avatar));
-        $urlAvatar = $request->file('avatar')->store('profile_avatar');
-        $user->update([
-            'avatar' => Storage::url($urlAvatar),
-        ]);
+        try {
+            $user = Auth::User();
+            unlink(public_path($user->avatar));
+            $urlAvatar = $request->file('avatar')->store('profile_avatar');
+            $user->update([
+                'avatar' => Storage::url($urlAvatar),
+            ]);
+            return response()->json(['msg' => 'El registro se ha editado correctamente.']);
+        } catch (\Exception $ex) {
+            return response('No se pudo editar, intente mas tarde', 400)
+                ->header('Content-Type', 'text/plain');
+        }
     }
 
     /**
@@ -134,51 +168,25 @@ class AdministratorController extends Controller
      */
     public function update(AdministratorRequest $request, User $user)
     {
-        $u = User::findOrFail($user->id);
+        try {
+            $u = User::findOrFail($user->id);
 
-        if ($u->id == 1) {
-            $typeMsg = 'error';
-            $msg = 'No se puede editar este administrador.';
-        } else {
-            $typeMsg = 'info';
-            $msg = 'Administrador actualizado exitosamente.';
+            if ($u->id == 1) {
+                $msg = 'No se puede editar este administrador.';
+            } else {
+                $msg = 'El registro se ha editado correctamente.';
 
-            $u->update([
-                'status' => $request['status'] ? true : false,
-            ]);
-            $u->syncRoles($request['rol']);
+                $u->update([
+                    'status' => $request['status'] ? true : false,
+                ]);
+                $u->syncRoles($request['rol']);
+            }
+
+            return response()->json(['msg' => $msg]);
+        } catch (\Exception $ex) {
+            return response('No se pudo editar, intente mas tarde', 400)
+                ->header('Content-Type', 'text/plain');
         }
-        return redirect()
-            ->route('administradores.index')
-            ->with($typeMsg, $msg);
-    }
-
-
-    /**
-     * Cambia el status del usuario
-     * @param int $id
-     * @return Response
-     */
-    public function changeUserStatus($id)
-    {
-        $u = User::findOrFail($id);
-
-        if ($u->id == 1) {
-            $typeMsg = 'error';
-            $msg = 'No se puede editar este administrador.';
-        } else {
-            $typeMsg = 'info';
-            $msg = 'Administrador actualizado exitosamente.';
-
-            $currentStatus = $u->status;
-            $u->update([
-                'status' => !$currentStatus,
-            ]);
-        }
-
-        return redirect()
-            ->route('administradores.index')
-            ->with($typeMsg, $msg);
     }
 
 
@@ -190,19 +198,19 @@ class AdministratorController extends Controller
      */
     public function destroy($id)
     {
-        $u = User::findOrFail($id);
+        try {
+            $u = User::findOrFail($id);
 
-        if ($u->id == 1) {
-            $typeMsg = 'error';
-            $msg = 'No se puede editar este administrador.';
-        } else {
-            $u->delete();
-            $typeMsg = 'info';
-            $msg = 'El administrador ha sido eliminado exitosamente.';
+            if ($u->id == 1) {
+                $msg = 'No se puede eliminar este administrador.';
+            } else {
+                $u->delete();
+                $msg = 'El registro se ha eliminado correctamente';
+            }
+            return response()->json(['msg' => $msg]);
+        } catch (\Exception $ex) {
+            return response('No se pudo eliminar, intente mas tarde', 400)
+                ->header('Content-Type', 'text/plain');
         }
-
-        return redirect()
-            ->route('administradores.index')
-            ->with($typeMsg, $msg);
     }
 }
