@@ -120,16 +120,19 @@ class AdministratorController extends Controller
         try {
             $user = User::findOrFail(Auth::User()->id);
             $password = '';
+            $changedPassword = false;
             if ($request['password'] == null) {
                 $password = Auth::User()->password;
             } else {
                 $password = Hash::make($request['password']);
+                $changedPassword = true;
             }
 
             $user->update([
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'password' => $password,
+                'change_password' => $changedPassword
             ]);
 
 
@@ -138,10 +141,7 @@ class AdministratorController extends Controller
             return response('No se pudo editar, intente mas tarde', 400)
                 ->header('Content-Type', 'text/plain');
         }
-
-
     }
-
 
     public function updateAvatarAdministrator(Request $request)
     {

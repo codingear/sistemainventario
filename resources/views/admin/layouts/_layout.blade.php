@@ -35,15 +35,15 @@
             <div class="container-fluid">
                 @if (!Auth::user()->change_password)
                     <div class="_alert _alert-warning fade show mb-3">
-                        <div class="_alert-body">
-                            <div class="_alert-icon _icon-warning">
-                                <i class="fas fa-exclamation-triangle"></i>
+                            <div class="_alert-body">
+                                <div class="_alert-icon _icon-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="alert-msj">
+                                    <p class="_alert-title">Tu contraseña temporal es insegura.</p>
+                                    <a href="{{route('admin.editProfile')}}" class="_alert-text">Cambiar contraseña</a>
+                                </div>
                             </div>
-                            <div class="alert-msj">
-                                <p class="_alert-title">Tu contraseña temporal es insegura.</p>
-                                <a href="{{route('admin.editProfile')}}" class="_alert-text">Cambiar contraseña</a>
-                            </div>
-                        </div>
                     </div>
                 @endif
                 @yield ('content')
