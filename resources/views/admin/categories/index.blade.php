@@ -2,7 +2,7 @@
 @section('title', 'Categorías')
 @push('stylesheets')
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.css')}}">
-    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.dataTables.min.css')}}"> 
+    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.dataTables.min.css')}}">
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.bootstrap4.min.css')}}">
 @endpush
 @section('content')
@@ -81,7 +81,6 @@
                             <p class="modal-body-text-msj">¿Estás seguro que quieres eliminar la categoría?. Si lo haces
                                 perderás este registro de forma permanente.</p>
                         </div>
-                        <input type="hidden" name="category_id" id="cat_id" value="">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="button button-modal-cancel" data-dismiss="modal">
@@ -120,42 +119,40 @@
                 },
                 "responsive": true,
                 "columns": [
-                    {     
-                        "data" : "name",
-                        render: function(data, type, row){
+                    {
+                        "data": "name",
+                        render: function (data, type, row) {
                             return `
                                 <p class="table-product table-cell-text">${data}</p>
                             `;
                         }
                     },
                     {"data": "description"},
-                    { 
+                    {
                         "data": "status",
-                        render: function(data, type, row){
-                            var txt = data.toLowerCase();
-                            txt = txt.charAt(0).toUpperCase() + txt.slice(1);
-                            if(txt == 'Publicado'){
-                                return "<span class='pill pill--success'>"+txt+"</span>";
-                            }else if(txt == 'Inactivo'){
-                                return "<span class='pill pill--warning'>"+txt+"</span>";
-                            }else{
-                                return "<span class='pill'>"+txt+"</span>";
+                        render: function (data, type, row) {
+                            if (data == 'Publicado') {
+                                return "<span class='pill pill--success'>" + data + "</span>";
+                            } else if (data == 'Inactivo') {
+                                return "<span class='pill pill--warning'>" + data + "</span>";
+                            } else {
+                                return "<span class='pill'>" + data + "</span>";
                             }
                         }
                     },
                     {
-                        "data" : "created_at",
-                        render: function(data, type, row){
-                            if(type === "sort" || type === "type"){
+                        "data": "created_at",
+                        render: function (data, type, row) {
+                            if (type === "sort" || type === "type") {
                                 return data;
                             }
                             moment.locale('es');
-                            return "<p class='table-cell-text'><strong>"+moment(data).format("DD-MM-YYYY")+"</strong></p><p class='table-cell-text'>"+moment(data).format("HH:mm a")+"</p>";
+                            return "<p class='table-cell-text'><strong>" + moment(data).format("DD-MM-YYYY") + "</strong></p><p class='table-cell-text'>" + moment(data).format("HH:mm a") + "</p>";
                         }
                     },
                     {
                         "data": null,
-                        render: function ( data, type, row ) {
+                        render: function (data, type, row) {
                             $tmp = `
                                 <a href='${APP_URL}/categorias/${row.id}/editar' class='control-button'><i class='far fa-edit fa-lg'></i></a>
                                 <button id="showMod" onclick='deleteData(${row.id})' class='control-button' data-toggle="modal" data-target="#deleteModal" data-placement="top"><i class='far fa-trash-alt fa-lg'></i></button>
@@ -217,6 +214,5 @@
             url = url.replace(':id', id);
             $("#deleteForm").attr('action', url);
         }
-
     </script>
 @endpush

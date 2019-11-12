@@ -3,7 +3,7 @@
 @push('stylesheets')
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.css')}}">
 
-    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.dataTables.min.css')}}"> 
+    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.dataTables.min.css')}}">
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.bootstrap4.min.css')}}">
 @endpush
 @section('content')
@@ -63,7 +63,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        
+
                         </tbody>
                     </table>
                 </div>
@@ -77,22 +77,23 @@
          aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">¿Eliminar Proveedor?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="deleteForm">
+                <form action="" id="deleteForm" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">
-                        Está acción es irreversible, borrarás el registro de forma permanente.
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="modal-body-text">
+                            <p class="modal-body-text-title">Eliminar Proveedor</p>
+                            <p class="modal-body-text-msj">¿Estás seguro que quieres eliminar el proveedor?. Si lo haces
+                                perderás este registro de forma permanente.</p>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, mantener el registro.</button>
-                        <button type="submit" class="btn btn-danger">
-                            Si, eliminar registro.
+                        <button type="button" class="button button-modal-cancel" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="button button-modal-danger">
+                            Eliminar registro.
                         </button>
                     </div>
                 </form>
@@ -109,7 +110,7 @@
 
     <script src="{{ asset('vendors/dataTables/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('vendors/dataTables/responsive.bootstrap4.min.js') }}"></script>
-    
+
     <script>
         $(document).ready(function(){
             var scope;
@@ -127,30 +128,30 @@
                 },
                 "columns": [
                     {
-                        "data" : "name",
-                        render: function(data, type, row){
+                        "data": "name",
+                        render: function (data, type, row) {
                             return `
                                 <p class="table-product table-cell-text">${data}</p>
                                 <p class='table-cell-text'>${row.contact_name}</p>
                             `;
                         }
                     },
-                    {"data" : "email"},
-                    {"data" : "rfc"},
-                    {"data" : "telephone"},
+                    {"data": "email"},
+                    {"data": "rfc"},
+                    {"data": "telephone"},
                     {
-                        "data" : "created_at",
-                        render: function(data, type, row){
-                            if(type === "sort" || type === "type"){
+                        "data": "created_at",
+                        render: function (data, type, row) {
+                            if (type === "sort" || type === "type") {
                                 return data;
                             }
                             moment.locale('es');
-                            return "<p class='table-cell-text'><strong>"+moment(data).format("DD-MM-YYYY")+"</strong></p><p class='table-cell-text'>"+moment(data).format("HH:mm a")+"</p>";
+                            return "<p class='table-cell-text'><strong>" + moment(data).format("DD-MM-YYYY") + "</strong></p><p class='table-cell-text'>" + moment(data).format("HH:mm a") + "</p>";
                         }
                     },
                     {
                         "data": null,
-                        render: function ( data, type, row ) {
+                        render: function (data, type, row) {
                             $tmp = `
                                 <a href='${APP_URL}/proveedores/${row.id}' class='control-button'><i class='far fa-eye fa-lg'></i></a>
                                 <a href='${APP_URL}/proveedores/${row.id}/editar' class='control-button'><i class='far fa-edit fa-lg'></i></a>

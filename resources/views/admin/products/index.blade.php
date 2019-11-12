@@ -2,8 +2,8 @@
 @section('title', 'Productos')
 @push('stylesheets')
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.css')}}">
-    
-    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.dataTables.min.css')}}"> 
+
+    <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.dataTables.min.css')}}">
     <link rel="stylesheet" href="{{ asset('vendors/dataTables/responsive.bootstrap4.min.css')}}">
 @endpush
 @section('content')
@@ -49,7 +49,7 @@
                     <table class="table table-custom" id="t-products" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th width="10%">IMAGEN</th> 
+                            <th width="10%">IMAGEN</th>
                             <th width="40%">NOMBRE / SKU</th>
                             <th width="10%">EXISTENCIAS</th>
                             <th width="10%">PRECIO</th>
@@ -58,46 +58,46 @@
                         </tr>
                         </thead>
                         <tbody>
-                        
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     @endif
-@endsection
 
-@push('optional_scripts')
     {{-- Modal Delete Course--}}
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
          aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">¿Eliminar Producto?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="deleteForm">
+                <form action="" id="deleteForm" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">
-                        El producto no será eliminado de forma permanente, pero ya no podrás ver sus detalles.
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="modal-body-text">
+                            <p class="modal-body-text-title">Eliminar Producto</p>
+                            <p class="modal-body-text-msj">¿Estás seguro que quieres eliminar el producto?. No se
+                                eliminara de forma permanente pero no podrás acceder a sus detalles.</p>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, mantener el registro.
+                        <button type="button" class="button button-modal-cancel" data-dismiss="modal">
+                            Cancelar
                         </button>
-                        <button type="submit" class="btn btn-danger">
-                            Si, eliminar registro.
+                        <button type="submit" class="button button-modal-danger">
+                            Eliminar producto.
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    {{-- Modal --}}
- 
+    {{--Modal--}}
+@endsection
+
+@push('optional_scripts')
     <script src="{{ asset('vendors/dataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.js') }}"></script>
 
@@ -117,51 +117,51 @@
                     dataSrc: '',
                 },
                 "columns": [
-                    { 
-                        "data": "image.url", 
-                        render: function(data, type, row){
-                            if(data == null || data == undefined){
+                    {
+                        "data": "image.url",
+                        render: function (data, type, row) {
+                            if (data == null || data == undefined) {
                                 return "<img class='img-table' src='https://dummyimage.com/50x50/f8f9fc/363537.png&text=Sin+Imagen'>";
-                            }else{
-                                return "<img class='img-table' src='"+data+"'>";
+                            } else {
+                                return "<img class='img-table' src='" + data + "'>";
                             }
                         }
                     },
-                    { 
+                    {
                         "data": "name",
-                        render: function(data, type, row){
-                            return "<p class='table-product table-cell-text'>"+data+"</p><p>"+row.sku+"</p>";
+                        render: function (data, type, row) {
+                            return "<p class='table-product table-cell-text'>" + data + "</p><p>" + row.sku + "</p>";
                         }
                     },
-                    { 
+                    {
                         "data": "stock",
-                        render: function(data, type, row){
-                            return "<p class='table-cell-text'><strong>"+data+"</strong></p><p>Unidades</p>";
+                        render: function (data, type, row) {
+                            return "<p class='table-cell-text'><strong>" + data + "</strong></p><p>Unidades</p>";
                         }
                     },
-                    { 
+                    {
                         "data": "sale_price",
-                        render: function(data, type, row){
-                            return "<p class='table-cell-text'><strong>$" + data +"</strong></p><p>MXN</p>";
+                        render: function (data, type, row) {
+                            return "<p class='table-cell-text'><strong>$" + data + "</strong></p><p>MXN</p>";
                         }
                     },
-                    { 
+                    {
                         "data": "status",
-                        render: function(data, type, row){
+                        render: function (data, type, row) {
                             var txt = data.toLowerCase();
                             txt = txt.charAt(0).toUpperCase() + txt.slice(1);
-                            if(txt == 'Publicado'){
-                                return "<span class='pill pill--success'>"+txt+"</span>";
-                            }else if(txt == 'Inactivo'){
-                                return "<span class='pill pill--warning'>"+txt+"</span>";
-                            }else{
-                                return "<span class='pill'>"+txt+"</span>";
+                            if (txt == 'Publicado') {
+                                return "<span class='pill pill--success'>" + txt + "</span>";
+                            } else if (txt == 'Inactivo') {
+                                return "<span class='pill pill--warning'>" + txt + "</span>";
+                            } else {
+                                return "<span class='pill'>" + txt + "</span>";
                             }
                         }
                     },
                     {
                         "data": null,
-                        render: function ( data, type, row ) {
+                        render: function (data, type, row) {
                             $tmp = `
                                 <a href='javascript:void(0);' class='control-button'><i class='far fa-eye fa-lg'></i></a>
                                 <a href='${APP_URL}/productos/${row.id}/editar' class='control-button'><i class='far fa-edit fa-lg'></i></a>
@@ -180,19 +180,19 @@
                     });
                 }
             });
-       
+
             var scope;
-            
-            $('#t-products tbody').on( 'click', 'button#showMod', function () {
+
+            $('#t-products tbody').on('click', 'button#showMod', function () {
                 scope = this;
             });
 
-            $("#deleteForm").submit(function(ev){
+            $("#deleteForm").submit(function (ev) {
                 ev.preventDefault();
                 $('button[type=submit]').prop('disabled', true);
                 var data = new FormData(this);
-                axios.delete(this.action,data)
-                    .then(function(response){
+                axios.delete(this.action, data)
+                    .then(function (response) {
                         const res = response.data;
                         $("#deleteModal").modal('hide');
                         $('button[type=submit]').prop('disabled', false);
@@ -209,14 +209,14 @@
 
                         });
                     })
-                    .catch(function(error){
+                    .catch(function (error) {
                         const errors = error.response.data;
                         $("#deleteModal").modal('hide');
                         $('#deleteModal').on('hidden.bs.modal', function (e) {
                             $('button[type=submit]').prop('disabled', false);
-                            shootAlert("error",errors);
+                            shootAlert('error', 'Ups. Algo salió mal.', errors);
                         })
-                });
+                    });
             });
 
         });
@@ -226,6 +226,6 @@
             let url = '{{ route("productos.destroy", ":id") }}';
             url = url.replace(':id', id);
             $("#deleteForm").attr('action', url);
-        }   
+        }
     </script>
 @endpush

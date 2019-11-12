@@ -1,4 +1,4 @@
-@extends('front.layouts._layout')
+@extends('front.layouts._layout-comingSoon')
 @section('title', 'Inicio')
 @section('content')
     <div class="container-logo bg-main d-flex align-items-center justify-content-center ">

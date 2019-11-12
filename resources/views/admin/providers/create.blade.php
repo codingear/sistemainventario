@@ -1,5 +1,5 @@
 @extends('admin.layouts._layout')
-@section('title', 'Nuevo Proveedor')
+@section('title', 'Crear Proveedor')
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between">
@@ -58,28 +58,25 @@
 
                 })
                     .then(function (response) {
-                        const alert = document.querySelector('#alert_message');
-                        alert.innerHTML = (`<div class="alert alert-success mt-2" role="alert"><strong> Muy bien.</strong>${response.data.success}</div>`);
-                        document.body.scrollTop = document.documentElement.scrollTop = 0;
+                        clearErrors();
+                        console.clear();
+                        shootAlert('success', 'Proveedor creado.', response.data.msg);
                         window.setTimeout(function () {
                             window.location.href = '{{ route('proveedores.index') }}'
                         }, 1200);
-                        clearErrors();
-                        console.clear();
                     })
                     .catch(function (error) {
-                        console.log(error)
                         document.body.scrollTop = document.documentElement.scrollTop = 0;
                         const errors = error.response.data.errors;
                         clearErrors();
-                        Object.keys(errors).forEach(function (i) {
-                            const itemDOM = document.getElementById(i);
-                            const errorMessage = errors[i];
-                            itemDOM.insertAdjacentHTML('afterend', `<div class="invalid-feedback">${errorMessage}</div>`);
+                        Object.keys(errors).forEach(function (k) {
+                            const itemDOM = document.getElementById(k);
+                            const errorMessage = errors[k];
+                            itemDOM.insertAdjacentHTML('afterend',
+                                `<div class="invalid-feedback">${errorMessage}</div>`);
                             itemDOM.classList.add('is-invalid');
                             console.clear();
                         });
-                        console.clear();
                     });
             });
         })();

@@ -1,0 +1,42 @@
+@charset "utf-8";
+// IMPORT GOOGLE FONT
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900&display=swap');
+// FONTAWESOME 4
+@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+// BULMA CONFIG VARS
+$background-light: #F8F8F8;
+$background-dark: #2A3035;
+$gray: #7F7F7F;
+$primary: #1F548E;
+$secondary: #7BB904;
+$family-sans-serif: 'Roboto', sans-serif;
+$grey-dark: $background-dark;
+$grey-light: $background-light;
+$primary: $primary;
+$link: $secondary;
+$widescreen-enabled: true;
+$fullhd-enabled: true;
+$text: $background-dark;
+$gap: 10px;
+$input-focus-border-color: $primary;
+$input-focus-box-shadow-color: rgba($primary,.25);
+$input-arrow: $primary;
+// BULMA IMPORTS
+
+// @import "../../../../node_modules/bulma/bulma.sass";
+
+@import "../../../../node_modules/bulma/sass/utilities/_all.sass";
+@import "../../../../node_modules/bulma/sass/base/_all.sass";
+@import "../../../../node_modules/bulma/sass/elements/container.sass";
+@import "../../../../node_modules/bulma/sass/elements/content.sass";
+@import "../../../../node_modules/bulma/sass/elements/other.sass";
+@import "../../../../node_modules/bulma/sass/elements/image.sass";
+@import "../../../../node_modules/bulma/sass/elements/button.sass";
+@import "../../../../node_modules/bulma/sass/elements/form.sass";
+@import "../../../../node_modules/bulma/sass/form/_all.sass";
+@import "../../../../node_modules/bulma/sass/components/media.sass";
+
+// CUSTOM STYLES
+@import "base/init";
+@import "layout/header";

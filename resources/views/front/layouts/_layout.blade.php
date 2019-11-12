@@ -2,22 +2,27 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     @include('partials._metas')
-    <title>{{ config('app.name', 'Equibra') }} - @yield('title') </title>
-    <link href="{{ asset('css/all.css')}}" rel="stylesheet">
+    @yield('styles')
     <link href="{{asset('img/favicon.ico')}}" rel="icon" type="image/png">
+    <title>{{ config('app.name', 'Equibra') }} - @yield('title') </title>
 </head>
 
 <body>
-{{--Contenido Principal --}}
-<main id="content-body">
-    @yield ('content')
-</main>
-{{--Contenido Principal --}}
 
-{{-- Footer --}}
-<footer>
-</footer>
-{{-- Footer --}}
+@include('front.layouts._partials-mobile')
+
+<div class="site-wrapper" id="content-body">
+
+    @include ('front.layouts._header')
+
+    @yield ('content')
+
+    @include ('front.layouts._footer')
+    
+</div>
+    
+
+@yield('scripts')
 </body>
 
 </html>

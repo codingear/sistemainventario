@@ -6,7 +6,7 @@ use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
 
-class StoreController extends Controller
+class websiteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,6 +14,16 @@ class StoreController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
+        return view('front.home.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
         $categories = Category::query()
             ->orderBy('id', 'asc')
@@ -24,16 +34,6 @@ class StoreController extends Controller
             ->get();
 
         return view('front.store.index', compact('categories', 'products'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
