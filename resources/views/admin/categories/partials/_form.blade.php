@@ -26,10 +26,12 @@
     @endif
 </div>
 <div class="btn-action">
-    <button class="button button-blue-primary" type="submit">
-        Guardar
+    <button class="button button-blue-primary" id="submit-btn" type="submit">
+        <span>
+            {{ request()->is('admin/categorias/crear') ? 'Guardar' : 'Actualizar' }}
+        </span>
     </button>
     <a href="{{route('categorias.index')}}" class="button button-blue-secondary">
-        Cancelar
+        Volver
     </a>
 </div>

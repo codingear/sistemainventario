@@ -34,14 +34,18 @@
             {{--Begin Page Content--}}
             <div class="container-fluid">
                 @if (!Auth::user()->change_password)
-                    <div class="alert alert-warning mt-2" role="alert">
-                        Tu contraseña temporal es insegura, recuerda cambiarla.
-                        <a href="{{route('admin.editProfile')}}" class="alert-link">Cambiar contraseña</a>.
+                    <div class="_alert _alert-warning fade show mb-3">
+                        <div class="_alert-body">
+                            <div class="_alert-icon _icon-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="alert-msj">
+                                <p class="_alert-title">Tu contraseña temporal es insegura.</p>
+                                <a href="{{route('admin.editProfile')}}" class="_alert-text">Cambiar contraseña</a>
+                            </div>
+                        </div>
                     </div>
                 @endif
-                {{-- NOTIFY JAVASCRIPT --}}
-                {{--                    <div id="alert-notify-success" class="alert-notifier alert alert-success alert-dismissible fade"--}}
-                {{--                        role="alert"></div>--}}
                 @yield ('content')
             </div>
 
@@ -104,6 +108,20 @@
             });
         }, 2000);
     }
+
+    function enableSubmit(btn, msg) {
+        btn.style.opacity = 'initial';
+        btn.disabled = false;
+        btn.innerHTML = `<span>${msg}</span>`;
+    }
+
+
+    function disableSubmit(btn, msg) {
+        btn.style.opacity = ".5";
+        btn.disabled = true;
+        btn.innerHTML = `<span>${msg}</span> <i class="fas fa-circle-notch fa-spin"></i>`;
+    }
+
 </script>
 @stack('optional_scripts')
 </body>

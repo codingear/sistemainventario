@@ -102,10 +102,15 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
+        try {
+            $image = Image::findOrFail($id);
+            $image->delete();
+            unlink(public_path($image->url));
+            return response()->json(['msg' => 'El registro se ha eliminado correctamente.',]);
+        } catch (\Exception $ex) {
+            return response('No se pudo eliminar, intente mas tarde', 500)
+                ->header('Content-Type', 'text/plain');
+        }
 
-        $image = Image::findOrFail($id);
-        $image->delete();
-        unlink(public_path($image->url));
-        return response()->json(['success' => 'Imagen eliminada correctamente.']);
     }
 }

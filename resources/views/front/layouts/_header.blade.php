@@ -24,12 +24,12 @@
 						<button class="actions__link" id="m-open-nav"><i class="fas fa-bars"></i></button>
 					</div>
 					<div class="actions__search">
-						<button class="actions__link"><i class="fas fa-search"></i></button>
-						<div class="actions__search-input">
+						<button class="actions__link" id="m-open-search"><i class="fas fa-search"></i></button>
+						<div class="actions__search-input" id="m-input-search">
 							{{-- <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, quis qui. Numquam quos totam nobis!</p> --}}
 							<div class="field has-addons actions__search-input-component">
 								<div class="control is-expanded">
-								  	<input class="input" class="" type="text" placeholder="Busca productos...">
+									<input class="input" class="" type="text" placeholder="Busca productos...">
 								</div>
 								<div class="control">
 									<a class="button is-primary">

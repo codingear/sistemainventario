@@ -313,6 +313,7 @@
         z-index: 1000;
         background-color: $background-light;
         left: 0;
+        display: none;
     }
     &__search-input-component{
         display: flex;

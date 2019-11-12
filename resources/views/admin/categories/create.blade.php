@@ -32,31 +32,38 @@
         (function () {
             document.querySelector('#newCategoryForm').addEventListener('submit', function (e) {
                 e.preventDefault();
+                clearErrors();
+                let btn = document.querySelector("#submit-btn");
+                disableSubmit(btn, 'Guardando');
                 axios.post(this.action, {
                     'name': document.querySelector('#name').value,
                     'description': document.querySelector('#description').value,
                 })
-                    .then(function (response) {
+                    .then((response) => {
+                        enableSubmit(btn, 'Guardar');
                         clearErrors();
                         console.clear();
                         shootAlert('success', 'Categoría creada.', response.data.msg);
                         window.setTimeout(function () {
                             window.location.href = '{{ route('categorias.index') }}'
                         }, 1200);
-                    })
-                    .catch(function (error) {
-                        document.body.scrollTop = document.documentElement.scrollTop = 0;
-                        const errors = error.response.data.errors;
-                        clearErrors();
-                        Object.keys(errors).forEach(function (k) {
-                            const itemDOM = document.getElementById(k);
-                            const errorMessage = errors[k];
-                            itemDOM.insertAdjacentHTML('afterend',
-                                `<div class="invalid-feedback">${errorMessage}</div>`);
-                            itemDOM.classList.add('is-invalid');
-                            console.clear();
-                        });
+                    }).catch((error) => {
+                    enableSubmit(btn, 'Guardar');
+                    document.body.scrollTop = document.documentElement.scrollTop = 0;
+                    clearErrors();
+                    const errors = error.response.data.errors;
+                    Object.keys(errors).forEach(function (k) {
+                        const itemDOM = document.getElementById(k);
+                        const errorMessage = errors[k];
+                        itemDOM.insertAdjacentHTML('afterend',
+                            `<div class="invalid-feedback">${errorMessage}</div>`);
+                        itemDOM.classList.add('is-invalid');
+                        console.clear();
                     });
+                }).finally(() => {
+                    enableSubmit(btn, 'Guardar');
+                });
+
             });
         })();
 

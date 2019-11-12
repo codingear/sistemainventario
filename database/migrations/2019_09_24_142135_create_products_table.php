@@ -24,6 +24,11 @@ class CreateProductsTable extends Migration
             $table->integer('stock')->default(0)->nullable();
             $table->decimal('sale_price')->default(0)->nullable();
             $table->timestamps();
+
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('set null');
         });
     }
 

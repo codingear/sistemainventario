@@ -12,7 +12,9 @@
                 <li class="h5 breadcrumb-item"><a class="text-main" href="{{route('dashboard')}}">Dashboard</a></li>
                 <li class="h5 breadcrumb-item"><a class="text-main" href="{{route('productos.index')}}">Productos</a>
                 </li>
-                <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Crear Producto</li>
+                <li class="h5 breadcrumb-item text-gray-800 active" aria-current="page">Crear
+                    Producto
+                </li>
             </ol>
         </nav>
     </div>
@@ -70,7 +72,20 @@
                             </div>
                             <div class="form-group col-lg-4 col-md-12">
                                 <label for="stock" class="col-form-label">Stock:</label>
-                                <input type="number" class="form-control" value="" id="stock" name="stock">
+                                <input type="number" class="form-control"
+                                       value="{{(auth::user()->roles->first()->slug==='administrador')? 0: ''}}"
+                                       id="stock"
+                                       name="stock" {{(auth::user()->roles->first()->slug==='administrador')? 'disabled': ''}} >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                                <label for="label-status" class="col-form-label">Status:</label>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" onclick="checkStatus('status','label_status');"
+                                           class="custom-control-input" name="status"
+                                           id="status" {{(auth::user()->roles->first()->slug==='administrador')? 'disabled': ''}}>
+                                    <label class="custom-control-label" for="status"
+                                           name="label_status" id="label_status">Inactivo</label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
@@ -82,11 +97,11 @@
                     </div>
                     <div class="card-footer">
                         <div class="btn-action">
-                            <button class="button button-blue-primary" type="submit" id="send_form">
-                                Guardar
+                            <button class="button button-blue-primary" type="submit" id="btnNewProduct">
+                                <span>Guardar</span>
                             </button>
                             <a href="{{route('productos.index')}}" class="button button-blue-secondary">
-                                Cancelar
+                                Volver
                             </a>
                         </div>
                     </div>
@@ -239,6 +254,18 @@
             disableShift: false,
             disableCtrl: false,
         });
+
+
+        function checkStatus(checkbox, label) {
+
+            let checkboxvar = document.getElementById(checkbox);
+            let labelvar = document.getElementById(label);
+            if (checkboxvar.checked) {
+                labelvar.innerHTML = "Publicado";
+            } else {
+                labelvar.innerHTML = "Inactivo";
+            }
+        }
 
 
         $('#myModal').on('shown.bs.modal', function (e) {
@@ -409,7 +436,9 @@
 
         document.querySelector('#editProductForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            console.log("submiteando")
+            clearErrors();
+            let btn = document.querySelector("#btnNewProduct");
+            disableSubmit(btn, 'Guardando');
             axios.post(this.action, {
                 'name': document.querySelector('#name').value,
                 'sku': document.querySelector('#sku').value,
@@ -418,29 +447,37 @@
                 'stock': document.querySelector('#stock').value,
                 'description': document.querySelector('#description').value,
                 'principal_image': document.querySelector('#principal_image_field').value,
+                'status': (document.querySelector('#status').checked) ? 'Publicado' : 'Inactivo',
                 'gallery': $list_images,
             })
-                .then(function (response) {
+                .then((response) => {
+                    enableSubmit(btn, 'Guardar');
                     clearErrors();
                     console.clear();
+                    document.body.scrollTop = document.documentElement.scrollTop = 0;
                     shootAlert('success', 'Producto creado.', response.data.msg);
                     window.setTimeout(function () {
                         window.location.href = '{{ route('productos.index') }}'
                     }, 1200);
                 })
-                .catch(function (error) {
+
+                .catch((error) => {
+                    enableSubmit(btn, 'Guardar');
+                    clearErrors();
                     document.body.scrollTop = document.documentElement.scrollTop = 0;
                     const errors = error.response.data.errors;
-                    clearErrors();
                     Object.keys(errors).forEach(function (k) {
                         const itemDOM = document.getElementById(k);
                         const errorMessage = errors[k];
                         itemDOM.insertAdjacentHTML('afterend',
                             `<div class="invalid-feedback">${errorMessage}</div>`);
                         itemDOM.classList.add('is-invalid');
-                        console.clear();
+                        //console.clear();
                     });
-                });
+                })
+                .finally(() => {
+                    enableSubmit(btn, 'Guardar');
+                })
         });
 
         function clearErrors() {

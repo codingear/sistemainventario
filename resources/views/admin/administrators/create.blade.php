@@ -37,45 +37,55 @@
         (function () {
             document.querySelector('#newAdministratorForm').addEventListener('submit', function (e) {
                 e.preventDefault();
+                clearErrors();
+                let btn = document.querySelector("#submit-btn");
+                disableSubmit(btn, 'Guardando');
                 axios.post(this.action, {
                     'name': document.querySelector('#name').value,
                     'email': document.querySelector('#email').value,
                     'rol': document.querySelector('#rol').value,
                 })
-                    .then(function (response) {
+                    .then((response) => {
+                        enableSubmit(btn, 'Guardar');
                         clearErrors();
                         console.clear();
-                        shootAlert('success', 'Administrador creadp.', response.data.msg);
+                        shootAlert('success', 'Administrador creado.', response.data.msg);
                         window.setTimeout(function () {
                             window.location.href = '{{ route('administradores.index') }}'
                         }, 1200);
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
+                        enableSubmit(btn, 'Guardar');
+                        clearErrors();
                         document.body.scrollTop = document.documentElement.scrollTop = 0;
                         const errors = error.response.data.errors;
-                        clearErrors();
+
                         Object.keys(errors).forEach(function (k) {
                             const itemDOM = document.getElementById(k);
                             const errorMessage = errors[k];
 
-                            if (itemDOM.attributes.name.value != "rol") {
+                            if (itemDOM.attributes.name.value !== "rol") {
                                 itemDOM.insertAdjacentHTML('afterend',
                                     `<div class="invalid-feedback">${errorMessage}</div>`);
                                 itemDOM.classList.add('is-invalid');
                             } else {
                                 const buttonDropdown = itemDOM.parentElement.childNodes[1];
-                                buttonDropdown.insertAdjacentHTML('afterend',
-                                    `<div class="invalid-feedback d-block mb-2">${errorMessage}</div>`);
+                                const formGroup = itemDOM.parentElement.childNodes[1].parentElement;
+
+                                formGroup.insertAdjacentHTML('afterend',
+                                    `<div class="invalid-feedback d-block">${errorMessage}</div>`);
                                 buttonDropdown.classList.add('button-is-invalid');
                                 buttonDropdown.classList.add('form-control');
                             }
                             console.clear();
                         });
-                    });
+                    }).finally(() => {
+                    enableSubmit(btn, 'Guardar');
+                })
             });
         })();
 
-            function clearErrors() {
+        function clearErrors() {
             // remove all error messages
             const errorMessages = document.querySelectorAll('.invalid-feedback');
             errorMessages.forEach((element) => element.remove());

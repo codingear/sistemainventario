@@ -12,10 +12,10 @@
             {{!empty($user) ? 'readonly': '' }}>
 
     </div>
-    <div class="form-group col-lg-4 col-md-12 {{$errors->has('rol') ? 'is-invalid' :'' }}">
+    <div class="form-group col-lg-4 col-md-12">
         <label for="rol" class="col-form-label ">Rol</label>
         <select id="rol" data-style="btn-white"
-                class="form-control selectpicker show-tick {{$errors->has('rol') ? 'is-invalid' :'' }}" name="rol"
+                class="form-control selectpicker show-tick" name="rol"
                 title="Selecciona un rol...">
             @foreach ($roles as $rol)
                 <option value="{{ $rol->slug }}"
@@ -38,10 +38,12 @@
     @endif
 </div>
 <div class="btn-action btn-action-mt">
-    <button class="button button-blue-primary" type="submit">
-        Guardar
+    <button class="button button-blue-primary" id="submit-btn" type="submit">
+         <span>
+            {{ request()->is('admin/administradores/crear') ? 'Guardar' : 'Actualizar' }}
+        </span>
     </button>
     <a href="{{route('administradores.index')}}" class="button button-blue-secondary">
-        Cancelar
+        Volver
     </a>
 </div>
