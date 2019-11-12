@@ -81,7 +81,7 @@
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">
-                        <i class="fas fa-exclamation-circle"></i>
+                        <i class="fas fa-exclamation-circle modal-icon"></i>
                         <div class="modal-body-text">
                             <p class="modal-body-text-title">Eliminar Proveedor</p>
                             <p class="modal-body-text-msj">¿Estás seguro que quieres eliminar el proveedor?. Si lo haces
@@ -92,8 +92,8 @@
                         <button type="button" class="button button-modal-cancel" data-dismiss="modal">
                             Cancelar
                         </button>
-                        <button type="submit" class="button button-modal-danger">
-                            Eliminar registro.
+                        <button type="submit" class="button button-modal-danger" id="btnDeleteProvider">
+                            <span>Eliminar</span>
                         </button>
                     </div>
                 </form>
@@ -112,7 +112,7 @@
     <script src="{{ asset('vendors/dataTables/responsive.bootstrap4.min.js') }}"></script>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             var scope;
 
             var table = $('#table-providers').DataTable({
@@ -162,31 +162,33 @@
                     }
                 ],
                 initComplete: function () {
-                    this.api().on( 'draw', function () {
+                    this.api().on('draw', function () {
                         console.log($(this).find('tbody tr').length);
-                        if($(this).find('tbody tr td').first().attr('colspan')){
+                        if ($(this).find('tbody tr td').first().attr('colspan')) {
                             window.location.replace(APP_URL + '/proveedores');
                         }
                     });
                 }
             });
-                
-            $('#table-providers tbody').on( 'click', 'button#showMod', function () {
+
+            $('#table-providers tbody').on('click', 'button#showMod', function () {
                 scope = this;
             });
             
             $("#deleteForm").submit(function(ev){
                 ev.preventDefault();
+                let btn = document.querySelector("#btnDeleteProvider");
+                disableSubmit(btn, 'Eliminando');
                 $('button[type=submit]').prop('disabled', true);
                 var data = new FormData(this);
-                axios.delete(this.action,data)
-                    .then(function(response){
+                axios.delete(this.action, data)
+                    .then((response) => {
                         const res = response.data;
                         $("#deleteModal").modal('hide');
-                        $('button[type=submit]').prop('disabled', false);
-                        shootAlert("success",res.msg);
+                        enableSubmit(btn, 'Eliminar');
+                        shootAlert('success', 'Proveedor eliminado', res.msg);
                         var row;
-                        if($(scope).closest('table').hasClass("collapsed")) {
+                        if ($(scope).closest('table').hasClass("collapsed")) {
                             var child = $(scope).parents("tr.child");
                             row = $(child).prev(".parent");
                             console.log(row);
@@ -197,14 +199,16 @@
                             table.row(row).remove().draw();
                         });
                     })
-                    .catch(function(error){
+                    .catch((error) => {
                         const errors = error.response.data;
                         $("#deleteModal").modal('hide');
                         $('#deleteModal').on('hidden.bs.modal', function (e) {
-                            $('button[type=submit]').prop('disabled', false);
-                            shootAlert("error",errors);
+                            enableSubmit(btn, 'Eliminar');
+                            shootAlert('error', 'Ups. Algo salió mal.', errors);
                         })
-                });
+                    }).finally(() => {
+                    enableSubmit(btn, 'Eliminar');
+                })
             });
         });
         function deleteData($providerId) {

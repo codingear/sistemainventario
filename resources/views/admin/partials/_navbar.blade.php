@@ -8,7 +8,7 @@
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+               aria-haspopup="true" aria-expanded="false">
                 <div class="d-flex flex-column align-items-center">
                     <span class="mr-2 d-lg-inline text-gray-600 small">
                         {{auth()->user()->name}}
@@ -17,7 +17,7 @@
                         {{auth::user()->roles->first()->name}}
                     </span>
                 </div>
-                <img class="img-profile rounded-circle" src="{{auth::user()->avatar}}" alt="">
+                <img class="img-profile rounded-circle" src="{{auth::user()->avatar}}" alt="Foto Usuario" id="profile-image">
                 <i class="fas fa-chevron-down ml-3"></i>
             </a>
             <!-- Dropdown - User Information -->

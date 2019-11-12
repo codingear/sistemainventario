@@ -72,6 +72,7 @@ class ProductController extends Controller
                     'description' => $request['description'],
                     'category_id' => $request['category_id'],
                     'stock' => $request['stock'],
+                    'status' => $request['status'],
                     'sale_price' => $request['sale_price'],
                     'principal_image' => $request['principal_image']
                 ]
@@ -129,6 +130,7 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
+
         try {
             $product = Product::findOrFail($id);
             $product->update([
@@ -137,6 +139,7 @@ class ProductController extends Controller
                 'description' => $request['description'],
                 'category_id' => $request['category_id'],
                 'stock' => $request['stock'],
+                'status' => $request['status'],
                 'sale_price' => $request['sale_price'],
                 'principal_image' => $request['principal_image']
             ]);

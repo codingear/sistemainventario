@@ -114,37 +114,49 @@ class AdministratorController extends Controller
         return view('admin.administrators.edit-profile', ['user' => Auth::User()]);
     }
 
-    public function updateAdminProfile(AdministratorUpdateProfile $request, User $user)
+    public function updateAdminProfile(AdministratorUpdateProfile $request)
     {
-        $u = User::findOrFail($user->id);
-        $password = '';
-        if ($request['password'] == null) {
-            $password = $user->password;
-        } else {
-            $password = Hash::make($request['password']);
+
+        try {
+            $user = User::findOrFail(Auth::User()->id);
+            $password = '';
+            if ($request['password'] == null) {
+                $password = Auth::User()->password;
+            } else {
+                $password = Hash::make($request['password']);
+            }
+
+            $user->update([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => $password,
+            ]);
+
+
+            return response()->json(['msg' => 'El registro se ha editado correctamente.']);
+        } catch (\Exception $ex) {
+            return response('No se pudo editar, intente mas tarde', 400)
+                ->header('Content-Type', 'text/plain');
         }
 
-        $u->update([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => $password,
-        ]);
-        $u->change_password = true;
-        $u->save();
-        return redirect()
-            ->route('admin.profile')
-            ->with('info', 'Datos editados exitosamente.');
+
     }
 
 
     public function updateAvatarAdministrator(Request $request)
     {
-        $user = Auth::User();
-        unlink(public_path($user->avatar));
-        $urlAvatar = $request->file('avatar')->store('profile_avatar');
-        $user->update([
-            'avatar' => Storage::url($urlAvatar),
-        ]);
+        try {
+            $user = Auth::User();
+            unlink(public_path($user->avatar));
+            $urlAvatar = $request->file('avatar')->store('profile_avatar');
+            $user->update([
+                'avatar' => Storage::url($urlAvatar),
+            ]);
+            return response()->json(['msg' => 'El registro se ha editado correctamente.']);
+        } catch (\Exception $ex) {
+            return response('No se pudo editar, intente mas tarde', 400)
+                ->header('Content-Type', 'text/plain');
+        }
     }
 
     /**
@@ -170,13 +182,11 @@ class AdministratorController extends Controller
                 $u->syncRoles($request['rol']);
             }
 
-            return response()->json(['msg' => $msg,]);
+            return response()->json(['msg' => $msg]);
         } catch (\Exception $ex) {
             return response('No se pudo editar, intente mas tarde', 400)
                 ->header('Content-Type', 'text/plain');
         }
-
-
     }
 
 

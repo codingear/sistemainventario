@@ -75,7 +75,7 @@
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">
-                        <i class="fas fa-exclamation-circle"></i>
+                        <i class="fas fa-exclamation-circle modal-icon"></i>
                         <div class="modal-body-text">
                             <p class="modal-body-text-title">Eliminar Categoria</p>
                             <p class="modal-body-text-msj">¿Estás seguro que quieres eliminar la categoría?. Si lo haces
@@ -86,8 +86,8 @@
                         <button type="button" class="button button-modal-cancel" data-dismiss="modal">
                             Cancelar
                         </button>
-                        <button type="submit" class="button button-modal-danger">
-                            Eliminar registro.
+                        <button type="submit" class="button button-modal-danger" id="btnDeleteCategory">
+                            <span>Eliminar</span>
                         </button>
                     </div>
                 </form>
@@ -103,7 +103,6 @@
     <script src="{{ asset('vendors/moment/moment-with-locales.min.js') }}"></script>
     <script src="{{ asset('vendors/dataTables/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('vendors/dataTables/responsive.bootstrap4.min.js') }}"></script>
-    <!-- <script src="{{ asset('vendors/dataTables/dataTables.bootstrap4.min.js') }}"></script> -->
     <script>
         $(document).ready(function () {
             var scope;
@@ -162,9 +161,9 @@
                     }
                 ],
                 initComplete: function () {
-                    this.api().on( 'draw', function () {
+                    this.api().on('draw', function () {
                         console.log($(this).find('tbody tr').length);
-                        if($(this).find('tbody tr td').first().attr('colspan')){
+                        if ($(this).find('tbody tr td').first().attr('colspan')) {
                             window.location.replace(APP_URL + '/categorias');
                         }
                     });
@@ -176,18 +175,19 @@
                 scope = this;
             });
 
-            $("#deleteForm").submit(function(ev){
+            $("#deleteForm").submit(function (ev) {
                 ev.preventDefault();
-                $('button[type=submit]').prop('disabled', true);
+                let btn = document.querySelector("#btnDeleteCategory");
+                disableSubmit(btn, 'Eliminando');
                 var data = new FormData(this);
-                axios.delete(this.action,data)
-                    .then(function(response){
+                axios.delete(this.action, data)
+                    .then((response) => {
+                        enableSubmit(btn, 'Eliminar');
                         const res = response.data;
                         $("#deleteModal").modal('hide');
-                        $('button[type=submit]').prop('disabled', false);
-                        shootAlert("success", res.msg);
+                        shootAlert('success', 'Categoría eliminada', res.msg);
                         var row;
-                        if($(scope).closest('table').hasClass("collapsed")) {
+                        if ($(scope).closest('table').hasClass("collapsed")) {
                             var child = $(scope).parents("tr.child");
                             row = $(child).prev(".parent");
                         } else {
@@ -197,13 +197,17 @@
                             table.row(row).remove().draw();
                         });
                     })
-                    .catch(function(error){
+
+                    .catch((error) => {
+                        enableSubmit(btn, 'Eliminar');
                         const errors = error.response.data;
                         $("#deleteModal").modal('hide');
                         $('#deleteModal').on('hidden.bs.modal', function (e) {
-                            $('button[type=submit]').prop('disabled', false);
-                            shootAlert("error",errors);
+                            shootAlert('error', 'Ups. Algo salió mal.', errors);
                         })
+                    })
+                    .finally(() => {
+                        enableSubmit(btn, 'Eliminar');
                     });
             });
         });
