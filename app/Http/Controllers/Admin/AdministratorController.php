@@ -13,9 +13,9 @@ use App\Http\Requests\AdministratorUpdateProfile;
 use App\Notifications\NewAdmin;
 use Illuminate\Support\Str;
 use App\User;
+use DebugBar\DebugBar;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-
 //use Laravolt\Avatar\Avatar;
 
 
@@ -71,7 +71,7 @@ class AdministratorController extends Controller
             $basePath = "/img/profile_avatar";
             $avatarName = (str_replace(" ", "_", $request['name'])) . '_avatar';
             $avatar = \Avatar::create($request['name'])->getImageObject()->encode('png');
-            Storage::put('profile_avatar/' . $avatarName . '.png', (string)$avatar);
+            Storage::put('profile_avatar/' . $avatarName . '.png', (string) $avatar);
             $avatar_url = $basePath . '/' . $avatarName . '.png';
 
             $user = User::create([
@@ -92,7 +92,6 @@ class AdministratorController extends Controller
             return response('No se pudo crear, intente mas tarde', 500)
                 ->header('Content-Type', 'text/plain');
         }
-
     }
 
 
@@ -120,23 +119,24 @@ class AdministratorController extends Controller
         try {
             $user = User::findOrFail(Auth::User()->id);
             $password = '';
-            $changedPassword = false;
+            $changePass = false;
             if ($request['password'] == null) {
-                $password = Auth::User()->password;
+                $password = $user->password;
             } else {
                 $password = Hash::make($request['password']);
-                $changedPassword = true;
+                $changePass = true;
             }
 
             $user->update([
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'password' => $password,
-                'change_password' => $changedPassword
             ]);
+            $user->change_password = $changePass;
+            $user->save();
 
 
-            return response()->json(['msg' => 'El registro se ha editado correctamente.']);
+            return response()->json(['msg' => 'El registro se ha editado correctamente.', 'changed_pass' => $changePass]);
         } catch (\Exception $ex) {
             return response('No se pudo editar, intente mas tarde', 400)
                 ->header('Content-Type', 'text/plain');
