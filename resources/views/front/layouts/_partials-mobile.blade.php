@@ -28,13 +28,9 @@
                 </div>
                 <div class="navbar-mobile__menu-collapse" id="secondary-menu">
                     <ul>
-                        <li><a class="navbar-mobile__menu-collapse-item" href="">categoria 1</a></li>
-                        <li><a class="navbar-mobile__menu-collapse-item" href="">categoria 2</a></li>
-                        <li><a class="navbar-mobile__menu-collapse-item" href="">categoria 3</a></li>
-                        <li><a class="navbar-mobile__menu-collapse-item" href="">categoria 4</a></li>
-                        <li><a class="navbar-mobile__menu-collapse-item" href="">categoria 5</a></li>
-                        <li><a class="navbar-mobile__menu-collapse-item" href="">categoria 4</a></li>
-                        <li><a class="navbar-mobile__menu-collapse-item" href="">categoria 5</a></li>
+                        @foreach ($categories as $category)
+                            <li><a class="navbar-mobile__menu-collapse-item" href="">{{$category->name}}</a></li>
+                        @endforeach 
                     </ul>
                 </div>
             </div>
