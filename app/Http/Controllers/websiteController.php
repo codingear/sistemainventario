@@ -15,7 +15,15 @@ class websiteController extends Controller
      */
     public function index()
     {
-        return view('front.home.index');
+        $categories = Category::query()
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $products = Product::where('status', 'ACTIVO')
+            ->orderBy('name', 'desc')
+            ->get();
+
+        return view('front.home.index', compact('categories', 'products'));
     }
 
     /**

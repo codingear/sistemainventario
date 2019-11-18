@@ -64,3 +64,8 @@ $("body").click(function(ev){
         }
     }
 });
+
+// BUSQUEDA DE PRODUCTOS
+$("#m-open-search").click(function(){
+    $("#m-input-search").fadeToggle("fast");
+});
