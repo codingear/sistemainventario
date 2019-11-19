@@ -13,17 +13,17 @@ class websiteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
+
         $categories = Category::query()
             ->orderBy('id', 'asc')
             ->get();
-
-        $products = Product::where('status', 'ACTIVO')
-            ->orderBy('name', 'desc')
+        $products = Product::where('status', 'Publicado')
+            ->orderBy('name', 'asc')
             ->get();
-
+        // dd($products);
         return view('front.home.index', compact('categories', 'products'));
+
     }
 
     /**

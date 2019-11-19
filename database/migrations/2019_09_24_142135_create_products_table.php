@@ -22,9 +22,8 @@ class CreateProductsTable extends Migration
             $table->enum('status', ['Publicado', 'Inactivo', 'Eliminado'])->default('Publicado');
             $table->bigInteger('principal_image')->unsigned()->nullable();
             $table->integer('stock')->default(0)->nullable();
-            $table->decimal('sale_price')->default(0)->nullable();
+            $table->decimal('sale_price',8,2)->default(0)->nullable();
             $table->timestamps();
-
             $table->foreign('category_id')
                 ->references('id')
                 ->on('categories')
