@@ -20,26 +20,27 @@
                     <input id="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                         name="email" value="{{ old('email') }}" placeholder="Email" required>
                     <label for="email">Email</label>
-                    @if ($errors->has('email'))
+                    @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('email') }}</strong>
                     </span>
-                    @endif
+                    @enderror
                 </div>
                 <div class="form-label-group">
                     <input id="password" type="password"
                         class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
                         placeholder="contraseña">
                     <label for="password">Contraseña</label>
-                    @if ($errors->has('password'))
+
+                    @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('password') }}</strong>
                     </span>
-                    @endif
+                    @enderror
                 </div>
                 <div class="custom-control custom-checkbox mb-3">
                     <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Recordar contraseña</label>
+                    <label class="custom-control-label" for="customCheck1">Recuerdame</label>
                 </div>
                 <button class="btn btn-lg btn-blue  btn-block text-uppercase" type="submit">Entrar</button>
                 <div class="text-center">
