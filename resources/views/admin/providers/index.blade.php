@@ -174,8 +174,8 @@
             $('#table-providers tbody').on('click', 'button#showMod', function () {
                 scope = this;
             });
-
-            $("#deleteForm").submit(function (ev) {
+            
+            $("#deleteForm").submit(function(ev){
                 ev.preventDefault();
                 let btn = document.querySelector("#btnDeleteProvider");
                 disableSubmit(btn, 'Eliminando');
@@ -211,7 +211,6 @@
                 })
             });
         });
-
         function deleteData($providerId) {
             let id = $providerId;
             let url = '{{ route("proveedores.destroy", ":id") }}';

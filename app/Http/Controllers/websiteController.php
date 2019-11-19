@@ -6,7 +6,7 @@ use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
 
-class StoreController extends Controller
+class websiteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class StoreController extends Controller
             ->orderBy('name', 'desc')
             ->get();
 
-        return view('front.store.index', compact('categories', 'products'));
+        return view('front.home.index', compact('categories', 'products'));
     }
 
     /**
@@ -33,7 +33,15 @@ class StoreController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::query()
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $products = Product::where('status', 'ACTIVO')
+            ->orderBy('name', 'desc')
+            ->get();
+
+        return view('front.store.index', compact('categories', 'products'));
     }
 
     /**

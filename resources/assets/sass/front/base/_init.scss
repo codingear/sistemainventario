@@ -1,0 +1,14 @@
+.site-wrapper{
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+
+    &:before{
+        content: '';
+        visibility: visible;
+        pointer-events: auto;
+        display: block;
+        // transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+    }
+}

@@ -15,7 +15,9 @@ Route::get('/', function () {
     return view('front.index');
 })->name('inicio');
 
-Route::get('store', 'StoreController@index')->name('store');
+// Shop Routes
+Route::get('store', 'websiteController@shop')->name('store');
+Route::get('inicio', 'websiteController@index')->name('home');
 
 
 // Authentication Routes...

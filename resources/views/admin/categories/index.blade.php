@@ -169,9 +169,9 @@
                     });
                 }
             });
-
-
-            $('#t-categories tbody').on('click', 'button#showMod', function () {
+            
+                
+            $('#t-categories tbody').on( 'click', 'button#showMod', function () {
                 scope = this;
             });
 
@@ -211,13 +211,12 @@
                     });
             });
         });
-
+        
         function deleteData(categoryId) {
             let id = categoryId;
             let url = '{{ route("categorias.destroy", ":id") }}';
             url = url.replace(':id', id);
             $("#deleteForm").attr('action', url);
         }
-
     </script>
 @endpush
